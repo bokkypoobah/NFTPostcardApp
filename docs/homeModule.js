@@ -143,7 +143,7 @@ const Home = {
             <b-carousel
               id="carousel-1"
               v-model="slide"
-              :interval="8000"
+              :interval="5000"
               controls
               indicators
               background="#ababab"
@@ -156,91 +156,55 @@ const Home = {
             >
 
               <!-- Text slides with image -->
-              <b-carousel-slide
-                caption="Zombie #3636,"
-                text="BASTARD GAN V2 Children And Cats, Bombo, NSW, Australia, Year 2021"
-                img-src="images/IMG_9534_z3636_Bombo_2048x960.png"
-                img-height="200"
-              ></b-carousel-slide>
-
-              <b-carousel-slide
-                caption="Zombie #3636 & #4472 Family"
-                text="On A Palaeontological Stroll Down The Permian At Gerroa, NSW, Australia"
-                img-src="images/GerroaPhotoAlbumWithZ3636n4472Family_2048x960.png"
-                img-height="200"
-              ></b-carousel-slide>
-
-              <b-carousel-slide
-                caption="Zombie #3636 & #4472 Family"
-                text="In Year 1637 At Utrecht To Trade Tulip NFT Options"
-                img-src="images/Cryptogs_3185_ZFam_2048x960.png"
-                img-height="200"
-              ></b-carousel-slide>
-
-              <b-carousel-slide
-                caption="Zombie #3636 & #4472 Family"
-                text="In 1507 At Badaling To Trade Silk NFTs"
-                img-src="images/GreatWall_ZFam_2048x960.png"
-                img-height="200"
-              ></b-carousel-slide>
-
-              <b-carousel-slide
-                caption="Zombie Xtreme High Yield Farmers"
-                text="With Subjects In 1935 At Milsons Point"
-                img-src="images/PunkstersHarbourBridgeMilsonsPoint1935_1600x750.png"
-                img-height="200"
-              ></b-carousel-slide>
-
-              <b-carousel-slide
-                caption="Zombie #3636 & #4472,"
-                text="Infected By Airborne Z-Alien Virus, Travel To 1,050 BC To Inspect Their Re-analoged Digitalised Cat At Earth-619"
-                img-src="images/Punks_3636_4472_Sphinx_1024x480.png"
-                img-height="200"
-              ></b-carousel-slide>
-
-              <b-carousel-slide
-                caption="Zombie Xtreme High Yield Cultivator's Subjects,"
-                text="Infected By Mutated Z-Alien Virus Strains In 1,050 BC at Earth-619"
-                img-src="images/Punks_3636_4472_Sphinx_Subjects_More_1024x480.png"
-                img-height="200"
-              ></b-carousel-slide>
-
-              <b-carousel-slide
-                caption="Zombie Xtreme High Yield Cultivators"
-                text="Take Ownership Of Twins At 1888 In The Royal Prince Alfred Hospital, Sydney. Credits - Mitchell Library, State Library of NSW"
-                img-src="images/CryptoBabyPunk_401_Birth_At_RPA_1880-1893_960x450.png"
-                img-height="200"
-              ></b-carousel-slide>
-
-
-
-
-
-              <!-- Slides with custom text -->
-              <!--
-              <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=54">
-                <h1>Hello world!</h1>
+              <b-carousel-slide caption="Zombie #3636,"
+                text="BASTARD GAN V2 Children And Cats, Bombo, NSW, Australia, Year 2021">
+                <b-img-lazy slot="img" class="d-block img-fluid w-100" width="1024" height="480"
+                   src="images/IMG_9534_z3636_Bombo_2048x960.png" alt="image slot">
               </b-carousel-slide>
-              -->
 
-              <!-- Slides with image only -->
-              <!-- <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=58"></b-carousel-slide> -->
-
-              <!-- Slides with img slot -->
-              <!-- Note the classes .d-block and .img-fluid to prevent browser default image alignment -->
-              <!--
-              <b-carousel-slide>
-                <template #img>
-                  <img
-                    class="d-block img-fluid w-100"
-                    width="1024"
-                    height="480"
-                    src="https://picsum.photos/1024/480/?image=55"
-                    alt="image slot"
-                  >
-                </template>
+              <b-carousel-slide caption="Zombie #3636 & #4472 Family"
+                text="On A Palaeontological Stroll Down The Permian At Gerroa, NSW, Australia">
+                <b-img-lazy slot="img" class="d-block img-fluid w-100" width="1024" height="480"
+                     src="images/GerroaPhotoAlbumWithZ3636n4472Family_2048x960.png" alt="image slot">
               </b-carousel-slide>
-              -->
+
+              <b-carousel-slide caption="Zombie #3636 & #4472 Family"
+                text="In Year 1637 At Utrecht To Trade Tulip NFT Options">
+                <b-img-lazy slot="img" class="d-block img-fluid w-100" width="1024" height="480"
+                     src="images/Cryptogs_3185_ZFam_2048x960.png" alt="image slot">
+              </b-carousel-slide>
+
+              <b-carousel-slide caption="Zombie #3636 & #4472 Family"
+                text="In 1507 At Badaling To Trade Silk NFTs">
+                <b-img-lazy slot="img" class="d-block img-fluid w-100" width="1024" height="480"
+                     src="images/GreatWall_ZFam_2048x960.png" alt="image slot">
+              </b-carousel-slide>
+
+              <b-carousel-slide caption="Zombie Xtreme High Yield Farmers"
+                text="With Subjects In 1935 At Milsons Point">
+                <b-img-lazy slot="img" class="d-block img-fluid w-100" width="1024" height="480"
+                     src="images/PunkstersHarbourBridgeMilsonsPoint1935_1600x750.png" alt="image slot">
+              </b-carousel-slide>
+
+              <b-carousel-slide caption="Zombie #3636 & #4472"
+                text="Infected By Airborne Z-Alien Virus, Travel To 1,050 BC To Inspect Their Re-analoged Digitalised Cat At Earth-619">
+                <b-img-lazy slot="img" class="d-block img-fluid w-100" width="1024" height="480"
+                     src="images/Punks_3636_4472_Sphinx_1024x480.png" alt="image slot">
+              </b-carousel-slide>
+
+              <b-carousel-slide caption="Zombie Xtreme High Yield Cultivators And Subjects"
+                text="Infected By Mutated Z-Alien Virus Strains In 1,050 BC at Earth-619">
+                <b-img-lazy slot="img" class="d-block img-fluid w-100" width="1024" height="480"
+                     src="images/Punks_3636_4472_Sphinx_Subjects_More_1024x480.png" alt="image slot">
+              </b-carousel-slide>
+
+              <b-carousel-slide caption="Zombie Xtreme High Yield Cultivators"
+                text="Take Ownership Of Twins At 1888 In The Royal Prince Alfred Hospital, Sydney. Credits - Mitchell Library, State Library of NSW">
+                <b-img-lazy slot="img" class="d-block img-fluid w-100" width="1024" height="480"
+                     src="images/CryptoBabyPunk_401_Birth_At_RPA_1880-1893_960x450.png" alt="image slot">
+              </b-carousel-slide>
+
+
 
               <!-- Slide with blank fluid image to maintain slide aspect ratio -->
               <!--
