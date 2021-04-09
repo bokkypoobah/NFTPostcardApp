@@ -1,12 +1,149 @@
 const Home = {
   template: `
     <div class="mt-5 pt-3">
-      <b-card no-body header="Home" class="border-0" header-class="p-1">
-        <div>
+
+    <b-card no-body header="Zombie Babies" class="border-0" header-class="p-1">
+      <br />
+      <b-card-group deck class="m-2">
+        <b-card
+          title="#000"
+          img-src="images/Baby_000_background.png"
+          img-alt="Image"
+          img-top
+          tag="article"
+          style="max-width: 20rem;"
+          class="m-1"
+        >
+          <b-card-text>
+            Blah <b-link href="https://opensea.io/assets/0xfe9231f0e6753a8412a00ec1f0028a24d5220ba9/0" target="_blank"><img src="images/e68241c-opensea-logo-flat-colored-blue.png" width="60px" /></b-link>
+          </b-card-text>
+        </b-card>
+
+        <b-card
+          title="#001"
+          img-src="images/Baby_001_background.png"
+          img-alt="Image"
+          img-top
+          tag="article"
+          style="max-width: 20rem;"
+          class="m-1"
+        >
+          <b-card-text>
+            Blah <b-link href="https://opensea.io/assets/0xfe9231f0e6753a8412a00ec1f0028a24d5220ba9/1" target="_blank"><img src="images/e68241c-opensea-logo-flat-colored-blue.png" width="60px" /></b-link>
+          </b-card-text>
+        </b-card>
+
+        <b-card
+          title="#002"
+          img-src="images/Baby_002_background.png"
+          img-alt="Image"
+          img-top
+          tag="article"
+          style="max-width: 20rem;"
+          class="m-1"
+        >
+          <b-card-text>
+            Blah <b-link href="https://opensea.io/assets/0xfe9231f0e6753a8412a00ec1f0028a24d5220ba9/2" target="_blank"><img src="images/e68241c-opensea-logo-flat-colored-blue.png" width="60px" /></b-link>
+          </b-card-text>
+        </b-card>
+
+        <b-card
+          title="#003"
+          img-src="images/Baby_003_background.png"
+          img-alt="Image"
+          img-top
+          tag="article"
+          style="max-width: 20rem;"
+          class="m-1"
+        >
+          <b-card-text>
+            Blah <b-link href="https://opensea.io/assets/0xfe9231f0e6753a8412a00ec1f0028a24d5220ba9/3" target="_blank"><img src="images/e68241c-opensea-logo-flat-colored-blue.png" width="60px" /></b-link>
+          </b-card-text>
+        </b-card>
+      </b-card-group deck>
+
+      <b-card-group deck class="m-2">
+        <b-card
+          title="#004"
+          img-src="images/Baby_004_background.png"
+          img-alt="Image"
+          img-top
+          tag="article"
+          style="max-width: 20rem;"
+          class="m-1"
+        >
+          <b-card-text>
+            Blah <b-link href="https://opensea.io/assets/0xfe9231f0e6753a8412a00ec1f0028a24d5220ba9/4" target="_blank"><img src="images/e68241c-opensea-logo-flat-colored-blue.png" width="60px" /></b-link>
+          </b-card-text>
+        </b-card>
+
+        <b-card
+          title="#005"
+          img-src="images/Baby_005_background.png"
+          img-alt="Image"
+          img-top
+          tag="article"
+          style="max-width: 20rem;"
+          class="m-1"
+        >
+          <b-card-text>
+            Blah <b-link href="https://opensea.io/assets/0xfe9231f0e6753a8412a00ec1f0028a24d5220ba9/5" target="_blank"><img src="images/e68241c-opensea-logo-flat-colored-blue.png" width="60px" /></b-link>
+          </b-card-text>
+        </b-card>
+
+        <b-card
+          title="#006"
+          img-src="images/Baby_006_background.png"
+          img-alt="Image"
+          img-top
+          tag="article"
+          style="max-width: 20rem;"
+          class="m-1"
+        >
+          <b-card-text>
+            Blah <b-link href="https://opensea.io/assets/0xfe9231f0e6753a8412a00ec1f0028a24d5220ba9/6" target="_blank"><img src="images/e68241c-opensea-logo-flat-colored-blue.png" width="60px" /></b-link>
+          </b-card-text>
+        </b-card>
+
+        <b-card
+          title="#007"
+          img-src="images/Baby_007_background.png"
+          img-alt="Image"
+          img-top
+          tag="article"
+          style="max-width: 20rem;"
+          class="m-1"
+        >
+          <b-card-text>
+            Blah <b-link href="https://opensea.io/assets/0xfe9231f0e6753a8412a00ec1f0028a24d5220ba9/7" target="_blank"><img src="images/e68241c-opensea-logo-flat-colored-blue.png" width="60px" /></b-link>
+          </b-card-text>
+        </b-card>
+      </b-card-group deck>
+
+      <b-card-group deck class="m-2">
+        <b-card
+          title="#008"
+          img-src="images/Baby_008_background.png"
+          img-alt="Image"
+          img-top
+          tag="article"
+          style="max-width: 20rem;"
+          class="m-1"
+        >
+          <b-card-text>
+            Blah <b-link href="https://opensea.io/assets/0xfe9231f0e6753a8412a00ec1f0028a24d5220ba9/8" target="_blank"><img src="images/e68241c-opensea-logo-flat-colored-blue.png" width="60px" /></b-link>
+          </b-card-text>
+        </b-card>
+
+      </b-card-group deck>
+
+      <br />
+      <b-card no-body header="Zombies #3636 & #4472" class="border-0" header-class="p-1">
+        <div class="m-5">
             <b-carousel
               id="carousel-1"
               v-model="slide"
-              :interval="4000"
+              :interval="8000"
               controls
               indicators
               background="#ababab"
