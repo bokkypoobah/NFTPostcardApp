@@ -1,7 +1,7 @@
 const Tokens = {
   template: `
     <div>
-      <b-card header-class="warningheader" header="Incorrect Network Detected" v-if="network != 1337 && network != 3">
+      <b-card header-class="warningheader" header="Incorrect Network Detected" v-if="network != 1337 && network != 1 && network != 3">
         <b-card-text>
           Please switch to the Ropsten testnet in MetaMask and refresh this page
         </b-card-text>
@@ -77,12 +77,14 @@ const tokensModule = {
   namespaced: true,
   state: {
     tokenData: {},
+    jsonData: null,
 
     params: null,
     executing: false,
   },
   getters: {
     tokenData: state => state.tokenData,
+    jsonData: state => state.jsonData,
 
     params: state => state.params,
   },
@@ -116,6 +118,10 @@ const tokensModule = {
       state.tokenData = {};
       localStorage.removeItem('tokenData');
     },
+    updateJsonData(state, jsonData) {
+      logInfo("tokensModule", "mutations.updateJsonData(" + jsonData + ")");
+      state.jsonData = jsonData;
+    },
     updateParams(state, params) {
       state.params = params;
       logDebug("tokensModule", "updateParams('" + params + "')")
@@ -137,6 +143,10 @@ const tokensModule = {
     removeAllTokens(context, blah) {
       // logInfo("tokensModule", "actions.removeAllTokens(" + blah + ")");
       context.commit('removeAllTokens', blah);
+    },
+    updateJsonData(context, jsonData) {
+      logInfo("tokensModule", "actions.updateJsonData(" + JSON.stringify(jsonData) + ")");
+      context.commit('updateJsonData', jsonData);
     },
     // Called by Connection.execWeb3()
     async execWeb3({ state, commit, rootState }, { count, networkChanged, blockChanged, coinbaseChanged }) {

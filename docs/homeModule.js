@@ -15,7 +15,7 @@ const Home = {
           class="m-1"
         >
           <b-card-text>
-            Blah <b-link href="https://opensea.io/assets/0xfe9231f0e6753a8412a00ec1f0028a24d5220ba9/0" target="_blank"><img src="images/e68241c-opensea-logo-flat-colored-blue.png" width="60px" /></b-link>
+            Blah <b-link href="https://opensea.io/assets/0xfe9231f0e6753a8412a00ec1f0028a24d5220ba9/0" target="_blank"><img src="images/381114e-opensea-logomark-flat-colored-blue.png" width="30px" /></b-link>
           </b-card-text>
         </b-card>
 
@@ -29,7 +29,7 @@ const Home = {
           class="m-1"
         >
           <b-card-text>
-            Blah <b-link href="https://opensea.io/assets/0xfe9231f0e6753a8412a00ec1f0028a24d5220ba9/1" target="_blank"><img src="images/e68241c-opensea-logo-flat-colored-blue.png" width="60px" /></b-link>
+            Blah <b-link href="https://opensea.io/assets/0xfe9231f0e6753a8412a00ec1f0028a24d5220ba9/1" target="_blank"><img src="images/381114e-opensea-logomark-flat-colored-blue.png" width="30px" /></b-link>
           </b-card-text>
         </b-card>
 
@@ -43,7 +43,7 @@ const Home = {
           class="m-1"
         >
           <b-card-text>
-            Blah <b-link href="https://opensea.io/assets/0xfe9231f0e6753a8412a00ec1f0028a24d5220ba9/2" target="_blank"><img src="images/e68241c-opensea-logo-flat-colored-blue.png" width="60px" /></b-link>
+            Blah <b-link href="https://opensea.io/assets/0xfe9231f0e6753a8412a00ec1f0028a24d5220ba9/2" target="_blank"><img src="images/381114e-opensea-logomark-flat-colored-blue.png" width="30px" /></b-link>
           </b-card-text>
         </b-card>
 
@@ -57,7 +57,7 @@ const Home = {
           class="m-1"
         >
           <b-card-text>
-            Blah <b-link href="https://opensea.io/assets/0xfe9231f0e6753a8412a00ec1f0028a24d5220ba9/3" target="_blank"><img src="images/e68241c-opensea-logo-flat-colored-blue.png" width="60px" /></b-link>
+            Blah <b-link href="https://opensea.io/assets/0xfe9231f0e6753a8412a00ec1f0028a24d5220ba9/3" target="_blank"><img src="images/381114e-opensea-logomark-flat-colored-blue.png" width="30px" /></b-link>
           </b-card-text>
         </b-card>
       </b-card-group deck>
@@ -73,7 +73,7 @@ const Home = {
           class="m-1"
         >
           <b-card-text>
-            Blah <b-link href="https://opensea.io/assets/0xfe9231f0e6753a8412a00ec1f0028a24d5220ba9/4" target="_blank"><img src="images/e68241c-opensea-logo-flat-colored-blue.png" width="60px" /></b-link>
+            Blah <b-link href="https://opensea.io/assets/0xfe9231f0e6753a8412a00ec1f0028a24d5220ba9/4" target="_blank"><img src="images/381114e-opensea-logomark-flat-colored-blue.png" width="30px" /></b-link>
           </b-card-text>
         </b-card>
 
@@ -87,7 +87,7 @@ const Home = {
           class="m-1"
         >
           <b-card-text>
-            Blah <b-link href="https://opensea.io/assets/0xfe9231f0e6753a8412a00ec1f0028a24d5220ba9/5" target="_blank"><img src="images/e68241c-opensea-logo-flat-colored-blue.png" width="60px" /></b-link>
+            Blah <b-link href="https://opensea.io/assets/0xfe9231f0e6753a8412a00ec1f0028a24d5220ba9/5" target="_blank"><img src="images/381114e-opensea-logomark-flat-colored-blue.png" width="30px" /></b-link>
           </b-card-text>
         </b-card>
 
@@ -101,7 +101,7 @@ const Home = {
           class="m-1"
         >
           <b-card-text>
-            Blah <b-link href="https://opensea.io/assets/0xfe9231f0e6753a8412a00ec1f0028a24d5220ba9/6" target="_blank"><img src="images/e68241c-opensea-logo-flat-colored-blue.png" width="60px" /></b-link>
+            Blah <b-link href="https://opensea.io/assets/0xfe9231f0e6753a8412a00ec1f0028a24d5220ba9/6" target="_blank"><img src="images/381114e-opensea-logomark-flat-colored-blue.png" width="30px" /></b-link>
           </b-card-text>
         </b-card>
 
@@ -115,7 +115,7 @@ const Home = {
           class="m-1"
         >
           <b-card-text>
-            Blah <b-link href="https://opensea.io/assets/0xfe9231f0e6753a8412a00ec1f0028a24d5220ba9/7" target="_blank"><img src="images/e68241c-opensea-logo-flat-colored-blue.png" width="60px" /></b-link>
+            Blah <b-link href="https://opensea.io/assets/0xfe9231f0e6753a8412a00ec1f0028a24d5220ba9/7" target="_blank"><img src="images/381114e-opensea-logomark-flat-colored-blue.png" width="30px" /></b-link>
           </b-card-text>
         </b-card>
       </b-card-group deck>
@@ -131,98 +131,99 @@ const Home = {
           class="m-1"
         >
           <b-card-text>
-            Blah <b-link href="https://opensea.io/assets/0xfe9231f0e6753a8412a00ec1f0028a24d5220ba9/8" target="_blank"><img src="images/e68241c-opensea-logo-flat-colored-blue.png" width="60px" /></b-link>
+            Blah <b-link href="https://opensea.io/assets/0xfe9231f0e6753a8412a00ec1f0028a24d5220ba9/8" target="_blank"><img src="images/381114e-opensea-logomark-flat-colored-blue.png" width="30px" /></b-link>
           </b-card-text>
         </b-card>
 
       </b-card-group deck>
+    </b-card>
 
-      <br />
-      <b-card no-body header="Zombies #3636 & #4472" class="border-0" header-class="p-1">
-        <div class="m-5">
-            <b-carousel
-              id="carousel-1"
-              v-model="slide"
-              :interval="5000"
-              controls
-              indicators
-              background="#ababab"
-              img-width="1024"
-              img-height="480"
-              style="text-shadow: 2px 2px 3px #333;"
-              @sliding-start="onSlideStart"
-              @sliding-end="onSlideEnd"
-              class="mx-5 p-0"
-            >
+    <br />
+    <b-card no-body header="Zombies #3636 & #4472" class="border-0" header-class="p-1">
+      <div class="m-5">
+          <b-carousel
+            id="carousel-1"
+            v-model="slide"
+            :interval="5000"
+            controls
+            indicators
+            background="#ababab"
+            img-width="1024"
+            img-height="480"
+            style="text-shadow: 2px 2px 3px #333;"
+            @sliding-start="onSlideStart"
+            @sliding-end="onSlideEnd"
+            class="mx-5 p-0"
+          >
 
-              <!-- Text slides with image -->
-              <b-carousel-slide caption="Zombie #3636,"
-                text="BASTARD GAN V2 Children And Cats, Bombo, NSW, Australia, Year 2021">
-                <b-img-lazy slot="img" class="d-block img-fluid w-100" width="1024" height="480"
-                   src="images/IMG_9534_z3636_Bombo_2048x960.png" alt="image slot">
-              </b-carousel-slide>
+            <!-- Text slides with image -->
+            <b-carousel-slide caption="Zombie #3636,"
+              text="BASTARD GAN V2 Children And Cats, Bombo, NSW, Australia, Year 2021">
+              <b-img-lazy slot="img" class="d-block img-fluid w-100" width="1024" height="480"
+                 src="images/IMG_9534_z3636_Bombo_2048x960.png" alt="image slot"></b-img-lazy>
+            </b-carousel-slide>
 
-              <b-carousel-slide caption="Zombie #3636 & #4472 Family"
-                text="On A Palaeontological Stroll Down The Permian At Gerroa, NSW, Australia">
-                <b-img-lazy slot="img" class="d-block img-fluid w-100" width="1024" height="480"
-                     src="images/GerroaPhotoAlbumWithZ3636n4472Family_2048x960.png" alt="image slot">
-              </b-carousel-slide>
+            <b-carousel-slide caption="Zombie #3636 & #4472 Family"
+              text="On A Palaeontological Stroll Down The Permian At Gerroa, NSW, Australia">
+              <b-img-lazy slot="img" class="d-block img-fluid w-100" width="1024" height="480"
+                   src="images/GerroaPhotoAlbumWithZ3636n4472Family_2048x960.png" alt="image slot"></b-img-lazy>
+            </b-carousel-slide>
 
-              <b-carousel-slide caption="Zombie #3636 & #4472 Family"
-                text="In Year 1637 At Utrecht To Trade Tulip NFT Options">
-                <b-img-lazy slot="img" class="d-block img-fluid w-100" width="1024" height="480"
-                     src="images/Cryptogs_3185_ZFam_2048x960.png" alt="image slot">
-              </b-carousel-slide>
+            <b-carousel-slide caption="Zombie #3636 & #4472 Family"
+              text="In Year 1637 At Utrecht To Trade Tulip NFT Options">
+              <b-img-lazy slot="img" class="d-block img-fluid w-100" width="1024" height="480"
+                   src="images/Cryptogs_3185_ZFam_2048x960.png" alt="image slot"></b-img-lazy>
+            </b-carousel-slide>
 
-              <b-carousel-slide caption="Zombie #3636 & #4472 Family"
-                text="In 1507 At Badaling To Trade Silk NFTs">
-                <b-img-lazy slot="img" class="d-block img-fluid w-100" width="1024" height="480"
-                     src="images/GreatWall_ZFam_2048x960.png" alt="image slot">
-              </b-carousel-slide>
+            <b-carousel-slide caption="Zombie #3636 & #4472 Family"
+              text="In 1507 At Badaling To Trade Silk NFTs">
+              <b-img-lazy slot="img" class="d-block img-fluid w-100" width="1024" height="480"
+                   src="images/GreatWall_ZFam_2048x960.png" alt="image slot"></b-img-lazy>
+            </b-carousel-slide>
 
-              <b-carousel-slide caption="Zombie Xtreme High Yield Farmers"
-                text="With Subjects In 1935 At Milsons Point">
-                <b-img-lazy slot="img" class="d-block img-fluid w-100" width="1024" height="480"
-                     src="images/PunkstersHarbourBridgeMilsonsPoint1935_1600x750.png" alt="image slot">
-              </b-carousel-slide>
+            <b-carousel-slide caption="Zombie Xtreme High Yield Farmers"
+              text="With Subjects In 1935 At Milsons Point">
+              <b-img-lazy slot="img" class="d-block img-fluid w-100" width="1024" height="480"
+                   src="images/PunkstersHarbourBridgeMilsonsPoint1935_1600x750.png" alt="image slot"></b-img-lazy>
+            </b-carousel-slide>
 
-              <b-carousel-slide caption="Zombie #3636 & #4472"
-                text="Infected By Airborne Z-Alien Virus, Travel To 1,050 BC To Inspect Their Re-analoged Digitalised Cat At Earth-619">
-                <b-img-lazy slot="img" class="d-block img-fluid w-100" width="1024" height="480"
-                     src="images/Punks_3636_4472_Sphinx_1024x480.png" alt="image slot">
-              </b-carousel-slide>
+            <b-carousel-slide caption="Zombie #3636 & #4472"
+              text="Infected By Airborne Z-Alien Virus, Travel To 1,050 BC To Inspect Their Re-analoged Digitalised Cat At Earth-619">
+              <b-img-lazy slot="img" class="d-block img-fluid w-100" width="1024" height="480"
+                   src="images/Punks_3636_4472_Sphinx_1024x480.png" alt="image slot"></b-img-lazy>
+            </b-carousel-slide>
 
-              <b-carousel-slide caption="Zombie Xtreme High Yield Cultivators And Subjects"
-                text="Infected By Mutated Z-Alien Virus Strains In 1,050 BC at Earth-619">
-                <b-img-lazy slot="img" class="d-block img-fluid w-100" width="1024" height="480"
-                     src="images/Punks_3636_4472_Sphinx_Subjects_More_1024x480.png" alt="image slot">
-              </b-carousel-slide>
+            <b-carousel-slide caption="Zombie Xtreme High Yield Cultivators And Subjects"
+              text="Infected By Mutated Z-Alien Virus Strains In 1,050 BC at Earth-619">
+              <b-img-lazy slot="img" class="d-block img-fluid w-100" width="1024" height="480"
+                   src="images/Punks_3636_4472_Sphinx_Subjects_More_1024x480.png" alt="image slot"></b-img-lazy>
+            </b-carousel-slide>
 
-              <b-carousel-slide caption="Zombie Xtreme High Yield Cultivators"
-                text="Take Ownership Of Twins At 1888 In The Royal Prince Alfred Hospital, Sydney. Credits - Mitchell Library, State Library of NSW">
-                <b-img-lazy slot="img" class="d-block img-fluid w-100" width="1024" height="480"
-                     src="images/CryptoBabyPunk_401_Birth_At_RPA_1880-1893_960x450.png" alt="image slot">
-              </b-carousel-slide>
+            <b-carousel-slide caption="Zombie Xtreme High Yield Cultivators"
+              text="Take Ownership Of Twins At 1888 In The Royal Prince Alfred Hospital, Sydney. Credits - Mitchell Library, State Library of NSW">
+              <b-img-lazy slot="img" class="d-block img-fluid w-100" width="1024" height="480"
+                   src="images/CryptoBabyPunk_401_Birth_At_RPA_1880-1893_960x450.png" alt="image slot"></b-img-lazy>
+            </b-carousel-slide>
 
 
 
-              <!-- Slide with blank fluid image to maintain slide aspect ratio -->
-              <!--
-              <b-carousel-slide caption="Blank Image" img-blank img-alt="Blank image">
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eros felis, tincidunt
-                  a tincidunt eget, convallis vel est. Ut pellentesque ut lacus vel interdum.
-                </p>
-              </b-carousel-slide>
-              -->
+            <!-- Slide with blank fluid image to maintain slide aspect ratio -->
+            <!--
+            <b-carousel-slide caption="Blank Image" img-blank img-alt="Blank image">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eros felis, tincidunt
+                a tincidunt eget, convallis vel est. Ut pellentesque ut lacus vel interdum.
+              </p>
+            </b-carousel-slide>
+            -->
 
-            </b-carousel>
+          </b-carousel>
 
-            <p class="mt-4">
-              Slide #: {{ slide }}<br>
-              Sliding: {{ sliding }}
-            </p>
-          </div>
+          <p class="mt-4">
+            Slide #: {{ slide }}<br>
+            Sliding: {{ sliding }}
+          </p>
+        </div>
 
 
         <!--
@@ -261,5 +262,8 @@ const Home = {
     connect() {
       return store.getters['connection/connect'];
     },
+  },
+  mounted() {
+    logInfo("homeModule", "mounted() Called");
   },
 };

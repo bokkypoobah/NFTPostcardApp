@@ -1,0 +1,82 @@
+{
+  "network": "1",
+  "address": "0xFe9231f0e6753a8412a00eC1f0028A24d5220Ba9",
+  "collection": "Zombie Babies",
+  "name_prefix": "Zombie Baby",
+  "external_url_prefix": "https://ethervendingmachine.io/nfts/",
+  "image_url_prefix": "https://ethervendingmachine.io/nfts/",
+  "tokens": {
+    "0" : {
+      "generation": 2,
+      "parents": [3636, 4472],
+      "attributes": ["Front Beard Dark", "Earring", "Top Hat"],
+      "ancientDNA": [],
+      "imageHash": "QmSexHstXKqRszhXwaXiBp4DJRjFHXdp6t4tw4bR47UmT1",
+      "imageName": "Baby_000_background.png"
+    },
+    "1" : {
+      "generation": 2,
+      "parents": [3636, 4472],
+      "attributes": ["Front Beard Dark", "Purple Hair"],
+      "ancientDNA": [],
+      "imageHash": "QmZKfMJ6R1kVY8i7jJYTmAHi7igqZzs7Yq9vVdZE183CCC",
+      "imageName": "Baby_001_background.png"
+    },
+    "2" : {
+      "generation": 2,
+      "parents": [3636, 4472],
+      "attributes": ["Front Beard Dark", "Purple Hair", "Top Hat"],
+      "ancientDNA": [],
+      "imageHash": "QmfSsD7VfVDXv51QDJqVUbnn6z7xhWyiZjwzSnkb7j4sTb",
+      "imageName": "Baby_002_background.png"
+    },
+    "3" : {
+      "generation": 2,
+      "parents": [3636, 4472],
+      "attributes": ["Front Beard Dark", "Earring", "Top Hat"],
+      "ancientDNA": ["Cowboy Hat"],
+      "imageHash": "QmNeAK4t4ZdGb3hhxEP83WpPEnFqFKHu1F5fhgFqZNbNRx",
+      "imageName": "Baby_003_background.png"
+    },
+    "4" : {
+      "generation": 2,
+      "parents": [3636, 4472],
+      "attributes": ["Front Beard Dark", "Earring"],
+      "ancientDNA": ["Beanie"],
+      "imageHash": "QmZrJFwhiBP2QcpqraZ4SZYqXZTADXLTsUCHge9g8Piv5p",
+      "imageName": "Baby_004_background.png"
+    },
+    "5" : {
+      "generation": 2,
+      "parents": [3636, 4472],
+      "attributes": ["Front Beard Dark", "Earring", "Purple Hair"],
+      "ancientDNA": ["Cowboy Hat"],
+      "imageHash": "QmRnoBqzDTismKF5Ap4opDJmivN1HuB69krNsy9vKU47hq",
+      "imageName": "Baby_005_background.png"
+    },
+    "6" : {
+      "generation": 2,
+      "parents": [3636, 4472],
+      "attributes": ["Front Beard Dark", "Orange Hair"],
+      "ancientDNA": ["Orange Side"],
+      "imageHash": "QmVhZPK273b5aDZiWVZC6asxU5CK4nuFU12yYPcuyFZRwg",
+      "imageName": "Baby_006_background.png"
+    },
+    "7" : {
+      "generation": 2,
+      "parents": [3636, 4472],
+      "attributes": ["Earring"],
+      "ancientDNA": ["Mohawk"],
+      "imageHash": "Qme3jfJrXVDKAKqUCtAz4XovSxHwHGiaKivyhZdFgn4ahs",
+      "imageName": "Baby_007_background.png"
+    },
+    "8" : {
+      "generation": 2,
+      "parents": [3636, 4472],
+      "attributes": [],
+      "ancientDNA": ["Shadow Beard", "Wild Hair"],
+      "imageHash": "QmVZzByk6vyPEXpMEEUfuK1xLJtxFP3VYQyvvu9arupxug",
+      "imageName": "Baby_008_background.png"
+    }
+  }
+}

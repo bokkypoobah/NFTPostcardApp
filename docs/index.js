@@ -1,3 +1,5 @@
+// const JSONDATA = require("data.json");
+
 Vue.use(Vuex);
 Vue.use(VueApexCharts);
 
@@ -98,6 +100,7 @@ const app = new Vue({
       statusSidebar: false,
       lastBlockTimeDiff: null,
       reschedule: false,
+      jsonData: null,
 
       name: 'BootstrapVue',
       show: true,
@@ -118,7 +121,9 @@ const app = new Vue({
     },
   },
   mounted() {
-    // logInfo("app", "mounted() Called");
+    logInfo("app", "mounted() Called");
+    this.readJSON("data.json");
+
     if (localStorage.getItem('connect')) {
       var c = localStorage.getItem('connect');
       store.dispatch('connection/setConnect', c);
@@ -131,6 +136,16 @@ const app = new Vue({
     this.reschedule = false;
   },
   methods: {
+    readJSON(url) {
+      var req = new XMLHttpRequest();
+      req.overrideMimeType("application/json");
+      req.open('GET', url, true);
+      req.onload  = function() {
+         var jsonData = JSON.parse(req.responseText);
+         store.dispatch('tokens/updateJsonData', jsonData);
+      };
+      req.send(null);
+    },
     powerOn() {
       store.dispatch('connection/setConnect', true);
       localStorage.setItem('connect', true);
