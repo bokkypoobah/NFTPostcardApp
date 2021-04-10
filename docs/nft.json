@@ -33,7 +33,7 @@
     "3" : {
       "generation": 2,
       "parents": [3636, 4472],
-      "attributes": ["Front Beard Dark", "Earring", "Top Hat"],
+      "attributes": ["Front Beard Dark", "Earring"],
       "ancientDNA": ["Cowboy Hat"],
       "imageHash": "QmNeAK4t4ZdGb3hhxEP83WpPEnFqFKHu1F5fhgFqZNbNRx",
       "imageName": "Baby_003_background.png"
@@ -57,7 +57,7 @@
     "6" : {
       "generation": 2,
       "parents": [3636, 4472],
-      "attributes": ["Front Beard Dark", "Orange Hair"],
+      "attributes": ["Front Beard Dark", "Purple Hair"],
       "ancientDNA": ["Orange Side"],
       "imageHash": "QmVhZPK273b5aDZiWVZC6asxU5CK4nuFU12yYPcuyFZRwg",
       "imageName": "Baby_006_background.png"

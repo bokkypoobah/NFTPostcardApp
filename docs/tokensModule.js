@@ -78,7 +78,7 @@ const tokensModule = {
   state: {
     tokenData: {},
 
-    jsonData: null,
+    nftData: null,
     allTokenIds: null,
     allParents: null,
     allAttributes: null,
@@ -90,7 +90,7 @@ const tokensModule = {
   getters: {
     tokenData: state => state.tokenData,
 
-    jsonData: state => state.jsonData,
+    nftData: state => state.nftData,
     allTokenIds: state => state.allTokenIds,
     allParents: state => state.allParents,
     allAttributes: state => state.allAttributes,
@@ -100,8 +100,8 @@ const tokensModule = {
   },
   // computed: {
   //   allTokenIds() {
-  //     logInfo("tokensModule", "computed.allTokenIds(" + state.jsonData + ")");
-  //     return state.jsonData == null ? null : Object.keys(state.jsonData.tokens);
+  //     logInfo("tokensModule", "computed.allTokenIds(" + state.nftData + ")");
+  //     return state.nftData == null ? null : Object.keys(state.nftData.tokens);
   //   },
   // },
   mutations: {
@@ -134,10 +134,10 @@ const tokensModule = {
       state.tokenData = {};
       localStorage.removeItem('tokenData');
     },
-    updateJsonData(state, jsonData) {
-      logInfo("tokensModule", "mutations.updateJsonData(" + JSON.stringify(jsonData) + ")");
-      state.jsonData = jsonData;
-      if (state.jsonData == null) {
+    updateNFTData(state, nftData) {
+      logInfo("tokensModule", "mutations.updateNFTData(" + JSON.stringify(nftData) + ")");
+      state.nftData = nftData;
+      if (state.nftData == null) {
         state.allTokenIds = null;
         state.allParents = null;
         state.allAttributes = null;
@@ -146,8 +146,8 @@ const tokensModule = {
         const allParents = {};
         const allAttributes = {};
         const allAncientDNAs = {};
-        for (let tokenId in Object.keys(state.jsonData.tokens)) {
-          const token = state.jsonData.tokens[tokenId];
+        for (let tokenId in Object.keys(state.nftData.tokens)) {
+          const token = state.nftData.tokens[tokenId];
           for (let parentIndex in token.parents) {
             const parent = token.parents[parentIndex];
             if (allParents[parent] === undefined) {
@@ -167,10 +167,10 @@ const tokensModule = {
             }
           }
         }
-        state.allTokenIds = Object.keys(state.jsonData.tokens);
-        state.allParents = Object.keys(allParents);
-        state.allAttributes = Object.keys(allAttributes);
-        state.allAncientDNAs = Object.keys(allAncientDNAs);
+        state.allTokenIds = Object.keys(state.nftData.tokens).sort(function(a, b) { return a - b; });
+        state.allParents = Object.keys(allParents).sort();
+        state.allAttributes = Object.keys(allAttributes).sort();
+        state.allAncientDNAs = Object.keys(allAncientDNAs).sort();
       }
     },
     updateParams(state, params) {
@@ -195,9 +195,9 @@ const tokensModule = {
       // logInfo("tokensModule", "actions.removeAllTokens(" + blah + ")");
       context.commit('removeAllTokens', blah);
     },
-    updateJsonData(context, jsonData) {
-      logInfo("tokensModule", "actions.updateJsonData(" + JSON.stringify(jsonData) + ")");
-      context.commit('updateJsonData', jsonData);
+    updateNFTData(context, nftData) {
+      logInfo("tokensModule", "actions.updateNFTData(" + JSON.stringify(nftData) + ")");
+      context.commit('updateNFTData', nftData);
     },
     // Called by Connection.execWeb3()
     async execWeb3({ state, commit, rootState }, { count, networkChanged, blockChanged, coinbaseChanged }) {

@@ -26,6 +26,8 @@
     <script src="js/apexcharts.js"></script>
     <script src="js/vue-apexcharts.js"></script>
 
+    <script src="js/ethers-5.0.umd.min.js" type="application/javascript"></script>
+
     <script src="js/bignumber.min.js"></script>
     <script src="js/moment.min.js"></script>
     <script src="js/web3.js"></script>
@@ -84,14 +86,16 @@
               <!--
               <b-nav-item size="sm" to="/optinoExplorer/all" active-class="active" v-b-popover.hover="'View and create optinos'" :disabled="!connect">Optinos</b-nav-item>
               <b-nav-item size="sm" to="/feedsExplorer/all" active-class="active" v-b-popover.hover="'View and set feeds'" :disabled="!connect">Feeds</b-nav-item>
-              <b-nav-item size="sm" to="/tokensExplorer/all" active-class="active" v-b-popover.hover="'View and add tokens'" :disabled="!connect">Tokens</b-nav-item>
+              -->
+              <b-nav-item size="sm" to="/tokensExplorer/all" active-class="active" v-b-popover.hover="'Adoption Centre'">Adoption Centre</b-nav-item>
+              <!--
               <b-nav-item size="sm" to="/governance/all" active-class="active" v-b-popover.hover="'Governance'" :disabled="!connect">Governance</b-nav-item>
               <b-nav-item size="sm" href="https://wiki.optino.io" target="blank" active-class="active" v-b-popover.hover="'Wiki'">Wiki</b-nav-item>
               -->
               <!-- <b-nav-item href="https://github.com/bokkypoobah/Optino/wiki" target="_blank" v-b-popover.hover="'View the docs (work in progress)'">Docs</b-nav-item> -->
               <b-nav-form>
-                <b-button size="sm" variant="link" class="ml-4" v-b-popover.hover="'Power up this app'" @click="powerOn();" v-if="!connect"><b-icon-power shift-v="-1" font-scale="1.5"></b-icon-power></b-button>
-                <b-button size="sm" variant="link" v-b-popover.hover="'Show status'" v-b-toggle.sidebar-status v-if="connect"><b-icon-layout-sidebar-reverse class="ml-4 mr-2" shift-v="-1" font-scale="1.3"></b-icon-layout-sidebar-reverse><b-spinner class="m-0" :variant="spinnerVariant" v-if="connect" style="animation: spinner-grow 3.75s linear infinite;" small type="grow" label="Spinning"></b-spinner></b-button>
+                <b-button size="sm" variant="link" class="ml-4" v-b-popover.hover="'Power up this app'" @click="setPowerOn();" v-if="!powerOn"><b-icon-power shift-v="-1" font-scale="1.5"></b-icon-power></b-button>
+                <b-button size="sm" variant="link" v-b-popover.hover="'Show status'" v-b-toggle.sidebar-status v-if="powerOn"><b-icon-layout-sidebar-reverse class="ml-4 mr-2" shift-v="-1" font-scale="1.3"></b-icon-layout-sidebar-reverse><b-spinner class="m-0" :variant="spinnerVariant" v-if="powerOn" style="animation: spinner-grow 3.75s linear infinite;" small type="grow" label="Spinning"></b-spinner></b-button>
                 <b-sidebar id="sidebar-status" v-model="statusSidebar" title="Status" width="400px" right shadow no-header-close header-class="m-0 p-0">
                   <template v-slot:title="{ hide }">
                     <div class="d-flex flex-row justify-content-between m-0 p-0" style="height: 37px;">
@@ -99,7 +103,7 @@
                         <b-button size="sm" variant="link" class="m-0 p-0" v-b-popover.hover="'Close sidebar'" @click="hide"><b-icon-x shift-v="-1" font-scale="1.7"></b-icon-x></b-button>
                       </div>
                       <div class="m-0 p-0">
-                        <b-button size="sm" variant="link" class="m-0 p-0" v-b-popover.hover="'Power down this app'" @click="powerOff();" v-if="connect"><b-icon-power shift-v="-1" font-scale="1.5"></b-icon-power></b-button>
+                        <b-button size="sm" variant="link" class="m-0 p-0" v-b-popover.hover="'Power down this app'" @click="setPowerOff();" v-if="powerOn"><b-icon-power shift-v="-1" font-scale="1.5"></b-icon-power></b-button>
                       </div>
                       <div class="m-0 p-0 pl-4">
                         Status

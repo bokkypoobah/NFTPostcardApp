@@ -107,8 +107,8 @@ const app = new Vue({
     };
   },
   computed: {
-    connect() {
-      return store.getters['connection/connect'];
+    powerOn() {
+      return store.getters['connection/powerOn'];
     },
     spinnerVariant1() {
       var sv = store.getters['connection/spinnerVariant'];
@@ -122,11 +122,11 @@ const app = new Vue({
   },
   mounted() {
     logInfo("app", "mounted() Called");
-    this.readJSON("data.json");
+    this.loadNFTData("nft.json");
 
-    if (localStorage.getItem('connect')) {
-      var c = localStorage.getItem('connect');
-      store.dispatch('connection/setConnect', c);
+    if (localStorage.getItem('powerOn')) {
+      var c = localStorage.getItem('powerOn');
+      store.dispatch('connection/setPowerOn', c == 'true' || c === true);
     }
     this.reschedule = true;
     this.timeoutCallback();
@@ -136,27 +136,27 @@ const app = new Vue({
     this.reschedule = false;
   },
   methods: {
-    readJSON(url) {
+    loadNFTData(url) {
       var req = new XMLHttpRequest();
       req.overrideMimeType("application/json");
       req.open('GET', url, true);
       req.onload  = function() {
-         var jsonData = JSON.parse(req.responseText);
-         store.dispatch('tokens/updateJsonData', jsonData);
+         var nftData = JSON.parse(req.responseText);
+         store.dispatch('tokens/updateNFTData', nftData);
       };
       req.send(null);
     },
-    powerOn() {
-      store.dispatch('connection/setConnect', true);
-      localStorage.setItem('connect', true);
+    setPowerOn() {
+      store.dispatch('connection/setPowerOn', true);
+      localStorage.setItem('powerOn', true);
       var t = this;
       setTimeout(function() {
         t.statusSidebar = true;
       }, 1500);
     },
-    powerOff() {
-      store.dispatch('connection/setConnect', false);
-      localStorage.setItem('connect', false);
+    setPowerOff() {
+      store.dispatch('connection/setPowerOn', false);
+      localStorage.setItem('powerOn', false);
       var t = this;
       setTimeout(function() {
         t.statusSidebar = false;
