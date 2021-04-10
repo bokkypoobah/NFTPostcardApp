@@ -60,7 +60,7 @@ const TokensExplorer = {
                            +
                           </span>
                           <b-avatar variant="light" size="1.5rem" :src="'media/punk' + parentId + '.png'"></b-avatar>
-                        </span>
+                        </span><br />
                         <span v-for="attribute in nftData.tokens[tokenId].attributes"><b-badge pill variant="success">{{ attribute }}</b-badge></span>
                         <span v-for="ancientDNA in nftData.tokens[tokenId].ancientDNA"><b-badge pill variant="warning">🧬 {{ ancientDNA }}</b-badge></span>
                     </b-card-text>

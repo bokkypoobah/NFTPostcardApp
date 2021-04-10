@@ -31,7 +31,7 @@ const Tokens = {
   },
   computed: {
     network() {
-      return store.getters['connection/network'];
+      return store.getters['connection/network'] == null ? null : store.getters['connection/network'].chainId;
     },
     explorer() {
       return store.getters['connection/explorer'];

@@ -139,7 +139,9 @@ const Connection = {
   data: function () {
     return {
       count: 0,
-      lastNetwork: -1,
+      provider: null,
+      signer: null,
+      lastNetworkChainId: -1,
       lastCoinbase: null,
       lastBalance: null,
       lastBlockHash: null,
@@ -215,158 +217,108 @@ const Connection = {
     },
     async execWeb3() {
       logInfo("Connection", "execWeb3() start[" + this.count + "]");
+
       if (!store.getters['connection/connected']) {
         logInfo("Connection", "execWeb3() Attempting connection");
 
+        // logInfo("Connection", "execWeb3() ethereum: " + JSON.stringify(ethereum));
         // logInfo("Connection", "execWeb3() ethereum.isConnected(): " + window.ethereum.isConnected());
 
-        let provider = null;
-        let signer = null;
-        let blockNumber = null;
-        try {
-          provider = new ethers.providers.Web3Provider(window.ethereum);
-          logInfo("Connection", "execWeb3() provider: " + JSON.stringify(provider));
-          signer = provider.getSigner();
-          logInfo("Connection", "execWeb3() signer: " + JSON.stringify(signer));
-          blockNumber = provider.getBlockNumber();
-          logInfo("Connection", "execWeb3() blockNumber: " + JSON.stringify(blockNumber));
-        } catch (e) {
-          logInfo("Connection", "execWeb3() error: " + JSON.stringify(e));
+        if (this.provider == null) {
+          try {
+            this.provider = new ethers.providers.Web3Provider(window.ethereum);
+            logInfo("Connection", "execWeb3() provider: " + JSON.stringify(this.provider));
+            this.signer = this.provider.getSigner();
+            logInfo("Connection", "execWeb3() signer: " + JSON.stringify(this.signer));
+            store.dispatch('connection/setConnected', true);
+            store.dispatch('connection/setConnectionType', "MetaMask / Modern dapp browsers");
+          } catch (e) {
+            logInfo("Connection", "execWeb3() error: " + JSON.stringify(e));
+            store.dispatch('connection/setConnected', false);
+            this.provider = null;
+          }
         }
-
-        // if (provider != null) {
-        //   logInfo("Connection", "execWeb3() Ethereum successfully detected!");
-        //
-        //   // From now on, this should always be true:
-        //   // provider === window.ethereum
-        //
-        //   // Access the decentralized web!
-        //
-        //   // Legacy providers may only have ethereum.sendAsync
-        //   const chainId = await provider.request({
-        //     method: 'eth_chainId'
-        //   })
-        // } else {
-        //
-        //   // if the provider is not detected, detectEthereumProvider resolves to null
-        //   logInfo("Connection", "execWeb3() Please install MetaMask: " + JSON.stringify(error));
-        // }
-
-
-        // // Modern dapp browsers...
-        // if (window.ethereum) {
-        //   window.ethereum.autoRefreshOnNetworkChange = false;
-        //   window.web3 = new Web3(ethereum);
-        //   try {
-        //     // Request account access if needed
-        //     await ethereum.enable();
-        //     store.dispatch('connection/setConnectionType', "MetaMask / Modern dapp browsers");
-        //     // Accounts now exposed
-        //     store.dispatch('connection/setConnected', true);
-        //   } catch (error) {
-        //     // User denied account access...
-        //     store.dispatch('connection/setError', error.message);
-        //   }
-        // // Legacy dapp browsers...
-        // } else if (window.web3) {
-        //   try {
-        //     window.web3 = new Web3(web3.currentProvider);
-        //     // Acccounts always exposed
-        //     store.dispatch('connection/setConnectionType', "Legacy dapp browsers");
-        //     store.dispatch('connection/setConnected', true);
-        //   } catch (error) {
-        //     store.dispatch('connection/setError', error.message);
-        //   }
-        // // Non-dapp browsers...
-        // } else {
-        //   try {
-        //     window.web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
-        //     store.dispatch('connection/setConnectionType', "Non-dapp browsers");
-        //     store.dispatch('connection/setConnected', true);
-        //   } catch (error) {
-        //     store.dispatch('connection/setError', error.message);
-        //   }
-        // }
       }
-      // var networkChanged = false;
-      // if (store.getters['connection/connected']) {
-      //   try {
-      //     var _network = promisify(cb => web3.version.getNetwork(cb));
-      //     var network = await _network;
-      //     if (network != this.lastNetwork) {
-      //       store.dispatch('connection/setNetwork', network);
-      //       logDebug("Connection", "execWeb3() Network updated from " + this.lastNetwork + " to " + network + ": " + getNetworkDetails(network).name);
-      //       this.lastNetwork = network;
-      //       networkChanged = true;
-      //     }
-      //   } catch (error) {
-      //     store.dispatch('connection/setConnected', false);
-      //     store.dispatch('connection/setError', error.message);
-      //   }
-      // }
 
-      // var coinbaseChanged = false;
-      // var coinbase = null;
-      // if (store.getters['connection/connected']) {
-      //   try {
-      //     var _coinbase = promisify(cb => web3.eth.getCoinbase(cb));
-      //     coinbase = await _coinbase;
-      //     if (coinbase != this.lastCoinbase) {
-      //       store.dispatch('connection/setCoinbase', coinbase);
-      //       logDebug("Connection", "execWeb3() Coinbase updated from " + this.lastCoinbase + " to " + coinbase);
-      //       this.lastCoinbase = coinbase;
-      //       coinbaseChanged = true;
-      //     }
-      //   } catch (error) {
-      //     store.dispatch('connection/setConnected', false);
-      //     store.dispatch('connection/setError', error.message);
-      //   }
-      // }
-      //
-      // var balance = null;
-      // if (store.getters['connection/connected']) {
-      //   if (coinbase != null) {
-      //     try {
-      //       var _balance = promisify(cb => web3.eth.getBalance(coinbase, cb));
-      //       balance = new BigNumber(await _balance);
-      //     } catch (error) {
-      //       store.dispatch('connection/setConnected', false);
-      //       store.dispatch('connection/setError', error.message);
-      //     }
-      //   }
-      //   if (this.lastBalance == null || balance == null || !balance.equals(this.lastBalance)) {
-      //     store.dispatch('connection/setBalance', balance);
-      //     logDebug("Connection", "execWeb3() Coinbase balance updated from " + this.lastBalance + " to " + balance + ": " + (balance == null ? "" : balance.shift(-18).toString()));
-      //     this.lastBalance = balance;
-      //   }
-      // }
+      var networkChanged = false;
+      if (store.getters['connection/connected']) {
+        try {
+          let network = await this.provider.getNetwork();
+          // logInfo("Connection", "execWeb3() network: " + JSON.stringify(network));
+          if (network.chainId != this.lastNetworkChainId) {
+            store.dispatch('connection/setNetwork', network);
+            logInfo("Connection", "execWeb3() Network updated from " + this.lastNetworkChainId + " to " + network.chainId + ": " + getNetworkDetails(network.chainId).name);
+            this.lastNetworkChainId = network.chainId;
+            networkChanged = true;
+          }
+        } catch (error) {
+          store.dispatch('connection/setConnected', false);
+          store.dispatch('connection/setError', error.message);
+        }
+      }
 
-      // var block = null;
-      // if (store.getters['connection/connected']) {
-      //   try {
-      //     var _block = promisify(cb => web3.eth.getBlock("latest", false, cb));
-      //     block = await _block;
-      //   } catch (error) {
-      //     store.dispatch('connection/setConnected', false);
-      //     store.dispatch('connection/setError', error.message);
-      //   }
-      // }
-      // var blockChanged = false;
-      // if (block == null) {
-      //   if (this.lastBlockHash != null) {
-      //     store.dispatch('connection/setBlock', null);
-      //     logDebug("Connection", "execWeb3() Block hash updated from " + this.lastBlockHash + " to " + null);
-      //     this.lastBlockHash = null;
-      //     blockChanged = true;
-      //   }
-      // } else {
-      //   if (block.hash !== this.lastBlockHash) {
-      //     store.dispatch('connection/setBlock', block);
-      //     logDebug("Connection", "execWeb3() Block updated from " + (this.lastBlockHash ? this.lastBlockHash.substring(0, 10) : null) + " to " + (block.hash ? block.hash.substring(0, 10) : null) + " @ " + block.number + " " + new Date(block.timestamp * 1000).toLocaleString() + " " + getTimeDiff(block.timestamp));
-      //     this.lastBlockHash = block.hash;
-      //     blockChanged = true;
-      //   }
-      // }
+      var coinbaseChanged = false;
+      var coinbase = null;
+      if (store.getters['connection/connected']) {
+        try {
+          coinbase = await this.signer.getAddress();
+          // logInfo("Connection", "execWeb3() coinbase: " + JSON.stringify(coinbase));
+          if (coinbase != this.lastCoinbase) {
+            store.dispatch('connection/setCoinbase', coinbase);
+            logInfo("Connection", "execWeb3() Coinbase updated from " + this.lastCoinbase + " to " + coinbase);
+            this.lastCoinbase = coinbase;
+            coinbaseChanged = true;
+          }
+        } catch (error) {
+          store.dispatch('connection/setConnected', false);
+          store.dispatch('connection/setError', error.message);
+        }
+      }
+
+      var balance = null;
+      if (store.getters['connection/connected']) {
+        if (coinbase != null) {
+          try {
+            balance = await this.provider.getBalance(coinbase);
+            // logDebug("Connection", "execWeb3() balance: " + ethers.utils.formatUnits(balance, 18));
+          } catch (error) {
+            store.dispatch('connection/setConnected', false);
+            store.dispatch('connection/setError', error.message);
+          }
+        }
+        if (this.lastBalance == null || balance == null || !balance.eq(this.lastBalance)) {
+          store.dispatch('connection/setBalance', balance);
+          logInfo("Connection", "execWeb3() Coinbase balance updated from " + (this.lastBalance == null ? "null" : ethers.utils.formatUnits(this.lastBalance)) + " to " + (balance == null ? "null" : ethers.utils.formatUnits(balance)));
+          this.lastBalance = balance;
+        }
+      }
+
+      var block = null;
+      if (store.getters['connection/connected']) {
+        try {
+          block = await this.provider.getBlock();
+          // logInfo("Connection", "execWeb3() block: " + JSON.stringify(block.number));
+        } catch (error) {
+          store.dispatch('connection/setConnected', false);
+          store.dispatch('connection/setError', error.message);
+        }
+      }
+      var blockChanged = false;
+      if (block == null) {
+        if (this.lastBlockHash != null) {
+          store.dispatch('connection/setBlock', null);
+          logInfo("Connection", "execWeb3() Block hash updated from " + this.lastBlockHash + " to " + null);
+          this.lastBlockHash = null;
+          blockChanged = true;
+        }
+      } else {
+        if (block.hash !== this.lastBlockHash) {
+          store.dispatch('connection/setBlock', block);
+          logInfo("Connection", "execWeb3() Block updated from " + (this.lastBlockHash ? this.lastBlockHash.substring(0, 10) : null) + " to " + (block.hash ? block.hash.substring(0, 10) : null) + " @ " + block.number + " " + new Date(block.timestamp * 1000).toLocaleString() + " " + getTimeDiff(block.timestamp));
+          this.lastBlockHash = block.hash;
+          blockChanged = true;
+        }
+      }
 
       // if (store.getters['connection/connected']) {
       //   /*await*/ store.dispatch('governance/execWeb3', { count: this.count, networkChanged, blockChanged, coinbaseChanged });
@@ -382,15 +334,15 @@ const Connection = {
       //   //   await store.dispatch('priceFeedExplorer/execWeb3', { count: this.count, networkChanged, blockChanged, coinbaseChanged });
       //   // }
       // }
-      logDebug("Connection", "execWeb3() end[" + this.count + "]");
+      logInfo("Connection", "execWeb3() end[" + this.count + "]");
     },
     timeoutCallback() {
-      logInfo("Connection", "timeoutCallback() - store.getters['connection/powerOn']: " + JSON.stringify(store.getters['connection/powerOn']));
+      // logInfo("Connection", "timeoutCallback() - store.getters['connection/powerOn']: " + JSON.stringify(store.getters['connection/powerOn']));
       // store.dispatch('connection/mainLoop', {});
 
       var t = this;
       if (store.getters['connection/powerOn']) {
-        if (this.count++ % 15 == 0  /* || store.getters['tokens/executionQueue'].length > 0 */) {
+        if (this.count++ % 5 == 0  /* || store.getters['tokens/executionQueue'].length > 0 */) {
           // if (store.getters['connection/processNow']) {
           //   store.dispatch('connection/setProcessNow', false);
           // }
@@ -444,7 +396,7 @@ const connectionModule = {
     error: null,
     connectionType: null,
     network: null,
-    networkName: null,
+    // networkName: null,
     explorer: null,
     faucets: null,
     coinbase: null,
@@ -460,7 +412,7 @@ const connectionModule = {
     error: state => state.error,
     connectionType: state => state.connectionType,
     network: state => state.network,
-    networkName: state => state.networkName,
+    // networkName: state => state.networkName,
     explorer: state => state.explorer,
     faucets: state => state.faucets,
     coinbase: state => state.coinbase,
@@ -478,7 +430,6 @@ const connectionModule = {
     setPowerOn(state, c) {
       // logInfo("connectionModule", "mutations.setConnect: " + c);
       state.powerOn = c;
-      // localStorage.setItem('connect', state.connect);
     },
     // setSpinnerVariant(state, sv) {
     //   logInfo("connectionModule", "mutations.setSpinnerVariant: " + sv);
@@ -495,7 +446,7 @@ const connectionModule = {
     },
     setNetwork(state, n) {
       state.network = n;
-      var networkDetails = getNetworkDetails(n);
+      var networkDetails = getNetworkDetails(n.chainId);
       state.networkName = networkDetails.name;
       state.explorer = networkDetails.explorer;
       state.faucets = networkDetails.faucets;
