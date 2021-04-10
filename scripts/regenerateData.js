@@ -1,7 +1,7 @@
 var fs = require('fs');
 const util = require('util');
 
-const INPUTDATAFILE = "docs/data.json";
+const INPUTDATAFILE = "docs/config.json";
 
 console.log("Reading data from '" + INPUTDATAFILE + "' ...");
 var obj = JSON.parse(fs.readFileSync(INPUTDATAFILE, 'utf8'));

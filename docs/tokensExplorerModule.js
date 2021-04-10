@@ -5,6 +5,7 @@ const TokensExplorer = {
         <b-card no-body class="border-0 m-0 mt-2">
           <b-card-body class="p-0">
 
+            <!--
             <div>
               <b-container class="bv-example-row">
                 <b-row>
@@ -46,13 +47,12 @@ const TokensExplorer = {
                 </b-row>
               </b-container>
             </div>
+            -->
 
             <div>
               <b-card-group deck class="m-2">
-
                 <div v-for="tokenId in allTokenIds">
                   <b-card :img-src="'media/' + nftData.tokens[tokenId].imageName" img-alt="Image" img-top style="max-width: 15rem;" class="m-1 p-2">
-                    <!--<b-card-body class="m-1 p-1">-->
                       <b-card-text>
                         <b>#{{ tokenId }}</b> =
                         <span v-for="(parentId, parentIndex) in nftData.tokens[tokenId].parents">
@@ -66,28 +66,10 @@ const TokensExplorer = {
                     </b-card-text>
                   </b-card>
                 </div>
-
-                <!--
-                <b-card
-                  :title="'#' + tokenId"
-                  img-src="images/Baby_000_background.png"
-                  img-alt="Image"
-                  img-top
-                  tag="article"
-                  style="max-width: 20rem;"
-                  class="m-1"
-                >
-                  <b-card-text>
-                    Blah <b-link href="https://opensea.io/assets/0xfe9231f0e6753a8412a00ec1f0028a24d5220ba9/0" target="_blank"><img src="images/381114e-opensea-logomark-flat-colored-blue.png" width="30px" /></b-link>
-                  </b-card-text>
-                  <template #footer>
-                    <small class="text-muted">Last updated 3 mins ago</small>
-                  </template>
-                </b-card>
-                -->
               </b-card-group deck class="m-2">
             </div>
 
+            <!--
             <div class="d-flex m-0 p-0" style="height: 37px;">
               <div class="pr-1">
                 <b-form-input type="text" size="sm" v-model.trim="search" debounce="600" placeholder="Search..." v-b-popover.hover="'Search'"></b-form-input>
@@ -112,14 +94,15 @@ const TokensExplorer = {
                 </b-dropdown>
               </div>
             </div>
+            -->
 
+            <!--
             <b-modal id="bv-modal-addtoken" size="xl" hide-footer title-class="m-0 p-0" header-class="m-1 p-1" body-class="m-1 p-1">
               <template v-slot:modal-title>
                 Add Token(s) To List [{{ networkName }}]
               </template>
               <b-card-body class="m-0 p-0">
                 <div>
-                  <!-- <b-tabs card v-model="addTokenTabIndex" content-class="m-0 p-0" nav-class="m-0 p-0" nav-wrapper-class="m-0 p-0" active-nav-item-class="m-0 p-0" active-tab-class="m-0 p-0"> -->
                   <b-tabs small card v-model="addTokenTabIndex">
                     <b-tab size="sm" title="Search">
                       <b-container class="m-0 p-0">
@@ -191,14 +174,6 @@ const TokensExplorer = {
                         </div>
                       </div>
                       <b-table style="font-size: 85%;" small striped outlined selectable sticky-header select-mode="single" responsive hover :items="commonTokenList" :fields="addTokenTableFields" :filter="searchCommon" :filter-included-fields="['symbol', 'name']" head-variant="light" show-empty @row-clicked="rowClicked">
-                        <!--
-                        <template v-slot:empty="scope">
-                          <p class="pt-4">{{ scope.emptyText }}</p>
-                        </template>
-                        <template v-slot:emptyfiltered="scope">
-                          <p class="pt-4">{{ scope.emptyFilteredText }}</p>
-                        </template>
-                        -->
                         <template v-slot:cell(totalSupply)="data">
                           {{ formatNumberForDisplay(data.item.totalSupply, 8) }}
                         </template>
@@ -239,14 +214,6 @@ const TokensExplorer = {
                       </div>
 
                       <b-table style="font-size: 85%;" small striped outlined selectable sticky-header select-mode="single" responsive hover :items="fakeTokenList" :fields="addTokenTableFields" :filter="searchFake" :filter-included-fields="['symbol', 'name']" head-variant="light" show-empty @row-clicked="rowClicked">
-                        <!--
-                        <template v-slot:empty="scope">
-                          <p class="pt-4">{{ scope.emptyText }}</p>
-                        </template>
-                        <template v-slot:emptyfiltered="scope">
-                          <p class="pt-4">{{ scope.emptyFilteredText }}</p>
-                        </template>
-                        -->
                         <template v-slot:cell(totalSupply)="data">
                           {{ formatNumberForDisplay(data.item.totalSupply, 8) }}
                         </template>
@@ -291,17 +258,14 @@ const TokensExplorer = {
                 </div>
               </b-card-body>
             </b-modal>
+            -->
 
+            <!-
             <b-table style="font-size: 85%;" small striped outlined selectable select-mode="single" responsive hover :items="tokenDataSorted" :fields="tokenDataFields" head-variant="light" :current-page="currentPage" :per-page="perPage" :filter="search" @filtered="onFiltered" :filter-included-fields="['symbol', 'name']" show-empty>
               <template v-slot:empty="scope">
                 <div class="text-center my-2">{{ scope.emptyText }}</div>
                 <div class="text-center my-2 pt-4">Click <b-button size="sm" class="m-0 p-0" href="#" @click="$bvModal.show('bv-modal-addtoken')" variant="link" v-b-popover.hover="'Add new token'"><b-icon-plus shift-v="1" font-scale="1.4"></b-icon-plus></b-button> to customise your token list</div>
               </template>
-              <!--
-              <template v-slot:emptyfiltered="scope">
-                <p class="pt-4">{{ scope.emptyFilteredText }}</p>
-              </template>
-              -->
               <template v-slot:cell(totalSupply)="data">
                 {{ formatNumberForDisplay(data.item.totalSupply, 8) }}
               </template>
@@ -391,6 +355,7 @@ const TokensExplorer = {
                 </b-card>
               </template>
             </b-table>
+            -->
           </b-card-body>
         </b-card>
       </b-card>

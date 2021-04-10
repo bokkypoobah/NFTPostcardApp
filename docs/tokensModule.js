@@ -3,7 +3,7 @@ const Tokens = {
     <div>
       <b-card header-class="warningheader" header="Incorrect Network Detected" v-if="network != 1337 && network != 1 && network != 3">
         <b-card-text>
-          Please switch to the Ropsten testnet in MetaMask and refresh this page
+          Please switch to the Ethereum mainnet in MetaMask and refresh this page
         </b-card-text>
       </b-card>
       <b-button v-b-toggle.tokens size="sm" block variant="outline-info">Tokens: {{ tokenDataSorted.length }}</b-button>

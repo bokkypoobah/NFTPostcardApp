@@ -122,7 +122,7 @@ const app = new Vue({
   },
   mounted() {
     logInfo("app", "mounted() Called");
-    this.loadNFTData("nft.json");
+    this.loadNFTData("config.json");
 
     if (localStorage.getItem('powerOn')) {
       var c = localStorage.getItem('powerOn');
