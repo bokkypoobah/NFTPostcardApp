@@ -8,7 +8,7 @@ const Tokens = {
       </b-card>
       <b-button v-b-toggle.tokens size="sm" block variant="outline-info">Tokens: {{ tokenDataSorted.length }}</b-button>
       <b-collapse id="tokens" visible class="mt-2">
-        <b-card no-body class="border-0" v-if="network == 1337 || network == 3">
+        <b-card no-body class="border-0" v-if="network == 1337 || network == 1 || network == 3">
           <b-row v-for="(token) in tokenDataSorted" v-bind:key="token.tokenAddress">
             <b-col cols="4" class="small truncate mb-1" style="font-size: 80%" v-b-popover.hover="token.symbol + ' - ' + token.name + ' totalSupply ' + token.totalSupply + ' decimals ' + token.decimals">
               <b-link :href="explorer + 'token/' + token.tokenAddress" class="card-link" target="_blank">{{ token.symbol }}</b-link>
@@ -77,17 +77,33 @@ const tokensModule = {
   namespaced: true,
   state: {
     tokenData: {},
+
     jsonData: null,
+    allTokenIds: null,
+    allParents: null,
+    allAttributes: null,
+    allAncientDNAs: null,
 
     params: null,
     executing: false,
   },
   getters: {
     tokenData: state => state.tokenData,
+
     jsonData: state => state.jsonData,
+    allTokenIds: state => state.allTokenIds,
+    allParents: state => state.allParents,
+    allAttributes: state => state.allAttributes,
+    allAncientDNAs: state => state.allAncientDNAs,
 
     params: state => state.params,
   },
+  // computed: {
+  //   allTokenIds() {
+  //     logInfo("tokensModule", "computed.allTokenIds(" + state.jsonData + ")");
+  //     return state.jsonData == null ? null : Object.keys(state.jsonData.tokens);
+  //   },
+  // },
   mutations: {
     updateToken(state, token) {
       // logInfo("tokensModule", "mutations.updateToken(" + JSON.stringify(token) + ")");
@@ -119,8 +135,43 @@ const tokensModule = {
       localStorage.removeItem('tokenData');
     },
     updateJsonData(state, jsonData) {
-      logInfo("tokensModule", "mutations.updateJsonData(" + jsonData + ")");
+      logInfo("tokensModule", "mutations.updateJsonData(" + JSON.stringify(jsonData) + ")");
       state.jsonData = jsonData;
+      if (state.jsonData == null) {
+        state.allTokenIds = null;
+        state.allParents = null;
+        state.allAttributes = null;
+        state.allAncientDNAs = null;
+      } else {
+        const allParents = {};
+        const allAttributes = {};
+        const allAncientDNAs = {};
+        for (let tokenId in Object.keys(state.jsonData.tokens)) {
+          const token = state.jsonData.tokens[tokenId];
+          for (let parentIndex in token.parents) {
+            const parent = token.parents[parentIndex];
+            if (allParents[parent] === undefined) {
+              allParents[parent] = 1;
+            }
+          }
+          for (let attributeIndex in token.attributes) {
+            const attribute = token.attributes[attributeIndex];
+            if (allAttributes[attribute] === undefined) {
+              allAttributes[attribute] = 1;
+            }
+          }
+          for (let ancientDNAIndex in token.ancientDNA) {
+            let ancientDNA = token.ancientDNA[ancientDNAIndex];
+            if (allAncientDNAs[ancientDNA] === undefined) {
+              allAncientDNAs[ancientDNA] = 1;
+            }
+          }
+        }
+        state.allTokenIds = Object.keys(state.jsonData.tokens);
+        state.allParents = Object.keys(allParents);
+        state.allAttributes = Object.keys(allAttributes);
+        state.allAncientDNAs = Object.keys(allAncientDNAs);
+      }
     },
     updateParams(state, params) {
       state.params = params;
