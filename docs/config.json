@@ -3,6 +3,7 @@
   "nftAddress": "0xFe9231f0e6753a8412a00eC1f0028A24d5220Ba9",
   "adoptionCentreV1Address": "0xEd81cd3223e2a9355C2BAC14cD3d734e9FF3Cc35",
   "collection": "Zombie Babies",
+  "collectionDetails": "Zombie Babies by BokkyPooBah. Not affiliated with LarvaLabs or CryptoBabyPunk",
   "name_prefix": "Zombie Baby",
   "external_url_prefix": "https://ethervendingmachine.io/nfts/",
   "image_url_prefix": "https://ethervendingmachine.io/nfts/",

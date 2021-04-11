@@ -52,14 +52,14 @@ const TokensExplorer = {
             <div>
               <b-card-group deck class="m-2">
                 <div v-for="tokenId in allTokenIds">
-                  <b-card :img-src="'media/' + nftData.tokens[tokenId].imageName" img-alt="Image" img-top style="max-width: 15rem;" class="m-1 p-2">
+                  <b-card :img-src="'nfts/media/' + nftData.tokens[tokenId].imageName" img-alt="Image" img-top style="max-width: 15rem;" class="m-1 p-2">
                       <b-card-text>
                         <b>#{{ tokenId }}</b> =
                         <span v-for="(parentId, parentIndex) in nftData.tokens[tokenId].parents">
                           <span v-if="parentIndex > 0">
                            +
                           </span>
-                          <b-avatar variant="light" size="1.5rem" :src="'media/punk' + parentId + '.png'"></b-avatar>
+                          <b-avatar variant="light" size="1.5rem" :src="'nfts/media/punk' + parentId + '.png'"></b-avatar>
                         </span><br />
                         <span v-for="attribute in nftData.tokens[tokenId].attributes"><b-badge pill variant="success">{{ attribute }}</b-badge></span>
                         <span v-for="ancientDNA in nftData.tokens[tokenId].ancientDNA"><b-badge pill variant="warning">🧬 {{ ancientDNA }}</b-badge></span>
@@ -68,6 +68,7 @@ const TokensExplorer = {
                 </div>
               </b-card-group deck class="m-2">
             </div>
+
           </b-card-body>
         </b-card>
       </b-card>

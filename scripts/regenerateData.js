@@ -2,6 +2,7 @@ var fs = require('fs');
 const util = require('util');
 
 const INPUTDATAFILE = "docs/config.json";
+const OUTPUTDATADIR = "docs/ipfs/json/";
 
 console.log("Reading data from '" + INPUTDATAFILE + "' ...");
 var obj = JSON.parse(fs.readFileSync(INPUTDATAFILE, 'utf8'));
@@ -12,6 +13,14 @@ console.log("allTokenIds: " + util.inspect(getAllTokenIds(obj), showHidden=false
 console.log("allParents: " + util.inspect(getAllParents(obj), showHidden=false, depth=3, colorize=true));
 console.log("allAttributes: " + util.inspect(getAllAttributes(obj), showHidden=false, depth=3, colorize=true));
 console.log("allAncientDNAs: " + util.inspect(getAllAncientDNAs(obj), showHidden=false, depth=3, colorize=true));
+
+function pad64Zeroes(s) {
+  var o = s.toFixed(0);
+  while (o.length < 2) {
+    o = " " + o;
+  }
+  return o;
+}
 
 function getAllTokenIds(obj) {
   return Object.keys(obj.tokens);

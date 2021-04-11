@@ -320,9 +320,9 @@ const Connection = {
         }
       }
 
-      // if (store.getters['connection/connected']) {
+      if (store.getters['connection/connected']) {
       //   /*await*/ store.dispatch('governance/execWeb3', { count: this.count, networkChanged, blockChanged, coinbaseChanged });
-      //   /*await*/ store.dispatch('tokens/execWeb3', { count: this.count, networkChanged, blockChanged, coinbaseChanged });
+        /*await*/ store.dispatch('tokens/execWeb3', { count: this.count, networkChanged, blockChanged, coinbaseChanged });
       //   /*await*/ store.dispatch('optinoFactory/execWeb3', { count: this.count, networkChanged, blockChanged, coinbaseChanged });
       //   /*await*/ store.dispatch('feeds/execWeb3', { count: this.count, networkChanged, blockChanged, coinbaseChanged });
       //   // await store.dispatch('tokenContract/execWeb3', { count: this.count, networkChanged, blockChanged, coinbaseChanged });
@@ -333,7 +333,7 @@ const Connection = {
       //   // } else if (this.$route.name == "PriceFeedExplorer") {
       //   //   await store.dispatch('priceFeedExplorer/execWeb3', { count: this.count, networkChanged, blockChanged, coinbaseChanged });
       //   // }
-      // }
+      }
       logInfo("Connection", "execWeb3() end[" + this.count + "]");
     },
     timeoutCallback() {
@@ -342,7 +342,7 @@ const Connection = {
 
       var t = this;
       if (store.getters['connection/powerOn']) {
-        if (this.count++ % 5 == 0  /* || store.getters['tokens/executionQueue'].length > 0 */) {
+        if (this.count++ % 15 == 0  /* || store.getters['tokens/executionQueue'].length > 0 */) {
           // if (store.getters['connection/processNow']) {
           //   store.dispatch('connection/setProcessNow', false);
           // }
@@ -393,6 +393,9 @@ const connectionModule = {
     // spinnerVariant: null,
 
     connected: false,
+    provider: null,
+    signer: null,
+
     error: null,
     connectionType: null,
     network: null,
