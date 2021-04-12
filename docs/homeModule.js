@@ -29,6 +29,12 @@ const Home = {
                   #000 to #007 chosen by the adoption centre.
                 </b-card-text>
               </b-card>
+              <b-card body-class="p-1" :img-src="'nfts/media/ZombieBabies_000-008_set.gif'" img-alt="Image" img-top style="max-width: 15rem;" class="m-1 p-2">
+                <b-card-text class="pt-2">
+                  <b>Adopt A Set Of ZombieBabies</b><br />
+                  #000 to #008
+                </b-card-text>
+              </b-card>
             </b-card-group deck class="m-2">
           </div>
 
