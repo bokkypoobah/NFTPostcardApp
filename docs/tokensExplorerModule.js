@@ -66,6 +66,12 @@ const TokensExplorer = {
                     </b-card-text>
                   </b-card>
                 </div>
+                <b-card body-class="p-1" :img-src="'nfts/media/ZombieBabies_000-008_random.gif'" img-alt="Image" img-top style="max-width: 15rem;" class="m-1 p-2">
+                  <b-card-text class="pt-2">
+                    <b>Adopt A ZombieBaby</b><br />
+                    #000 to #007 chosen by the adoption centre.
+                  </b-card-text>
+                </b-card>
               </b-card-group deck class="m-2">
             </div>
 
