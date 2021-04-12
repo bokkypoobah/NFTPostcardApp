@@ -11,7 +11,7 @@
     "0" : {
       "generation": 2,
       "parents": ["Punk_3636", "Punk_4472"],
-      "attributes": ["Front Beard Dark", "Earring", "Top Hat"],
+      "attributes": ["Front Goatee Dark", "Earring", "Top Hat"],
       "ancientDNA": [],
       "imageHash": "QmSexHstXKqRszhXwaXiBp4DJRjFHXdp6t4tw4bR47UmT1",
       "imageName": "ZombieBaby_000.png"
@@ -19,7 +19,7 @@
     "1" : {
       "generation": 2,
       "parents": ["Punk_3636", "Punk_4472"],
-      "attributes": ["Front Beard Dark", "Purple Hair"],
+      "attributes": ["Front Goatee Dark", "Purple Hair"],
       "ancientDNA": [],
       "imageHash": "QmZKfMJ6R1kVY8i7jJYTmAHi7igqZzs7Yq9vVdZE183CCC",
       "imageName": "ZombieBaby_001.png"
@@ -27,7 +27,7 @@
     "2" : {
       "generation": 2,
       "parents": ["Punk_3636", "Punk_4472"],
-      "attributes": ["Front Beard Dark", "Purple Hair", "Top Hat"],
+      "attributes": ["Front Goatee Dark", "Purple Hair", "Top Hat"],
       "ancientDNA": [],
       "imageHash": "QmfSsD7VfVDXv51QDJqVUbnn6z7xhWyiZjwzSnkb7j4sTb",
       "imageName": "ZombieBaby_002.png"
@@ -35,7 +35,7 @@
     "3" : {
       "generation": 2,
       "parents": ["Punk_3636", "Punk_4472"],
-      "attributes": ["Front Beard Dark", "Earring"],
+      "attributes": ["Front Goatee Dark", "Earring"],
       "ancientDNA": ["Cowboy Hat"],
       "imageHash": "QmNeAK4t4ZdGb3hhxEP83WpPEnFqFKHu1F5fhgFqZNbNRx",
       "imageName": "ZombieBaby_003.png"
@@ -43,7 +43,7 @@
     "4" : {
       "generation": 2,
       "parents": ["Punk_3636", "Punk_4472"],
-      "attributes": ["Front Beard Dark", "Earring"],
+      "attributes": ["Front Goatee Dark", "Earring"],
       "ancientDNA": ["Beanie"],
       "imageHash": "QmZrJFwhiBP2QcpqraZ4SZYqXZTADXLTsUCHge9g8Piv5p",
       "imageName": "ZombieBaby_004.png"
@@ -51,7 +51,7 @@
     "5" : {
       "generation": 2,
       "parents": ["Punk_3636", "Punk_4472"],
-      "attributes": ["Front Beard Dark", "Earring", "Purple Hair"],
+      "attributes": ["Front Goatee Dark", "Earring", "Purple Hair"],
       "ancientDNA": ["Cowboy Hat"],
       "imageHash": "QmRnoBqzDTismKF5Ap4opDJmivN1HuB69krNsy9vKU47hq",
       "imageName": "ZombieBaby_005.png"
@@ -59,7 +59,7 @@
     "6" : {
       "generation": 2,
       "parents": ["Punk_3636", "Punk_4472"],
-      "attributes": ["Front Beard Dark", "Orange Hair"],
+      "attributes": ["Front Goatee Dark", "Orange Hair"],
       "ancientDNA": ["Orange Side"],
       "imageHash": "QmVhZPK273b5aDZiWVZC6asxU5CK4nuFU12yYPcuyFZRwg",
       "imageName": "ZombieBaby_006.png"
