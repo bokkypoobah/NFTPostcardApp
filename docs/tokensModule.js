@@ -135,7 +135,7 @@ const tokensModule = {
       localStorage.removeItem('tokenData');
     },
     updateNFTData(state, nftData) {
-      logInfo("tokensModule", "mutations.updateNFTData(" + JSON.stringify(nftData) + ")");
+      // logInfo("tokensModule", "mutations.updateNFTData(" + JSON.stringify(nftData) + ")");
       state.nftData = nftData;
       if (state.nftData == null) {
         state.allTokenIds = null;
@@ -196,7 +196,7 @@ const tokensModule = {
       context.commit('removeAllTokens', blah);
     },
     updateNFTData(context, nftData) {
-      logInfo("tokensModule", "actions.updateNFTData(" + JSON.stringify(nftData) + ")");
+      // logInfo("tokensModule", "actions.updateNFTData(" + JSON.stringify(nftData) + ")");
       context.commit('updateNFTData', nftData);
     },
     // Called by Connection.execWeb3()

@@ -152,13 +152,13 @@ const Connection = {
   },
   computed: {
     connected() {
-      return store.getters['connection/connected'];
+      return store.getters['connection/connection'] != null && store.getters['connection/connection'].connected;
     },
     error() {
-      return store.getters['connection/error'];
+      return store.getters['connection/connection'] == null ? null : store.getters['connection/connection'].error;
     },
     connectionType() {
-      return store.getters['connection/connectionType'];
+      return store.getters['connection/connection'] == null ? null : store.getters['connection/connection'].connectionType;
     },
     network() {
       return store.getters['connection/network'];
@@ -216,9 +216,9 @@ const Connection = {
       store.dispatch('connection/setTxError', "");
     },
     async execWeb3() {
-      logInfo("Connection", "execWeb3() start[" + this.count + "]");
+      logInfo("Connection", "execWeb3() start[" + this.count + "]: " + JSON.stringify(store.getters['connection/connected']));
 
-      if (!store.getters['connection/connected']) {
+      if (!store.getters['connection/connected'] || !store.getters['connection/connected'].connected) {
         logInfo("Connection", "execWeb3() Attempting connection");
 
         // logInfo("Connection", "execWeb3() ethereum: " + JSON.stringify(ethereum));
@@ -230,18 +230,17 @@ const Connection = {
             logInfo("Connection", "execWeb3() provider: " + JSON.stringify(this.provider));
             this.signer = this.provider.getSigner();
             logInfo("Connection", "execWeb3() signer: " + JSON.stringify(this.signer));
-            store.dispatch('connection/setConnected', true);
-            store.dispatch('connection/setConnectionType', "MetaMask / Modern dapp browsers");
-          } catch (e) {
-            logInfo("Connection", "execWeb3() error: " + JSON.stringify(e));
-            store.dispatch('connection/setConnected', false);
+            store.dispatch('connection/setConnected', { provider: this.provider, signer: this.signer, connectionType: "MetaMask / Modern dapp browsers" });
+          } catch (error) {
+            store.dispatch('connection/setDisconnected', JSON.stringify(error.message));
             this.provider = null;
+            this.signer = null;
           }
         }
       }
 
       var networkChanged = false;
-      if (store.getters['connection/connected']) {
+      if (store.getters['connection/connected'] && store.getters['connection/connected'].connected) {
         try {
           let network = await this.provider.getNetwork();
           // logInfo("Connection", "execWeb3() network: " + JSON.stringify(network));
@@ -252,14 +251,13 @@ const Connection = {
             networkChanged = true;
           }
         } catch (error) {
-          store.dispatch('connection/setConnected', false);
-          store.dispatch('connection/setError', error.message);
+          store.dispatch('connection/setDisconnected', JSON.stringify(error.message));
         }
       }
 
       var coinbaseChanged = false;
       var coinbase = null;
-      if (store.getters['connection/connected']) {
+      if (store.getters['connection/connected'] && store.getters['connection/connected'].connected) {
         try {
           coinbase = await this.signer.getAddress();
           // logInfo("Connection", "execWeb3() coinbase: " + JSON.stringify(coinbase));
@@ -270,37 +268,35 @@ const Connection = {
             coinbaseChanged = true;
           }
         } catch (error) {
-          store.dispatch('connection/setConnected', false);
-          store.dispatch('connection/setError', error.message);
+          store.dispatch('connection/setDisconnected', JSON.stringify(error.message));
         }
       }
 
       var balance = null;
-      if (store.getters['connection/connected']) {
+      if (store.getters['connection/connected'] && store.getters['connection/connected'].connected) {
         if (coinbase != null) {
           try {
             balance = await this.provider.getBalance(coinbase);
             // logDebug("Connection", "execWeb3() balance: " + ethers.utils.formatUnits(balance, 18));
+            if (this.lastBalance == null || balance == null || !balance.eq(this.lastBalance)) {
+              store.dispatch('connection/setBalance', balance);
+              logInfo("Connection", "execWeb3() Coinbase balance updated from " + (this.lastBalance == null ? "null" : ethers.utils.formatUnits(this.lastBalance)) + " to " + (balance == null ? "null" : ethers.utils.formatUnits(balance)));
+              this.lastBalance = balance;
+            }
           } catch (error) {
-            store.dispatch('connection/setConnected', false);
-            store.dispatch('connection/setError', error.message);
+            store.dispatch('connection/setDisconnected', JSON.stringify(error.message));
+            balance = null;
           }
-        }
-        if (this.lastBalance == null || balance == null || !balance.eq(this.lastBalance)) {
-          store.dispatch('connection/setBalance', balance);
-          logInfo("Connection", "execWeb3() Coinbase balance updated from " + (this.lastBalance == null ? "null" : ethers.utils.formatUnits(this.lastBalance)) + " to " + (balance == null ? "null" : ethers.utils.formatUnits(balance)));
-          this.lastBalance = balance;
         }
       }
 
       var block = null;
-      if (store.getters['connection/connected']) {
+      if (store.getters['connection/connected'] && store.getters['connection/connected'].connected) {
         try {
           block = await this.provider.getBlock();
           // logInfo("Connection", "execWeb3() block: " + JSON.stringify(block.number));
         } catch (error) {
-          store.dispatch('connection/setConnected', false);
-          store.dispatch('connection/setError', error.message);
+          store.dispatch('connection/setDisconnected', JSON.stringify(error.message));
         }
       }
       var blockChanged = false;
@@ -320,32 +316,21 @@ const Connection = {
         }
       }
 
-      if (store.getters['connection/connected']) {
-      //   /*await*/ store.dispatch('governance/execWeb3', { count: this.count, networkChanged, blockChanged, coinbaseChanged });
-        /*await*/ store.dispatch('tokens/execWeb3', { count: this.count, networkChanged, blockChanged, coinbaseChanged });
-      //   /*await*/ store.dispatch('optinoFactory/execWeb3', { count: this.count, networkChanged, blockChanged, coinbaseChanged });
-      //   /*await*/ store.dispatch('feeds/execWeb3', { count: this.count, networkChanged, blockChanged, coinbaseChanged });
+      if (store.getters['connection/connected'] && store.getters['connection/connected'].connected) {
+        store.dispatch('tokens/execWeb3', { count: this.count, networkChanged, blockChanged, coinbaseChanged });
       //   // await store.dispatch('tokenContract/execWeb3', { count: this.count, networkChanged, blockChanged, coinbaseChanged });
       //   // if (this.$route.name == "DeployTokenContract") {
       //   //   await store.dispatch('deployTokenContract/execWeb3', { count: this.count, networkChanged, blockChanged, coinbaseChanged });
       //   // } else if (this.$route.name == "TokenContractExplorer" /* || this.$route.name == "GoblokStatus" */) {
       //   //   await store.dispatch('tokenContractExplorer/execWeb3', { count: this.count, networkChanged, blockChanged, coinbaseChanged });
-      //   // } else if (this.$route.name == "PriceFeedExplorer") {
-      //   //   await store.dispatch('priceFeedExplorer/execWeb3', { count: this.count, networkChanged, blockChanged, coinbaseChanged });
       //   // }
       }
       logInfo("Connection", "execWeb3() end[" + this.count + "]");
     },
     timeoutCallback() {
-      // logInfo("Connection", "timeoutCallback() - store.getters['connection/powerOn']: " + JSON.stringify(store.getters['connection/powerOn']));
-      // store.dispatch('connection/mainLoop', {});
-
       var t = this;
       if (store.getters['connection/powerOn']) {
-        if (this.count++ % 15 == 0  /* || store.getters['tokens/executionQueue'].length > 0 */) {
-          // if (store.getters['connection/processNow']) {
-          //   store.dispatch('connection/setProcessNow', false);
-          // }
+        if (this.count++ % 15 == 0) {
           t.execWeb3();
         }
       }
@@ -362,9 +347,6 @@ const Connection = {
       } else {
         this.spinnerVariant = "danger";
       }
-      // if (store.getters['spinnerVariant'] != this.spinnerVariant) {
-      //   store.dispatch('connection/setSpinnerVariant', this.spinnerVariant);
-      // }
       if (this.reschedule) {
         setTimeout(function() {
           t.timeoutCallback();
@@ -387,19 +369,16 @@ const Connection = {
 const connectionModule = {
   namespaced: true,
   state: {
-    // count: 0,
-    //
     powerOn: false,
-    // spinnerVariant: null,
-
-    connected: false,
-    provider: null,
-    signer: null,
-
-    error: null,
-    connectionType: null,
+    connection: {
+      connected: false,
+      provider: null,
+      signer: null,
+      connectionType: null,
+      error: null,
+    },
     network: null,
-    // networkName: null,
+    networkName: null,
     explorer: null,
     faucets: null,
     coinbase: null,
@@ -407,15 +386,12 @@ const connectionModule = {
     block: null,
     txs: {},
     txError: "",
-    processNow: false,
   },
   getters: {
     powerOn: state => state.powerOn,
-    connected: state => state.connected,
-    error: state => state.error,
-    connectionType: state => state.connectionType,
+    connection: state => state.connection,
     network: state => state.network,
-    // networkName: state => state.networkName,
+    networkName: state => state.networkName,
     explorer: state => state.explorer,
     faucets: state => state.faucets,
     coinbase: state => state.coinbase,
@@ -423,29 +399,24 @@ const connectionModule = {
     block: state => state.block,
     txs: state => state.txs,
     txError: state => state.txError,
-    processNow: state => state.processNow,
   },
   mutations: {
-    // incrementCount(state) {
-    //   logInfo("connectionModule", "mutations.incrementCount: " + state.count);
-    //   state.count++;
-    // },
     setPowerOn(state, c) {
-      // logInfo("connectionModule", "mutations.setConnect: " + c);
       state.powerOn = c;
     },
-    // setSpinnerVariant(state, sv) {
-    //   logInfo("connectionModule", "mutations.setSpinnerVariant: " + sv);
-    //   state.spinnerVariant = sv;
-    // },
-    setConnected(state, ok) {
-      state.connected = ok;
+    setConnected(state, data) {
+      state.connection.connected = true;
+      state.connection.provider = data.provider;
+      state.connection.signer = data.signer;
+      state.connection.connectionType = data.connectionType;
+      state.connection.error = null;
     },
-    setError(state, e) {
-      state.error = e;
-    },
-    setConnectionType(state, ct) {
-      state.connectionType = ct;
+    setDisconnected(state, error) {
+      state.connection.connected = false;
+      state.connection.provider = null;
+      state.connection.signer = null;
+      state.connection.connectionType = null;
+      state.connection.error = error;
     },
     setNetwork(state, n) {
       state.network = n;
@@ -475,32 +446,17 @@ const connectionModule = {
       logInfo("connectionModule", "mutations.setTxError(): " + txError);
       state.txError = txError;
     },
-    setProcessNow(state, _processNow) {
-      logInfo("connectionModule", "mutations.setProcessNow(" + _processNow + ")");
-      state.processNow = _processNow;
-    },
   },
   actions: {
-    // mainLoop({ state, commit, rootState }) {
-    //   logInfo("connectionModule", "actions.mainLoop(" + state.connect + ")");
-    //   // commit('incrementCount');
-    // },
     setPowerOn(context, c) {
       logInfo("connectionModule", "actions.setPowerOn(" + c + ")");
       context.commit('setPowerOn', c);
     },
-    // setSpinnerVariant(context, sv) {
-    //   logInfo("connectionModule", "actions.setSpinnerVariant(" + sv + ")");
-    //   context.commit('setSpinnerVariant', sv);
-    // },
-    setConnected(context, ok) {
-      context.commit('setConnected', ok);
+    setConnected(context, data) {
+      context.commit('setConnected', data);
     },
-    setError(context, e) {
-      context.commit('setError', e);
-    },
-    setConnectionType(context, ct) {
-      context.commit('setConnectionType', ct);
+    setDisconnected(context, data) {
+      context.commit('setDisconnected', data);
     },
     setNetwork(context, n) {
       context.commit('setNetwork', n);
@@ -525,10 +481,6 @@ const connectionModule = {
     setTxError(context, txError) {
       logInfo("connectionModule", "actions.setTxError(): " + txError);
       context.commit('setTxError', txError);
-    },
-    setProcessNow(context, _processNow) {
-      logInfo("connectionModule", "actions.setProcessNow(" + _processNow + ")");
-      context.commit('setProcessNow', _processNow);
     },
   },
 };

@@ -2,34 +2,103 @@ var fs = require('fs');
 const util = require('util');
 
 const INPUTDATAFILE = "docs/config.json";
-const OUTPUTDATADIR = "docs/ipfs/json/";
+const OUTPUTDATADIR = "docs/nfts/json/";
 
 console.log("Reading data from '" + INPUTDATAFILE + "' ...");
-var obj = JSON.parse(fs.readFileSync(INPUTDATAFILE, 'utf8'));
+var config = JSON.parse(fs.readFileSync(INPUTDATAFILE, 'utf8'));
 
-console.log(util.inspect(obj, showHidden=false, depth=3, colorize=true));
+console.log(util.inspect(config, showHidden=false, depth=3, colorize=true));
 
-console.log("allTokenIds: " + util.inspect(getAllTokenIds(obj), showHidden=false, depth=3, colorize=true));
-console.log("allParents: " + util.inspect(getAllParents(obj), showHidden=false, depth=3, colorize=true));
-console.log("allAttributes: " + util.inspect(getAllAttributes(obj), showHidden=false, depth=3, colorize=true));
-console.log("allAncientDNAs: " + util.inspect(getAllAncientDNAs(obj), showHidden=false, depth=3, colorize=true));
+console.log("allTokenIds: " + util.inspect(getAllTokenIds(config), showHidden=false, depth=3, colorize=true));
+console.log("allParents: " + util.inspect(getAllParents(config), showHidden=false, depth=3, colorize=true));
+console.log("allAttributes: " + util.inspect(getAllAttributes(config), showHidden=false, depth=3, colorize=true));
+console.log("allAncientDNAs: " + util.inspect(getAllAncientDNAs(config), showHidden=false, depth=3, colorize=true));
+
+for (let tokenId in Object.keys(config.tokens)) {
+  let token = config.tokens[tokenId];
+  const filenamePrefix = pad64Zeroes(tokenId);
+  const jsonFilename = OUTPUTDATADIR + filenamePrefix + ".json";
+  console.log(jsonFilename + " " + JSON.stringify(token));
+  // for (let parentIndex in token.parents) {
+  //   let parent = token.parents[parentIndex];
+  //   if (allParents[parent] === undefined) {
+  //     allParents[parent] = 1;
+  //   }
+  // }
+  const data = {};
+  data.name = config.collection;
+  data.description = config.description;
+  data.external_url = config.external_url_prefix + filenamePrefix + ".json";
+  data.image = config.image_url_prefix + token.imageName;
+
+  fs.writeFile(jsonFilename, JSON.stringify(data, null, 2), (err) => {
+      if (err) throw err;
+      console.log('Data written to file: ' + jsonFilename + " " + JSON.stringify(data, null, 2));
+  });
+
+}
+
+// https://ipfs.io/ipfs/Qmdmw1BZA9eF8iH4yK7v3fjqqGEWXFM4x6bu4aLc2wdamB/Baby_000_background.png
+// {
+//   "description": "Zombie Baby #000",
+//   "external_url": "https://ethervendingmachine.io/nfts/0000000000000000000000000000000000000000000000000000000000000000.png",
+//   "image": "https://ethervendingmachine.io/nfts/0000000000000000000000000000000000000000000000000000000000000000.png",
+//   "name": "Zombie Baby #000",
+//   "attributes": [
+//       {
+//         "trait_type": "Collection",
+//         "value": "Zombie Babies"
+//       },
+//       {
+//         "trait_type": "Parent 1",
+//         "value": "Zombie #3636"
+//       },
+//       {
+//         "trait_type": "Parent 2",
+//         "value": "Zombie #4472"
+//       },
+//       {
+//         "trait_type": "Attribute",
+//         "value": "Front Beard Dark"
+//       },
+//       {
+//         "trait_type": "Attribute",
+//         "value": "Earring"
+//       },
+//       {
+//         "trait_type": "Attribute",
+//         "value": "Top Hat"
+//       },
+//       {
+//         "trait_type": "Ancient DNA",
+//         "value": "None"
+//       },
+//       {
+//         "display_type": "number",
+//         "trait_type": "Generation",
+//         "value": 2
+//       }
+//     ]
+// }
+
+
 
 function pad64Zeroes(s) {
-  var o = s.toFixed(0);
-  while (o.length < 2) {
-    o = " " + o;
+  var o = s.toString();
+  while (o.length < 64) {
+    o = "0" + o;
   }
   return o;
 }
 
-function getAllTokenIds(obj) {
-  return Object.keys(obj.tokens);
+function getAllTokenIds(config) {
+  return Object.keys(config.tokens);
 }
 
-function getAllParents(obj) {
+function getAllParents(config) {
   let allParents = {};
-  for (let tokenId in Object.keys(obj.tokens)) {
-    let token = obj.tokens[tokenId];
+  for (let tokenId in Object.keys(config.tokens)) {
+    let token = config.tokens[tokenId];
     for (let parentIndex in token.parents) {
       let parent = token.parents[parentIndex];
       if (allParents[parent] === undefined) {
@@ -40,10 +109,10 @@ function getAllParents(obj) {
   return Object.keys(allParents);
 }
 
-function getAllAttributes(obj) {
+function getAllAttributes(config) {
   let allAttributes = {};
-  for (let tokenId in Object.keys(obj.tokens)) {
-    let token = obj.tokens[tokenId];
+  for (let tokenId in Object.keys(config.tokens)) {
+    let token = config.tokens[tokenId];
     for (let attributeIndex in token.attributes) {
       let attribute = token.attributes[attributeIndex];
       if (allAttributes[attribute] === undefined) {
@@ -54,10 +123,10 @@ function getAllAttributes(obj) {
   return Object.keys(allAttributes);
 }
 
-function getAllAncientDNAs(obj) {
+function getAllAncientDNAs(config) {
   let allAncientDNAs = {};
-  for (let tokenId in Object.keys(obj.tokens)) {
-    let token = obj.tokens[tokenId];
+  for (let tokenId in Object.keys(config.tokens)) {
+    let token = config.tokens[tokenId];
     for (let ancientDNAIndex in token.ancientDNA) {
       let ancientDNA = token.ancientDNA[ancientDNAIndex];
       if (allAncientDNAs[ancientDNA] === undefined) {
