@@ -1,6 +1,7 @@
 # BabyZombies
 BabyZombies ERC-1155 NFT
 
+Work in progress - https://bokkypoobah.github.io/ZombieBabies/ .
 
 
 ```
