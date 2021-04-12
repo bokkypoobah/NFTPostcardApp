@@ -19,7 +19,7 @@ const Home = {
                       <b-avatar variant="light" size="1.5rem" :src="'nfts/media/' + parentId + '.png'"></b-avatar>
                     </span><br />
                     <span v-for="attribute in nftData.tokens[tokenId].attributes"><b-badge pill variant="success" class="mr-1">{{ attribute }}</b-badge></span>
-                    <span v-for="ancientDNA in nftData.tokens[tokenId].ancientDNA"><b-badge pill variant="warning" class="mr-1">{{ ancientDNA }} 🧬</b-badge></span>
+                    <span v-for="ancientDNA in nftData.tokens[tokenId].ancientDNA"><b-badge pill variant="warning" class="mr-1">{{ ancientDNA }} <font size="-1">🧬</font></b-badge></span>
                   </b-card-text>
                 </b-card>
               </div>
@@ -39,7 +39,7 @@ const Home = {
                   </b-card-text>
                 </b-card>
               </div>
-            </b-card-group deck class="m-2">
+            </b-card-group>
           </div>
 
 
