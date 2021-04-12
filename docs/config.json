@@ -71,6 +71,14 @@
       "ancientDNA": ["Mohawk"],
       "imageHash": "Qme3jfJrXVDKAKqUCtAz4XovSxHwHGiaKivyhZdFgn4ahs",
       "imageName": "ZombieBaby_007.png"
+    },
+    "8" : {
+      "generation": 2,
+      "parents": ["Punk_3636", "Punk_4472"],
+      "attributes": ["Earring"],
+      "ancientDNA": ["Police Cap"],
+      "imageHash": "QmTmyUU1wJGRdbyPxmA2yo7ocLgLbuXVVFxehRxMD6Z2pk",
+      "imageName": "ZombieBaby_008.png"
     }
   }
 }
