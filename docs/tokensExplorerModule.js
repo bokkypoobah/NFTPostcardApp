@@ -52,20 +52,18 @@ const TokensExplorer = {
             <div>
               <b-card-group deck class="m-2">
                 <div v-for="tokenId in allTokenIds">
-                  <b-card no-body :img-src="'nfts/media/' + nftData.tokens[tokenId].imageName" img-alt="Image" img-top style="max-width: 15rem;" class="m-1 p-2">
-                    <b-card-body class="p-1">
-                      <b-card-text class="pt-2">
-                        <b>#{{ tokenId }}</b>:
-                        <span v-for="(parentId, parentIndex) in nftData.tokens[tokenId].parents">
-                          <span v-if="parentIndex > 0">
-                           +
-                          </span>
-                          <b-avatar variant="light" size="1.5rem" :src="'nfts/media/' + parentId + '.png'"></b-avatar>
-                        </span><br />
-                        <span v-for="attribute in nftData.tokens[tokenId].attributes"><b-badge pill variant="success">{{ attribute }}</b-badge></span>
-                        <span v-for="ancientDNA in nftData.tokens[tokenId].ancientDNA"><b-badge pill variant="warning">{{ ancientDNA }}🧬</b-badge></span>
-                      </b-card-text>
-                    </b-card-body>
+                  <b-card body-class="p-1" :img-src="'nfts/media/' + nftData.tokens[tokenId].imageName" img-alt="Image" img-top style="max-width: 15rem;" class="m-1 p-2">
+                    <b-card-text class="pt-2">
+                      <b>#{{ tokenId }}</b>:
+                      <span v-for="(parentId, parentIndex) in nftData.tokens[tokenId].parents">
+                        <span v-if="parentIndex > 0">
+                         +
+                        </span>
+                        <b-avatar variant="light" size="1.5rem" :src="'nfts/media/' + parentId + '.png'"></b-avatar>
+                      </span><br />
+                      <span v-for="attribute in nftData.tokens[tokenId].attributes"><b-badge pill variant="success" class="mr-1">{{ attribute }}</b-badge></span>
+                      <span v-for="ancientDNA in nftData.tokens[tokenId].ancientDNA"><b-badge pill variant="warning" class="mr-1">{{ ancientDNA }} 🧬</b-badge></span>
+                    </b-card-text>
                   </b-card>
                 </div>
               </b-card-group deck class="m-2">
