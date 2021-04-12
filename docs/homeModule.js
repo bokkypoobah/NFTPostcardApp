@@ -9,7 +9,7 @@ const Home = {
           <div v-for="tokenId in allTokenIds">
             <b-card no-body :img-src="'nfts/media/' + nftData.tokens[tokenId].imageName" img-alt="Image" img-top style="max-width: 15rem;" class="m-1 p-2">
               <b-card-body class="p-1">
-                <b-card-text>
+                <b-card-text class="pt-2">
                   <b>#{{ tokenId }}</b>:
                   <span v-for="(parentId, parentIndex) in nftData.tokens[tokenId].parents">
                     <span v-if="parentIndex > 0">
