@@ -2,7 +2,7 @@ var fs = require('fs');
 const util = require('util');
 
 const INPUTDATAFILE = "docs/config.json";
-const OUTPUTDATADIR = "docs/nfts/json/";
+const OUTPUTDATADIR = "docs/json/";
 
 console.log("Reading data from '" + INPUTDATAFILE + "' ...");
 var config = JSON.parse(fs.readFileSync(INPUTDATAFILE, 'utf8'));
@@ -26,10 +26,12 @@ for (let tokenId in Object.keys(config.tokens)) {
   //   }
   // }
   const data = {};
-  data.name = config.collection;
+  const attributes = {};
   data.description = config.description;
-  data.external_url = config.external_url_prefix + filenamePrefix + ".json";
-  data.image = config.image_url_prefix + token.imageName;
+  data.external_url = config.external_url_prefix + 'json/' + filenamePrefix + ".json";
+  data.image = config.external_url_prefix + 'media/' + token.imageName;
+  data.name = config.name_prefix + ' #' + pad3Zeroes(tokenId);
+  data.attributes = attributes;
 
   fs.writeFile(jsonFilename, JSON.stringify(data, null, 2), (err) => {
       if (err) throw err;
@@ -82,6 +84,14 @@ for (let tokenId in Object.keys(config.tokens)) {
 // }
 
 
+
+function pad3Zeroes(s) {
+  var o = s.toString();
+  while (o.length < 3) {
+    o = "0" + o;
+  }
+  return o;
+}
 
 function pad64Zeroes(s) {
   var o = s.toString();

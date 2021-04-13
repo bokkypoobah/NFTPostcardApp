@@ -216,11 +216,17 @@ const Connection = {
       store.dispatch('connection/setTxError', "");
     },
     async execWeb3() {
-      logInfo("Connection", "execWeb3() start[" + this.count + "]: " + JSON.stringify(store.getters['connection/connected']));
+      logInfo("Connection", "execWeb3() start[" + this.count + "]: " + JSON.stringify(store.getters['connection/connection']));
 
-      if (!store.getters['connection/connected'] || !store.getters['connection/connected'].connected) {
+      if (!store.getters['connection/connection'] || !store.getters['connection/connection'].connected) {
         logInfo("Connection", "execWeb3() Attempting connection");
 
+        // logInfo("Connection", "execWeb3() window.ethereum: " + JSON.stringify(window.ethereum));
+        if (window.ethereum) {
+          if (!window.ethereum.isConnected() || !window.ethereum['isUnlocked']) {
+              window.ethereum.enable();
+          }
+        }
         // logInfo("Connection", "execWeb3() ethereum: " + JSON.stringify(ethereum));
         // logInfo("Connection", "execWeb3() ethereum.isConnected(): " + window.ethereum.isConnected());
 
@@ -240,10 +246,10 @@ const Connection = {
       }
 
       var networkChanged = false;
-      if (store.getters['connection/connected'] && store.getters['connection/connected'].connected) {
+      if (store.getters['connection/connection'] && store.getters['connection/connection'].connected) {
         try {
           let network = await this.provider.getNetwork();
-          // logInfo("Connection", "execWeb3() network: " + JSON.stringify(network));
+          logInfo("Connection", "execWeb3() network: " + JSON.stringify(network));
           if (network.chainId != this.lastNetworkChainId) {
             store.dispatch('connection/setNetwork', network);
             logInfo("Connection", "execWeb3() Network updated from " + this.lastNetworkChainId + " to " + network.chainId + ": " + getNetworkDetails(network.chainId).name);
@@ -257,8 +263,9 @@ const Connection = {
 
       var coinbaseChanged = false;
       var coinbase = null;
-      if (store.getters['connection/connected'] && store.getters['connection/connected'].connected) {
+      if (store.getters['connection/connection'] && store.getters['connection/connection'].connected) {
         try {
+          logInfo("Connection", "execWeb3() signer: " + JSON.stringify(this.signer));
           coinbase = await this.signer.getAddress();
           // logInfo("Connection", "execWeb3() coinbase: " + JSON.stringify(coinbase));
           if (coinbase != this.lastCoinbase) {
@@ -273,7 +280,7 @@ const Connection = {
       }
 
       var balance = null;
-      if (store.getters['connection/connected'] && store.getters['connection/connected'].connected) {
+      if (store.getters['connection/connection'] && store.getters['connection/connection'].connected) {
         if (coinbase != null) {
           try {
             balance = await this.provider.getBalance(coinbase);
@@ -291,7 +298,7 @@ const Connection = {
       }
 
       var block = null;
-      if (store.getters['connection/connected'] && store.getters['connection/connected'].connected) {
+      if (store.getters['connection/connection'] && store.getters['connection/connection'].connected) {
         try {
           block = await this.provider.getBlock();
           // logInfo("Connection", "execWeb3() block: " + JSON.stringify(block.number));
@@ -316,7 +323,7 @@ const Connection = {
         }
       }
 
-      if (store.getters['connection/connected'] && store.getters['connection/connected'].connected) {
+      if (store.getters['connection/connection'] && store.getters['connection/connection'].connected) {
         store.dispatch('tokens/execWeb3', { count: this.count, networkChanged, blockChanged, coinbaseChanged });
       //   // await store.dispatch('tokenContract/execWeb3', { count: this.count, networkChanged, blockChanged, coinbaseChanged });
       //   // if (this.$route.name == "DeployTokenContract") {
@@ -405,6 +412,7 @@ const connectionModule = {
       state.powerOn = c;
     },
     setConnected(state, data) {
+      logInfo("connectionModule", "mutations.setConnected()");
       state.connection.connected = true;
       state.connection.provider = data.provider;
       state.connection.signer = data.signer;
@@ -412,6 +420,7 @@ const connectionModule = {
       state.connection.error = null;
     },
     setDisconnected(state, error) {
+      logInfo("connectionModule", "mutations.setDisconnected() - error: " + error);
       state.connection.connected = false;
       state.connection.provider = null;
       state.connection.signer = null;
@@ -422,6 +431,7 @@ const connectionModule = {
       state.network = n;
       var networkDetails = getNetworkDetails(n.chainId);
       state.networkName = networkDetails.name;
+      logInfo("connectionModule", "mutations.setNetwork() - networkName: " + state.networkName);
       state.explorer = networkDetails.explorer;
       state.faucets = networkDetails.faucets;
     },
@@ -453,9 +463,11 @@ const connectionModule = {
       context.commit('setPowerOn', c);
     },
     setConnected(context, data) {
+      logInfo("connectionModule", "actions.setConnected()");
       context.commit('setConnected', data);
     },
     setDisconnected(context, data) {
+      logInfo("connectionModule", "actions.setDisconnected()");
       context.commit('setDisconnected', data);
     },
     setNetwork(context, n) {

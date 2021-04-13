@@ -78,7 +78,9 @@ const tokensModule = {
   state: {
     tokenData: {},
 
-    nftData: null,
+    nftData: {
+      "internal_media_dir": "media/"
+    },
     allTokenIds: null,
     allParents: null,
     allAttributes: null,
@@ -220,7 +222,8 @@ const tokensModule = {
           logInfo("tokensModule", "execWeb3() nftAddress: " + nftAddress);
 
           const nftAbi = ERC1155NFTABI;
-          logInfo("tokensModule", "execWeb3() nftAbi: " + JSON.stringify(nftAbi));
+          // logInfo("tokensModule", "execWeb3() nftAbi: " + JSON.stringify(nftAbi));
+
           // // The ERC-20 Contract ABI, which is a common contract interface
           // // for tokens (this is the Human-Readable ABI format)
           // const daiAbi = [

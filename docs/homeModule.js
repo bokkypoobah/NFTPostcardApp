@@ -9,14 +9,14 @@ const Home = {
           <div>
             <b-card-group class="m-2">
               <div v-for="tokenId in allTokenIds">
-                <b-card body-class="p-1" :img-src="'nfts/media/' + nftData.tokens[tokenId].imageName" img-alt="Image" img-top style="max-width: 15rem;" class="m-1 p-2">
+                <b-card body-class="p-1" :img-src="'media/' + nftData.tokens[tokenId].imageName" img-alt="Image" img-top style="max-width: 15rem;" class="m-1 p-2">
                   <b-card-text class="pt-2">
                     <b>#{{ tokenId }}</b>:
                     <span v-for="(parentId, parentIndex) in nftData.tokens[tokenId].parents">
                       <span v-if="parentIndex > 0">
                        +
                       </span>
-                      <b-avatar variant="light" size="1.5rem" :src="'nfts/media/' + parentId + '.png'"></b-avatar>
+                      <b-avatar variant="light" size="1.5rem" :src="'media/' + nftData.tokens[tokenId].parents[parentIndex].image"></b-avatar>
                     </span><br />
                     <span v-for="attribute in nftData.tokens[tokenId].attributes"><b-badge pill variant="success" class="mr-1">{{ attribute }}</b-badge></span>
                     <span v-for="ancientDNA in nftData.tokens[tokenId].ancientDNA"><b-badge pill variant="warning" class="mr-1">{{ ancientDNA }} <font size="-1">🧬</font></b-badge></span>
@@ -24,7 +24,7 @@ const Home = {
                 </b-card>
               </div>
               <div>
-                <b-card body-class="p-1" :img-src="'nfts/media/ZombieBabies_000-008_random.gif'" img-alt="Image" img-top style="max-width: 15rem;" class="m-1 p-2">
+                <b-card body-class="p-1" :img-src="'media/' + 'ZombieBabies_000-008_random.gif'" img-alt="Image" img-top style="max-width: 15rem;" class="m-1 p-2">
                   <b-card-text class="pt-2">
                     <b>Adopt A ZombieBaby</b><br />
                     #000 to #007 chosen by the adoption centre.
@@ -32,7 +32,7 @@ const Home = {
                 </b-card>
               </div>
               <div>
-                <b-card body-class="p-1" :img-src="'nfts/media/ZombieBabies_000-008_set.gif'" img-alt="Image" img-top style="max-width: 15rem;" class="m-1 p-2">
+                <b-card body-class="p-1" :img-src="'media/' + 'ZombieBabies_000-008_set.gif'" img-alt="Image" img-top style="max-width: 15rem;" class="m-1 p-2">
                   <b-card-text class="pt-2">
                     <b>Adopt A Clowder Of ZombieBabies</b><br />
                     #000 to #008
