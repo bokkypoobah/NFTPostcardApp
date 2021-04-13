@@ -216,7 +216,7 @@ const Connection = {
       store.dispatch('connection/setTxError', "");
     },
     async execWeb3() {
-      logInfo("Connection", "execWeb3() start[" + this.count + "]: " + JSON.stringify(store.getters['connection/connection']));
+      logInfo("Connection", "execWeb3() start[" + this.count + "]");
 
       if (!store.getters['connection/connection'] || !store.getters['connection/connection'].connected) {
         logInfo("Connection", "execWeb3() Attempting connection");
@@ -224,7 +224,9 @@ const Connection = {
         // logInfo("Connection", "execWeb3() window.ethereum: " + JSON.stringify(window.ethereum));
         if (window.ethereum) {
           if (!window.ethereum.isConnected() || !window.ethereum['isUnlocked']) {
-              window.ethereum.enable();
+              // window.ethereum.enable();
+              const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+              // logInfo("Connection", "execWeb3() accounts: " + JSON.stringify(accounts));
           }
         }
         // logInfo("Connection", "execWeb3() ethereum: " + JSON.stringify(ethereum));
@@ -233,9 +235,9 @@ const Connection = {
         if (this.provider == null) {
           try {
             this.provider = new ethers.providers.Web3Provider(window.ethereum);
-            logInfo("Connection", "execWeb3() provider: " + JSON.stringify(this.provider));
+            // logInfo("Connection", "execWeb3() provider: " + JSON.stringify(this.provider));
             this.signer = this.provider.getSigner();
-            logInfo("Connection", "execWeb3() signer: " + JSON.stringify(this.signer));
+            // logInfo("Connection", "execWeb3() signer: " + JSON.stringify(this.signer));
             store.dispatch('connection/setConnected', { provider: this.provider, signer: this.signer, connectionType: "MetaMask / Modern dapp browsers" });
           } catch (error) {
             store.dispatch('connection/setDisconnected', JSON.stringify(error.message));
@@ -265,7 +267,6 @@ const Connection = {
       var coinbase = null;
       if (store.getters['connection/connection'] && store.getters['connection/connection'].connected) {
         try {
-          logInfo("Connection", "execWeb3() signer: " + JSON.stringify(this.signer));
           coinbase = await this.signer.getAddress();
           // logInfo("Connection", "execWeb3() coinbase: " + JSON.stringify(coinbase));
           if (coinbase != this.lastCoinbase) {

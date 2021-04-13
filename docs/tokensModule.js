@@ -206,7 +206,7 @@ const tokensModule = {
       logInfo("tokensModule", "execWeb3() start[" + count + ", " + JSON.stringify(rootState.route.params) + ", " + networkChanged + ", " + blockChanged + ", " + coinbaseChanged+ "]");
       if (!state.executing) {
         commit('updateExecuting', true);
-        logInfo("tokensModule", "execWeb3() start[" + count + ", " + JSON.stringify(rootState.route.params) + ", " + networkChanged + ", " + blockChanged + ", " + coinbaseChanged + "]");
+        logInfo("tokensModule", "execWeb3() executing[" + count + ", " + JSON.stringify(rootState.route.params) + ", " + networkChanged + ", " + blockChanged + ", " + coinbaseChanged + "]");
 
         var paramsChanged = false;
         if (state.params != rootState.route.params.param) {
@@ -242,7 +242,8 @@ const tokensModule = {
           // ];
           //
           // // The Contract object
-          // const nftContract = new ethers.Contract(nftAddress, nftAbi, provider);
+          const nftContract = new ethers.Contract(nftAddress, nftAbi, store.getters['connection/connection'].provider);
+          logInfo("tokensModule", "execWeb3() nftContract: " + JSON.stringify(nftContract));
 
           // var tokenToolz = web3.eth.contract(TOKENTOOLZABI).at(TOKENTOOLZADDRESS);
           //
