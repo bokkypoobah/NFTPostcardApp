@@ -3,5 +3,30 @@
   "external_url": "https://zombiebabies.eth.link/json/0000000000000000000000000000000000000000000000000000000000000003.json",
   "image": "https://zombiebabies.eth.link/media/ZombieBaby_003.png",
   "name": "Zombie Baby #003",
-  "attributes": {}
+  "attributes": [
+    {
+      "trait_type": "Collection",
+      "value": "Zombie Babies"
+    },
+    {
+      "trait_type": "Parent",
+      "value": "Zombie #3636"
+    },
+    {
+      "trait_type": "Parent",
+      "value": "Zombie #4472"
+    },
+    {
+      "trait_type": "Attribute",
+      "value": "Front Goatee Dark"
+    },
+    {
+      "trait_type": "Attribute",
+      "value": "Earring"
+    },
+    {
+      "trait_type": "Ancient DNA",
+      "value": "Cowboy Hat"
+    }
+  ]
 }

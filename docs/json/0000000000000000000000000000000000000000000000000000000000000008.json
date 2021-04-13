@@ -3,5 +3,26 @@
   "external_url": "https://zombiebabies.eth.link/json/0000000000000000000000000000000000000000000000000000000000000008.json",
   "image": "https://zombiebabies.eth.link/media/ZombieBaby_008.png",
   "name": "Zombie Baby #008",
-  "attributes": {}
+  "attributes": [
+    {
+      "trait_type": "Collection",
+      "value": "Zombie Babies"
+    },
+    {
+      "trait_type": "Parent",
+      "value": "Zombie #3636"
+    },
+    {
+      "trait_type": "Parent",
+      "value": "Zombie #4472"
+    },
+    {
+      "trait_type": "Attribute",
+      "value": "Earring"
+    },
+    {
+      "trait_type": "Ancient DNA",
+      "value": "Police Cap"
+    }
+  ]
 }

@@ -3,5 +3,30 @@
   "external_url": "https://zombiebabies.eth.link/json/0000000000000000000000000000000000000000000000000000000000000006.json",
   "image": "https://zombiebabies.eth.link/media/ZombieBaby_006.png",
   "name": "Zombie Baby #006",
-  "attributes": {}
+  "attributes": [
+    {
+      "trait_type": "Collection",
+      "value": "Zombie Babies"
+    },
+    {
+      "trait_type": "Parent",
+      "value": "Zombie #3636"
+    },
+    {
+      "trait_type": "Parent",
+      "value": "Zombie #4472"
+    },
+    {
+      "trait_type": "Attribute",
+      "value": "Front Goatee Dark"
+    },
+    {
+      "trait_type": "Attribute",
+      "value": "Orange Hair"
+    },
+    {
+      "trait_type": "Ancient DNA",
+      "value": "Orange Side"
+    }
+  ]
 }

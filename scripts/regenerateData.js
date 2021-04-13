@@ -19,24 +19,40 @@ for (let tokenId in Object.keys(config.tokens)) {
   const filenamePrefix = pad64Zeroes(tokenId);
   const jsonFilename = OUTPUTDATADIR + filenamePrefix + ".json";
   console.log(jsonFilename + " " + JSON.stringify(token));
-  // for (let parentIndex in token.parents) {
-  //   let parent = token.parents[parentIndex];
-  //   if (allParents[parent] === undefined) {
-  //     allParents[parent] = 1;
-  //   }
-  // }
+
   const data = {};
-  const attributes = {};
+  const attributes = [];
   data.description = config.description;
   data.external_url = config.external_url_prefix + 'json/' + filenamePrefix + ".json";
   data.image = config.external_url_prefix + 'media/' + token.imageName;
   data.name = config.name_prefix + ' #' + pad3Zeroes(tokenId);
-  data.attributes = attributes;
+  attributes.push({ "trait_type": "Collection", "value": config.collection });
 
-  fs.writeFile(jsonFilename, JSON.stringify(data, null, 2), (err) => {
-      if (err) throw err;
-      console.log('Data written to file: ' + jsonFilename + " " + JSON.stringify(data, null, 2));
-  });
+  for (let parentIndex in token.parents) {
+    let parent = token.parents[parentIndex];
+    console.log("parent" + " " + JSON.stringify(parent));
+    attributes.push({ "trait_type": "Parent", "value": parent.name });
+  }
+
+  for (let attributeIndex in token.attributes) {
+    let attribute = token.attributes[attributeIndex];
+    console.log("attribute" + " " + JSON.stringify(attribute));
+    attributes.push({ "trait_type": "Attribute", "value": attribute });
+  }
+
+  for (let ancientDNAIndex in token.ancientDNA) {
+    let ancientDNA = token.ancientDNA[ancientDNAIndex];
+    console.log("ancientDNA" + " " + JSON.stringify(ancientDNA));
+    attributes.push({ "trait_type": "Ancient DNA", "value": ancientDNA });
+  }
+
+  data.attributes = attributes;
+  (async () => {
+    await fs.writeFile(jsonFilename, JSON.stringify(data, null, 2), (err) => {
+        if (err) throw err;
+        console.log('Data written to file: ' + jsonFilename + " " + JSON.stringify(data, null, 2));
+    });
+  })();
 
 }
 
