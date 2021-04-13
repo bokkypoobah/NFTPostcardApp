@@ -8,10 +8,10 @@ const Home = {
         <b-card-body class="p-0">
           <div>
             <b-card-group class="m-2">
-              <div v-for="tokenId in allTokenIds">
+              <div v-for="(tokenId, tokenIdIndex) in allTokenIds">
                 <b-card body-class="p-1" :img-src="'media/' + nftData.tokens[tokenId].imageName" img-alt="Image" img-top style="max-width: 15rem;" class="m-1 p-2">
                   <b-card-text class="pt-2">
-                    <b>#{{ tokenId }}</b>:
+                    <b>#{{ tokenId }}</b> x {{ balances != null && balances[tokenIdIndex] != null ? balances[tokenIdIndex] : 0 }}:
                     <span v-for="(parentId, parentIndex) in nftData.tokens[tokenId].parents">
                       <span v-if="parentIndex > 0">
                        +
@@ -96,6 +96,9 @@ const Home = {
     },
     allAncientDNAs() {
       return store.getters['tokens/allAncientDNAs'];
+    },
+    balances() {
+      return store.getters['tokens/balances'];
     },
   },
   mounted() {

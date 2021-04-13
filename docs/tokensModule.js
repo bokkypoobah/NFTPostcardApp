@@ -78,13 +78,13 @@ const tokensModule = {
   state: {
     tokenData: {},
 
-    nftData: {
-      "internal_media_dir": "media/"
-    },
+    nftData: null,
     allTokenIds: null,
     allParents: null,
     allAttributes: null,
     allAncientDNAs: null,
+
+    balances: null,
 
     params: null,
     executing: false,
@@ -97,6 +97,8 @@ const tokensModule = {
     allParents: state => state.allParents,
     allAttributes: state => state.allAttributes,
     allAncientDNAs: state => state.allAncientDNAs,
+
+    balances: state => state.balances,
 
     params: state => state.params,
   },
@@ -175,6 +177,10 @@ const tokensModule = {
         state.allAncientDNAs = Object.keys(allAncientDNAs).sort();
       }
     },
+    updateBalances(state, balances) {
+      state.balances = balances;
+      logInfo("tokensModule", "updateBalances('" + JSON.stringify(balances) + "')")
+    },
     updateParams(state, params) {
       state.params = params;
       logDebug("tokensModule", "updateParams('" + params + "')")
@@ -244,6 +250,17 @@ const tokensModule = {
           // // The Contract object
           const nftContract = new ethers.Contract(nftAddress, nftAbi, store.getters['connection/connection'].provider);
           logInfo("tokensModule", "execWeb3() nftContract: " + JSON.stringify(nftContract));
+
+          const tokenIds = store.getters['tokens/allTokenIds'];
+          const accounts = [];
+          for (let i = 0; i < tokenIds.length; i++) {
+            accounts.push(store.getters['connection/coinbase']);
+          }
+          logInfo("tokensModule", "execWeb3() tokens/allTokenIds: " + JSON.stringify(store.getters['tokens/allTokenIds']));
+
+          const balanceOfs = await nftContract.balanceOfBatch(accounts, tokenIds);
+          logInfo("tokensModule", "execWeb3() balanceOfs: " + JSON.stringify(balanceOfs.map((x) => { return x.toString(); })));
+          commit('updateBalances', balanceOfs.map((x) => { return x.toString(); }));
 
           // var tokenToolz = web3.eth.contract(TOKENTOOLZABI).at(TOKENTOOLZADDRESS);
           //
