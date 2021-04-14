@@ -20,7 +20,7 @@ const Home = {
                 <b-card body-class="p-1" img-alt="Image" img-top style="max-width: 15rem;" class="m-1 p-2">
                   <b-card-img :src="'media/' + nftData.tokens[tokenId].imageName" alt="Image" :style='{"background-color": nftData.tokens[tokenId].bgColour}'></b-card-img>
                   <b-card-text class="pt-2">
-                    <b>#{{ tokenId }}</b> x {{ balances != null && balances[tokenIdIndex] != null ? balances[tokenIdIndex] : 0 }}:
+                    <b>#{{ tokenId }}</b> <b-badge>{{ balances != null && balances[tokenIdIndex] != null ? ("x" + balances[tokenIdIndex]) : 0 }}</b-badge>:
                     <span v-for="(parentId, parentIndex) in nftData.tokens[tokenId].parents">
                       <span v-if="parentIndex > 0">
                        +
@@ -35,16 +35,19 @@ const Home = {
               <div>
                 <b-card body-class="p-1" :img-src="'media/' + 'ZombieBabies_000-008_random.gif'" img-alt="Image" img-top style="max-width: 15rem;" class="m-1 p-2">
                   <b-card-text class="pt-2">
-                    <b>Adopt A ZombieBaby</b><br />
-                    #000 to #007 chosen by the adoption centre.
+                    <!-- <b-button v-show="tokens[tokenId].owner === coinbase" size="sm" class="float-right" @click="burnToken(tokenId)" variant="danger">Burn Token</b-button> -->
+                    <b-button size="sm" variant="info">Adopt A ZombieBaby</b-button><br />
+                    <b-badge>Free + transaction fee</b-badge><br />
+                    Next available from the adoption centre, #0 to #7
                   </b-card-text>
                 </b-card>
               </div>
               <div>
                 <b-card body-class="p-1" :img-src="'media/' + 'ZombieBabies_000-008_set.gif'" img-alt="Image" img-top style="max-width: 15rem;" class="m-1 p-2">
                   <b-card-text class="pt-2">
-                    <b>Adopt A Clowder Of ZombieBabies</b><br />
-                    #000 to #008
+                    <b-button size="sm" variant="info">Adopt A Clowder Of ZombieBabies</b-button><br />
+                    <b-badge>0.05 ETH + transaction fee</b-badge><br />
+                    ZombieBabies #0 to #7
                   </b-card-text>
                 </b-card>
               </div>
