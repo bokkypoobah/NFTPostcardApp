@@ -7,9 +7,18 @@ const Home = {
       <b-card no-body class="border-0 m-0 mt-2">
         <b-card-body class="p-0">
           <div>
+            <!--
+            <b-card>
+              <b-img rounded="true" src="media/ZombieBaby_000.png" img-top style="max-width: 15rem;" class="m-1 p-2" />
+            </b-card>
+            <b-card bg-variant="none" style="background: radial-gradient(circle, black, white);">
+              <b-img rounded="circle" src="media/ZombieBaby_000_transparentbg.png" img-top style="max-width: 15rem; background-color: gold;" class="m-1 p-2" />
+            </b-card>
+            -->
             <b-card-group class="m-2">
               <div v-for="(tokenId, tokenIdIndex) in allTokenIds">
-                <b-card body-class="p-1" :img-src="'media/' + nftData.tokens[tokenId].imageName" img-alt="Image" img-top style="max-width: 15rem;" class="m-1 p-2">
+                <b-card body-class="p-1" img-alt="Image" img-top style="max-width: 15rem;" class="m-1 p-2">
+                  <b-card-img :src="'media/' + nftData.tokens[tokenId].imageName" alt="Image" :style='{"background-color": nftData.tokens[tokenId].bgColour}'></b-card-img>
                   <b-card-text class="pt-2">
                     <b>#{{ tokenId }}</b> x {{ balances != null && balances[tokenIdIndex] != null ? balances[tokenIdIndex] : 0 }}:
                     <span v-for="(parentId, parentIndex) in nftData.tokens[tokenId].parents">
