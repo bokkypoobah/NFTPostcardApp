@@ -17,15 +17,15 @@ const Home = {
             -->
             <b-card-group class="m-2">
               <div v-for="(tokenId, tokenIdIndex) in allTokenIds">
-                <b-card body-class="p-1" img-alt="Image" img-top style="max-width: 15rem;" class="m-1 p-2">
+                <b-card body-class="p-1" img-alt="Image" img-top style="max-width: 15rem; height: 23rem;" class="m-1 p-2">
                   <b-card-img :src="'media/' + nftData.tokens[tokenId].imageName" alt="Image" :style='{"background-color": nftData.tokens[tokenId].bgColour}'></b-card-img>
                   <b-card-text class="pt-2">
-                    <b>#{{ tokenId }}</b> <b-badge>{{ balances != null && balances[tokenIdIndex] != null ? ("x" + balances[tokenIdIndex]) : 0 }}</b-badge>:
+                    <b>#{{ tokenId }}</b> <b-badge v-if="connected">{{ balances != null && balances[tokenIdIndex] != null ? ("x" + balances[tokenIdIndex]) : 0 }}</b-badge>
                     <span v-for="(parentId, parentIndex) in nftData.tokens[tokenId].parents">
                       <span v-if="parentIndex > 0">
                        +
                       </span>
-                      <b-avatar variant="light" size="1.5rem" :src="'media/' + nftData.tokens[tokenId].parents[parentIndex].image"></b-avatar>
+                      <b-link :href="'https://www.larvalabs.com/cryptopunks/details/' + nftData.tokens[tokenId].parents[parentIndex].number" class="card-link" target="_blank"><b-avatar variant="light" size="2.0rem" :src="'https://www.larvalabs.com/public/images/cryptopunks/punk' + nftData.tokens[tokenId].parents[parentIndex].number + '.png'"></b-avatar></b-link>
                     </span><br />
                     <span v-for="attribute in nftData.tokens[tokenId].attributes"><b-badge pill variant="success" class="mr-1">{{ attribute }}</b-badge></span>
                     <span v-for="ancientDNA in nftData.tokens[tokenId].ancientDNA"><b-badge pill variant="warning" class="mr-1">{{ ancientDNA }} <font size="-1">🧬</font></b-badge></span>
@@ -33,19 +33,18 @@ const Home = {
                 </b-card>
               </div>
               <div>
-                <b-card body-class="p-1" :img-src="'media/' + 'ZombieBabies_000-008_random.gif'" img-alt="Image" img-top style="max-width: 15rem;" class="m-1 p-2">
+                <b-card body-class="p-1" :img-src="'media/' + 'ZombieBabies_000-008_random.gif'" img-alt="Image" img-top style="max-width: 15rem; height: 23rem;" class="m-1 p-2">
                   <b-card-text class="pt-2">
-                    <!-- <b-button v-show="tokens[tokenId].owner === coinbase" size="sm" class="float-right" @click="burnToken(tokenId)" variant="danger">Burn Token</b-button> -->
-                    <b-button size="sm" variant="info">Adopt A ZombieBaby</b-button><br />
+                    <b-button size="sm" @click="getOne()" variant="info">Adopt A ZombieBaby</b-button><br />
                     <b-badge>Free + transaction fee</b-badge><br />
                     Next available from the adoption centre, #0 to #7
                   </b-card-text>
                 </b-card>
               </div>
               <div>
-                <b-card body-class="p-1" :img-src="'media/' + 'ZombieBabies_000-008_set.gif'" img-alt="Image" img-top style="max-width: 15rem;" class="m-1 p-2">
+                <b-card body-class="p-1" :img-src="'media/' + 'ZombieBabies_000-008_set.gif'" img-alt="Image" img-top style="max-width: 15rem; height: 23rem;" class="m-1 p-2">
                   <b-card-text class="pt-2">
-                    <b-button size="sm" variant="info">Adopt A Clowder Of ZombieBabies</b-button><br />
+                    <b-button size="sm" @click="getSet()" variant="info">Adopt A Clowder Of ZombieBabies</b-button><br />
                     <b-badge>0.05 ETH + transaction fee</b-badge><br />
                     ZombieBabies #0 to #7
                   </b-card-text>
@@ -83,6 +82,108 @@ const Home = {
       sliding: null    }
   },
   methods: {
+    async getOne(event) {
+      if (!this.connected) {
+        this.$bvModal.msgBoxOk('Please connect your web3 browser wallet using the power button on the top right.', {
+            title: 'Note',
+            size: 'sm',
+            buttonSize: 'sm',
+            okVariant: 'primary',
+            footerClass: 'p-2',
+            hideHeaderClose: false,
+            centered: true
+          });
+      } else {
+        logInfo("homeModule", "getOne()");
+        this.$bvModal.msgBoxConfirm('Adopt the next available ZombieBaby for free? The Ethereum network transaction fee will be displayed in the next dialog box.', {
+            title: 'Please Confirm',
+            size: 'sm',
+            buttonSize: 'sm',
+            okVariant: 'danger',
+            okTitle: 'Yes',
+            cancelTitle: 'No',
+            footerClass: 'p-2',
+            hideHeaderClose: false,
+            centered: true
+          })
+          .then(value1 => {
+            if (value1) {
+              logInfo("homeModule", "getOne() confirmed");
+              // var factoryAddress = store.getters['optinoFactory/address']
+              const adoptionContract = new ethers.Contract(ZOMBIEBABYADOPTIONCENTREADDRESS, ZOMBIEBABYADOPTIONCENTREABI, store.getters['connection/connection'].provider);
+              logInfo("homeModule", "getOne() adoptionContract: " + JSON.stringify(adoptionContract));
+              let tx;
+              (async () => {
+                try {
+                  tx = await store.getters['connection/connection'].signer.sendTransaction({
+                    to: ZOMBIEBABYADOPTIONCENTREADDRESS,
+                    value: ethers.utils.parseEther("0"),
+                    gasLimit: 100000
+                  });
+                  store.dispatch('connection/addTx', tx);
+                } catch (error) {
+                  store.dispatch('connection/setTxError', error.message);
+                }
+              })();
+              event.preventDefault();
+            }
+          })
+          .catch(err => {
+            // An error occurred
+          });
+      }
+    },
+    async getSet(event) {
+      if (!this.connected) {
+        this.$bvModal.msgBoxOk('Please connect your web3 browser wallet using the power button on the top right.', {
+            title: 'Note',
+            size: 'sm',
+            buttonSize: 'sm',
+            okVariant: 'primary',
+            footerClass: 'p-2',
+            hideHeaderClose: false,
+            centered: true
+          });
+      } else {
+        logInfo("homeModule", "getSet()");
+        this.$bvModal.msgBoxConfirm('Adopt ZombieBabies #0 to #7? Adoption fee is 0.05 ETH plus the Ethereum network transaction fee that will be displayed in the next dialog box.', {
+            title: 'Please Confirm',
+            size: 'sm',
+            buttonSize: 'sm',
+            okVariant: 'danger',
+            okTitle: 'Yes',
+            cancelTitle: 'No',
+            footerClass: 'p-2',
+            hideHeaderClose: false,
+            centered: true
+          })
+          .then(value1 => {
+            if (value1) {
+              logInfo("homeModule", "getSet() confirmed");
+              // var factoryAddress = store.getters['optinoFactory/address']
+              const adoptionContract = new ethers.Contract(ZOMBIEBABYADOPTIONCENTREADDRESS, ZOMBIEBABYADOPTIONCENTREABI, store.getters['connection/connection'].provider);
+              logInfo("homeModule", "getSet() adoptionContract: " + JSON.stringify(adoptionContract));
+              let tx;
+              (async () => {
+                try {
+                  tx = await store.getters['connection/connection'].signer.sendTransaction({
+                    to: ZOMBIEBABYADOPTIONCENTREADDRESS,
+                    value: ethers.utils.parseEther("0.05"),
+                    gasLimit: 300000
+                  });
+                  store.dispatch('connection/addTx', tx);
+                } catch (error) {
+                  store.dispatch('connection/setTxError', error.message);
+                }
+              })();
+              event.preventDefault();
+            }
+          })
+          .catch(err => {
+            // An error occurred
+          });
+      }
+    },
     onSlideStart(slide) {
       this.sliding = true
     },
@@ -91,8 +192,8 @@ const Home = {
     }
   },
   computed: {
-    connect() {
-      return store.getters['connection/connect'];
+    connected() {
+      return store.getters['connection/connection'] != null && store.getters['connection/connection'].connected;
     },
     nftData() {
       return store.getters['tokens/nftData'];

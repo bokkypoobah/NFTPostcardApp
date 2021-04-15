@@ -249,7 +249,7 @@ const tokensModule = {
           //
           // // The Contract object
           const nftContract = new ethers.Contract(nftAddress, nftAbi, store.getters['connection/connection'].provider);
-          logInfo("tokensModule", "execWeb3() nftContract: " + JSON.stringify(nftContract));
+          // logInfo("tokensModule", "execWeb3() nftContract: " + JSON.stringify(nftContract));
 
           const tokenIds = store.getters['tokens/allTokenIds'];
           const accounts = [];

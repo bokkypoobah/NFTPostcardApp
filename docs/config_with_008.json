@@ -9,7 +9,7 @@
   "tokens": {
     "0" : {
       "generation": 2,
-      "parents": [{"number": "3636", "name": "Zombie #3636", "image": "Punk_3636.png"}, {"number": "4472", "name": "Zombie #4472", "image": "Punk_4472.png"}],
+      "parents": [{"name": "Zombie #3636", "image": "Punk_3636.png"}, {"name": "Zombie #4472", "image": "Punk_4472.png"}],
       "attributes": ["Front Goatee Dark", "Earring", "Top Hat"],
       "ancientDNA": [],
       "imageHash": "QmSexHstXKqRszhXwaXiBp4DJRjFHXdp6t4tw4bR47UmT1",
@@ -18,7 +18,7 @@
     },
     "1" : {
       "generation": 2,
-      "parents": [{"number": "3636", "name": "Zombie #3636", "image": "Punk_3636.png"}, {"number": "4472", "name": "Zombie #4472", "image": "Punk_4472.png"}],
+      "parents": [{"name": "Zombie #3636", "image": "Punk_3636.png"}, {"name": "Zombie #4472", "image": "Punk_4472.png"}],
       "attributes": ["Front Goatee Dark", "Purple Hair"],
       "ancientDNA": [],
       "imageHash": "QmZKfMJ6R1kVY8i7jJYTmAHi7igqZzs7Yq9vVdZE183CCC",
@@ -27,7 +27,7 @@
     },
     "2" : {
       "generation": 2,
-      "parents": [{"number": "3636", "name": "Zombie #3636", "image": "Punk_3636.png"}, {"number": "4472", "name": "Zombie #4472", "image": "Punk_4472.png"}],
+      "parents": [{"name": "Zombie #3636", "image": "Punk_3636.png"}, {"name": "Zombie #4472", "image": "Punk_4472.png"}],
       "attributes": ["Front Goatee Dark", "Purple Hair", "Top Hat"],
       "ancientDNA": [],
       "imageHash": "QmfSsD7VfVDXv51QDJqVUbnn6z7xhWyiZjwzSnkb7j4sTb",
@@ -36,7 +36,7 @@
     },
     "3" : {
       "generation": 2,
-      "parents": [{"number": "3636", "name": "Zombie #3636", "image": "Punk_3636.png"}, {"number": "4472", "name": "Zombie #4472", "image": "Punk_4472.png"}],
+      "parents": [{"name": "Zombie #3636", "image": "Punk_3636.png"}, {"name": "Zombie #4472", "image": "Punk_4472.png"}],
       "attributes": ["Front Goatee Dark", "Earring"],
       "ancientDNA": ["Cowboy Hat"],
       "imageHash": "QmNeAK4t4ZdGb3hhxEP83WpPEnFqFKHu1F5fhgFqZNbNRx",
@@ -45,7 +45,7 @@
     },
     "4" : {
       "generation": 2,
-      "parents": [{"number": "3636", "name": "Zombie #3636", "image": "Punk_3636.png"}, {"number": "4472", "name": "Zombie #4472", "image": "Punk_4472.png"}],
+      "parents": [{"name": "Zombie #3636", "image": "Punk_3636.png"}, {"name": "Zombie #4472", "image": "Punk_4472.png"}],
       "attributes": ["Front Goatee Dark", "Earring"],
       "ancientDNA": ["Beanie"],
       "imageHash": "QmZrJFwhiBP2QcpqraZ4SZYqXZTADXLTsUCHge9g8Piv5p",
@@ -54,7 +54,7 @@
     },
     "5" : {
       "generation": 2,
-      "parents": [{"number": "3636", "name": "Zombie #3636", "image": "Punk_3636.png"}, {"number": "4472", "name": "Zombie #4472", "image": "Punk_4472.png"}],
+      "parents": [{"name": "Zombie #3636", "image": "Punk_3636.png"}, {"name": "Zombie #4472", "image": "Punk_4472.png"}],
       "attributes": ["Front Goatee Dark", "Earring", "Purple Hair"],
       "ancientDNA": ["Cowboy Hat"],
       "imageHash": "QmRnoBqzDTismKF5Ap4opDJmivN1HuB69krNsy9vKU47hq",
@@ -63,7 +63,7 @@
     },
     "6" : {
       "generation": 2,
-      "parents": [{"number": "3636", "name": "Zombie #3636", "image": "Punk_3636.png"}, {"number": "4472", "name": "Zombie #4472", "image": "Punk_4472.png"}],
+      "parents": [{"name": "Zombie #3636", "image": "Punk_3636.png"}, {"name": "Zombie #4472", "image": "Punk_4472.png"}],
       "attributes": ["Front Goatee Dark", "Orange Hair"],
       "ancientDNA": ["Orange Side"],
       "imageHash": "QmVhZPK273b5aDZiWVZC6asxU5CK4nuFU12yYPcuyFZRwg",
@@ -72,12 +72,21 @@
     },
     "7" : {
       "generation": 2,
-      "parents": [{"number": "3636", "name": "Zombie #3636", "image": "Punk_3636.png"}, {"number": "4472", "name": "Zombie #4472", "image": "Punk_4472.png"}],
+      "parents": [{"name": "Zombie #3636", "image": "Punk_3636.png"}, {"name": "Zombie #4472", "image": "Punk_4472.png"}],
       "attributes": ["Earring"],
       "ancientDNA": ["Mohawk"],
       "imageHash": "Qme3jfJrXVDKAKqUCtAz4XovSxHwHGiaKivyhZdFgn4ahs",
       "imageName": "ZombieBaby_007.png",
       "bgColour": "#e3e39d"
+    },
+    "8" : {
+      "generation": 2,
+      "parents": [{"name": "Zombie #3636", "image": "Punk_3636.png"}, {"name": "Zombie #4472", "image": "Punk_4472.png"}],
+      "attributes": ["Earring"],
+      "ancientDNA": ["Police Cap"],
+      "imageHash": "QmTmyUU1wJGRdbyPxmA2yo7ocLgLbuXVVFxehRxMD6Z2pk",
+      "imageName": "ZombieBaby_008.png",
+      "bgColour": "#c8d5e5"
     }
   }
 }
