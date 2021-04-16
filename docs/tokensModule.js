@@ -6,19 +6,14 @@ const Tokens = {
           Please switch to the Ethereum mainnet in MetaMask and refresh this page
         </b-card-text>
       </b-card>
-      <b-button v-b-toggle.tokens size="sm" block variant="outline-info">Tokens: {{ tokenDataSorted.length }}</b-button>
-      <b-collapse id="tokens" visible class="mt-2">
+      <b-button v-b-toggle.contracts size="sm" block variant="outline-info">Contracts</b-button>
+      <b-collapse id="contracts" visible class="mt-2">
         <b-card no-body class="border-0" v-if="network == 1337 || network == 1 || network == 3">
-          <b-row v-for="(token) in tokenDataSorted" v-bind:key="token.tokenAddress">
-            <b-col cols="4" class="small truncate mb-1" style="font-size: 80%" v-b-popover.hover="token.symbol + ' - ' + token.name + ' totalSupply ' + token.totalSupply + ' decimals ' + token.decimals">
-              <b-link :href="explorer + 'token/' + token.tokenAddress" class="card-link" target="_blank">{{ token.symbol }}</b-link>
-            </b-col>
-            <b-col cols="4" class="small truncate text-right mb-1"  style="font-size: 60%" v-b-popover.hover="'Balance'">
-              {{ formatMaxDecimals(token.balance, 4) }}
-            </b-col>
-            <b-col cols="4" class="small truncate text-right mb-1"  style="font-size: 60%" v-b-popover.hover="'Allowance'">
-              {{ formatMaxDecimals(token.allowance, 4) }}
-            </b-col>
+          <b-row>
+            <b-col cols="4" class="small">ERC-1155 NFT</b-col><b-col class="small truncate" cols="8"><b-link :href="explorer + 'address/' + nftData.nftAddress + '#code'" class="card-link" target="_blank">{{ nftData.nftAddress.substring(0, 12) }}</b-link> <b-link v-b-popover.hover="'View on OpenSea.io'" :href="nftData.openSeaUrl" target="_blank"><img src="images/381114e-opensea-logomark-flat-colored-blue.png" width="20px" /></b-link></b-col>
+          </b-row>
+          <b-row>
+            <b-col cols="4" class="small">Adoption Centre</b-col><b-col class="small truncate" cols="8"><b-link :href="explorer + 'address/' + nftData.adoptionCentreV1Address + '#code'" class="card-link" target="_blank">{{ nftData.adoptionCentreV1Address.substring(0, 12) }}</b-link></b-col>
           </b-row>
         </b-card>
       </b-collapse>
@@ -39,36 +34,14 @@ const Tokens = {
     coinbase() {
       return store.getters['connection/coinbase'];
     },
-    tokenDataSorted() {
-      var results = [];
-      var tokenData = store.getters['tokens/tokenData'];
-      for (token in tokenData) {
-        if (/^\w+$/.test(tokenData[token].symbol)) {
-          results.push(tokenData[token]);
-        }
-      }
-      results.sort(function(a, b) {
-        return ('' + a.symbol).localeCompare(b.symbol);
-      });
-      return results;
+    nftData() {
+      return store.getters['tokens/nftData'];
     },
   },
   methods: {
-    formatMaxDecimals(value, decimals) {
-      return parseFloat(new BigNumber(value).toFixed(decimals));
-    },
   },
   mounted() {
     logDebug("Tokens", "mounted()")
-    if (localStorage.getItem('tokenData')) {
-      var tokenData = JSON.parse(localStorage.getItem('tokenData'));
-      // logInfo("Tokens", "Restoring tokenData: " + JSON.stringify(tokenData));
-      for (var address in tokenData) {
-        var token = tokenData[address];
-        // logInfo("Tokens", "Restoring token: " + JSON.stringify(token));
-        store.dispatch('tokens/updateToken', token);
-      }
-    }
   },
 };
 
@@ -76,8 +49,6 @@ const Tokens = {
 const tokensModule = {
   namespaced: true,
   state: {
-    tokenData: {},
-
     nftData: null,
     allTokenIds: null,
     allParents: null,
@@ -90,8 +61,6 @@ const tokensModule = {
     executing: false,
   },
   getters: {
-    tokenData: state => state.tokenData,
-
     nftData: state => state.nftData,
     allTokenIds: state => state.allTokenIds,
     allParents: state => state.allParents,
@@ -102,42 +71,7 @@ const tokensModule = {
 
     params: state => state.params,
   },
-  // computed: {
-  //   allTokenIds() {
-  //     logInfo("tokensModule", "computed.allTokenIds(" + state.nftData + ")");
-  //     return state.nftData == null ? null : Object.keys(state.nftData.tokens);
-  //   },
-  // },
   mutations: {
-    updateToken(state, token) {
-      // logInfo("tokensModule", "mutations.updateToken(" + JSON.stringify(token) + ")");
-      var currentToken = state.tokenData[token.address.toLowerCase()];
-      if (typeof currentToken === 'undefined' ||
-        currentToken.address != token.address ||
-        currentToken.symbol != token.symbol ||
-        currentToken.name != token.name ||
-        currentToken.decimals != token.decimals ||
-        currentToken.totalSupply != token.totalSupply ||
-        currentToken.balance != token.balance ||
-        currentToken.allowance != token.allowance ||
-        currentToken.source != token.source) {
-        Vue.set(state.tokenData, token.address.toLowerCase(), {address: token.address, symbol: token.symbol, name: token.name, decimals: token.decimals, totalSupply: token.totalSupply, balance: token.balance, allowance: token.allowance, source: token.source });
-        // logInfo("tokensModule", "mutations.updateToken - state.tokenData: " +  JSON.stringify(state.tokenData));
-        localStorage.setItem('tokenData', JSON.stringify(state.tokenData));
-      // } else {
-      //   logInfo("tokensModule", "mutations.updateToken - NOT UPDATED state.tokenData: " +  JSON.stringify(state.tokenData));
-      }
-    },
-    removeToken(state, address) {
-      // logInfo("tokensModule", "mutations.removeToken(" + address + ")");
-      Vue.delete(state.tokenData, address.toLowerCase());
-      localStorage.setItem('tokenData', JSON.stringify(state.tokenData));
-    },
-    removeAllTokens(state, blah) {
-      // logInfo("tokensModule", "mutations.removeAllTokens()");
-      state.tokenData = {};
-      localStorage.removeItem('tokenData');
-    },
     updateNFTData(state, nftData) {
       // logInfo("tokensModule", "mutations.updateNFTData(" + JSON.stringify(nftData) + ")");
       state.nftData = nftData;
@@ -191,18 +125,6 @@ const tokensModule = {
     },
   },
   actions: {
-    updateToken(context, token) {
-      // logInfo("tokensModule", "actions.updateToken(" + JSON.stringify(token) + ")");
-      context.commit('updateToken', token);
-    },
-    removeToken(context, address) {
-      // logInfo("tokensModule", "actions.removeToken(" + address + ")");
-      context.commit('removeToken', address);
-    },
-    removeAllTokens(context, blah) {
-      // logInfo("tokensModule", "actions.removeAllTokens(" + blah + ")");
-      context.commit('removeAllTokens', blah);
-    },
     updateNFTData(context, nftData) {
       // logInfo("tokensModule", "actions.updateNFTData(" + JSON.stringify(nftData) + ")");
       context.commit('updateNFTData', nftData);

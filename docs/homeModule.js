@@ -26,7 +26,9 @@ const Home = {
                        +
                       </span>
                       <b-link :href="'https://www.larvalabs.com/cryptopunks/details/' + nftData.tokens[tokenId].parents[parentIndex].number" class="card-link" target="_blank"><b-avatar variant="light" size="2.0rem" :src="'https://www.larvalabs.com/public/images/cryptopunks/punk' + nftData.tokens[tokenId].parents[parentIndex].number + '.png'"></b-avatar></b-link>
-                    </span><br />
+                    </span>
+                    <b-link :href="'https://opensea.io/assets/'+ nftData.nftAddress + '/' + tokenId" target="_blank"><img src="images/381114e-opensea-logomark-flat-colored-blue.png" width="30px" /></b-link>
+                    <br />
                     <span v-for="attribute in nftData.tokens[tokenId].attributes"><b-badge pill variant="success" class="mr-1">{{ attribute }}</b-badge></span>
                     <span v-for="ancientDNA in nftData.tokens[tokenId].ancientDNA"><b-badge pill variant="warning" class="mr-1">{{ ancientDNA }} <font size="-1">🧬</font></b-badge></span>
                   </b-card-text>

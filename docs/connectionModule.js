@@ -95,7 +95,7 @@ const Connection = {
             </b-col>
           </b-row>
           <b-row>
-            <b-col cols="4" class="small">My account</b-col><b-col class="small truncate" cols="8"><b-link :href="explorer + 'address/' + coinbase" class="card-link" target="_blank">{{ coinbase }}</b-link></b-col>
+            <b-col cols="4" class="small">My account</b-col><b-col class="small truncate" cols="8"><b-link :href="explorer + 'address/' + coinbase" class="card-link" target="_blank">{{ coinbase == null ? '' : coinbase.substring(0, 12) }}</b-link> <b-link v-b-popover.hover="'View on OpenSea.io'" :href="'https://opensea.io/accounts/'+ coinbase" target="_blank"><img src="images/381114e-opensea-logomark-flat-colored-blue.png" width="20px" /></b-link></b-col>
           </b-row>
           <b-row>
             <b-col cols="4" class="small">My balance</b-col><b-col class="small truncate" cols="8"><b-link :href="explorer + 'address/' + coinbase" class="card-link" target="_blank">{{ balanceString }}</b-link></b-col>
