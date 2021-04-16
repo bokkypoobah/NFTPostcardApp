@@ -146,7 +146,7 @@ const tokensModule = {
         if (networkChanged || blockChanged || coinbaseChanged || paramsChanged) {
 
           // You can also use an ENS name for the contract address
-          const nftAddress = state.nftData.nftAddress;
+          const nftAddress = "token.zombiebabies.eth"; // state.nftData.nftAddress;
           logInfo("tokensModule", "execWeb3() nftAddress: " + nftAddress);
 
           const nftAbi = ERC1155NFTABI;
