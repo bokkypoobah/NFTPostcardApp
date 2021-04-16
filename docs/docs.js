@@ -11,8 +11,8 @@ const Docs = {
                 <h5 ref="info_top" class="mb-3">Info</h5>
 
                 <!-- <b-card no-body class="border-0"> -->
-                  <p>We, <b-link href="https://www.larvalabs.com/cryptopunks/details/3636" target="_blank">#3636 <b-avatar variant="light" size="2.0rem" src="https://www.larvalabs.com/public/images/cryptopunks/punk3636.png"></b-avatar></b-link> and
-                  <b-link href="https://www.larvalabs.com/cryptopunks/details/4472" target="_blank">#4472 <b-avatar variant="light" size="2.0rem" src="https://www.larvalabs.com/public/images/cryptopunks/punk4472.png"></b-avatar></b-link>, Zombie Xtreme High Yield cultivators have been travelling through space and time collecting digital subjects to build a menagerie.</p>
+                  <p>We, <b-link href="https://www.larvalabs.com/cryptopunks/details/3636" target="_blank">#3636 <b-avatar variant="light" size="3.0rem" src="https://www.larvalabs.com/public/images/cryptopunks/punk3636.png"></b-avatar></b-link> and
+                  <b-link href="https://www.larvalabs.com/cryptopunks/details/4472" target="_blank">#4472 <b-avatar variant="light" size="3.0rem" src="https://www.larvalabs.com/public/images/cryptopunks/punk4472.png"></b-avatar></b-link>, Zombie Xtreme High Yield cultivators have been travelling through space and time collecting digital subjects to build a menagerie.</p>
                   <div class="m-5">
                       <b-carousel
                         id="carousel-1"
@@ -28,43 +28,43 @@ const Docs = {
                       >
                         <b-carousel-slide caption="Zombie #3636,"
                           text="BASTARD GAN V2 Children And Cats, Bombo, NSW, Australia, Year 2021">
-                          <b-img-lazy slot="img" class="d-block img-fluid w-100" :width=slideWidth :height=slideHeight
-                             src="images/IMG_9534_z3636_Bombo_2048x960.png" alt="image slot"></b-img-lazy>
+                          <b-img slot="img" class="d-block img-fluid w-100" :width=slideWidth :height=slideHeight
+                             src="images/IMG_9534_z3636_Bombo_2048x960.png" alt="image slot"></b-img>
                         </b-carousel-slide>
                         <b-carousel-slide caption="Zombie #3636 & #4472 Family"
                           text="On A Palaeontological Stroll Down The Permian At Gerroa, NSW, Australia">
-                          <b-img-lazy slot="img" class="d-block img-fluid w-100" :width=slideWidth :height=slideHeight
-                               src="images/GerroaPhotoAlbumWithZ3636n4472Family_2048x960.png" alt="image slot"></b-img-lazy>
+                          <b-img slot="img" class="d-block img-fluid w-100" :width=slideWidth :height=slideHeight
+                               src="images/GerroaPhotoAlbumWithZ3636n4472Family_2048x960.png" alt="image slot"></b-img>
                         </b-carousel-slide>
                         <b-carousel-slide caption="Zombie #3636 & #4472 Family"
                           text="In Year 1637 At Utrecht To Trade Tulip NFT Options">
-                          <b-img-lazy slot="img" class="d-block img-fluid w-100" :width=slideWidth :height=slideHeight
-                               src="images/Cryptogs_3185_ZFam_2048x960.png" alt="image slot"></b-img-lazy>
+                          <b-img slot="img" class="d-block img-fluid w-100" :width=slideWidth :height=slideHeight
+                               src="images/Cryptogs_3185_ZFam_2048x960.png" alt="image slot"></b-img>
                         </b-carousel-slide>
                         <b-carousel-slide caption="Zombie #3636 & #4472 Family"
                           text="In 1507 At Badaling To Trade Silk NFTs">
-                          <b-img-lazy slot="img" class="d-block img-fluid w-100" :width=slideWidth :height=slideHeight
-                               src="images/GreatWall_ZFam_2048x960.png" alt="image slot"></b-img-lazy>
+                          <b-img slot="img" class="d-block img-fluid w-100" :width=slideWidth :height=slideHeight
+                               src="images/GreatWall_ZFam_2048x960.png" alt="image slot"></b-img>
                         </b-carousel-slide>
                         <b-carousel-slide caption="Zombie Xtreme High Yield Farmers"
                           text="With Subjects In 1935 At Milsons Point">
-                          <b-img-lazy slot="img" class="d-block img-fluid w-100" :width=slideWidth :height=slideHeight
-                               src="images/PunkstersHarbourBridgeMilsonsPoint1935_1600x750.png" alt="image slot"></b-img-lazy>
+                          <b-img slot="img" class="d-block img-fluid w-100" :width=slideWidth :height=slideHeight
+                               src="images/PunkstersHarbourBridgeMilsonsPoint1935_1600x750.png" alt="image slot"></b-img>
                         </b-carousel-slide>
                         <b-carousel-slide caption="Zombie #3636 & #4472"
                           text="Infected By Airborne Z-Alien Virus, Travel To 1,050 BC To Inspect Their Re-analoged Digitalised Cat At Earth-619">
-                          <b-img-lazy slot="img" class="d-block img-fluid w-100" :width=slideWidth :height=slideHeight
-                               src="images/Punks_3636_4472_Sphinx_1024x480.png" alt="image slot"></b-img-lazy>
+                          <b-img slot="img" class="d-block img-fluid w-100" :width=slideWidth :height=slideHeight
+                               src="images/Punks_3636_4472_Sphinx_1024x480.png" alt="image slot"></b-img>
                         </b-carousel-slide>
                         <b-carousel-slide caption="Zombie Xtreme High Yield Cultivators And Subjects"
                           text="Infected By Mutated Z-Alien Virus Strains In 1,050 BC at Earth-619">
-                          <b-img-lazy slot="img" class="d-block img-fluid w-100" :width=slideWidth :height=slideHeight
-                               src="images/Punks_3636_4472_Sphinx_Subjects_More_1024x480.png" alt="image slot"></b-img-lazy>
+                          <b-img slot="img" class="d-block img-fluid w-100" :width=slideWidth :height=slideHeight
+                               src="images/Punks_3636_4472_Sphinx_Subjects_More_1024x480.png" alt="image slot"></b-img>
                         </b-carousel-slide>
                         <b-carousel-slide caption="Zombie Xtreme High Yield Cultivators"
                           text="Take Ownership Of Twins At 1888 In The Royal Prince Alfred Hospital, Sydney. Credits - Mitchell Library, State Library of NSW">
-                          <b-img-lazy slot="img" class="d-block img-fluid w-100" :width=slideWidth :height=slideHeight
-                               src="images/CryptoBabyPunk_401_Birth_At_RPA_1880-1893_960x450.png" alt="image slot"></b-img-lazy>
+                          <b-img slot="img" class="d-block img-fluid w-100" :width=slideWidth :height=slideHeight
+                               src="images/CryptoBabyPunk_401_Birth_At_RPA_1880-1893_960x450.png" alt="image slot"></b-img>
                         </b-carousel-slide>
                       </b-carousel>
                     </div>
@@ -72,7 +72,7 @@ const Docs = {
 
                   <p>We have now deployed an Xtreme High Yield Zombie Baby <b-link :href="explorer + 'address/token.zombiebabies.eth#code'" target="_blank">ERC-1155 Non-Fungible Token</b-link> (NFT), and a <b-link :href="explorer + 'address/adoption.zombiebabies.eth#code'" target="_blank">Zombie Baby Adoption Centre</b-link> on the Ethereum blockchain, for our immortal Zombie Babies to spread throughout SpaceTime.</p>
 
-                  <!-- {{ nftData.nftAddress == null ? '' : (nftData.nftAddress.substring(0, 10) + '...') }}</b-link> <b-link v-b-popover.hover="'View on OpenSea.io'" :href="nftData.openSeaUrl" target="_blank"><img src="images/381114e-opensea-logomark-flat-colored-blue.png" width="20px" /></b-link> -->
+                  <p><b-link to="/">Adopt</b-link> the next available Zombie Babies (one of #0 to #7) for free (+ transaction fee), or adopt a clowder of Zombie Babies (all of #0 to #7) for 0.05 ETH (+ transaction fee).</p>
 
 
                 <!--
@@ -82,6 +82,7 @@ const Docs = {
             </b-tab>
 
             <!-- Risks -->
+            <!--
             <b-tab title="Risks" @click.prevent="updateRouterParamsSectionTopic('risks', 'top')">
 
               <b-card-text>
@@ -95,16 +96,20 @@ const Docs = {
 
               </b-card-text>
             </b-tab>
+            -->
 
             <!-- How To -->
+            <!--
             <b-tab title="How To" @click.prevent="updateRouterParamsSectionTopic('howto', 'top')">
               <b-card-text>
                 <h5 ref="howto_top" class="mb-3">How To ...</h5>
                 How To ...
               </b-card-text>
             </b-tab>
+            -->
 
             <!-- Formulae -->
+            <!--
             <b-tab title="Formulae" @click.prevent="updateRouterParamsSectionTopic('formulae', 'top')">
               <b-card-text>
                 <h5 ref="formulae_top" class="mb-3">Formulae</h5>
@@ -202,8 +207,10 @@ if (spot > 0 && spot > strike) {
 // ----------------------------------------------------------------------------</code></pre>
               </b-card-text>
             </b-tab>
+            -->
 
             <!-- Factory -->
+            <!--
             <b-tab title="Factory" @click.prevent="updateRouterParamsSectionTopic('factory', 'top')">
               <b-card-text>
                 <h5 ref="factory_top" class="mb-3">Factory</h5>
@@ -223,8 +230,10 @@ if (spot > 0 && spot > strike) {
 }</code></pre>
               </b-card-text>
             </b-tab>
+            -->
 
             <!-- Optino And Cover -->
+            <!--
             <b-tab title="Optino And Cover" @click.prevent="updateRouterParamsSectionTopic('optinoandcover', 'top')">
               <b-card-text>
                 <h5 ref="optinoandcover_top" class="mb-3">Optino And Cover</h5>
@@ -237,6 +246,7 @@ if (spot > 0 && spot > strike) {
 }</code></pre>
               </b-card-text>
             </b-tab>
+            -->
 
             <!--
             <b-tab title="Reference" @click.prevent="updateRouterParamsSectionTopic('reference', 'top')">
