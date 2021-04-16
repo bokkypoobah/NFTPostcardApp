@@ -87,6 +87,7 @@ const app = new Vue({
       lastBlockTimeDiff: null,
       reschedule: false,
       jsonData: null,
+      twitterCardId: "000",
 
       name: 'BootstrapVue',
       show: true,
@@ -109,6 +110,21 @@ const app = new Vue({
   mounted() {
     logInfo("app", "mounted() Called");
     this.loadNFTData("config.json");
+    // logInfo("app", "mounted() $route: " + JSON.stringify(this.$route.params));
+    if (this.$route.params["id"] != null) {
+      // function pad3Zeroes(s) {
+      //   var o = s.toString();
+      //   while (o.length < 3) {
+      //     o = "0" + o;
+      //   }
+      //   return o;
+      // }
+      // this.twitterCardId = pad3Zeroes(this.$route.params["id"]);
+      // const descEl = document.querySelector('head');
+      // logInfo("app", "descEl " + JSON.stringify(descEl));
+      // document.title = this.twitterCardId;
+      // logInfo("app", "mounted() $route: twitterCardId " + JSON.stringify(this.$route.params) + " => " + this.twitterCardId);
+    }
 
     if (localStorage.getItem('powerOn')) {
       var c = localStorage.getItem('powerOn');

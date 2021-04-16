@@ -7,6 +7,10 @@ const routes = [{
     component: Docs,
     name: 'Docs',
   }, {
+    path: '/:id',
+    component: Home,
+    name: '',
+  }, {
     path: '*',
     component: Home,
     name: ''

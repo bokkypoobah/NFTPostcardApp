@@ -81,22 +81,16 @@ const Docs = {
               </b-card-text>
             </b-tab>
 
-            <!-- Risks -->
-            <!--
-            <b-tab title="Risks" @click.prevent="updateRouterParamsSectionTopic('risks', 'top')">
+            <!-- Links -->
+            <b-tab title="Links" @click.prevent="updateRouterParamsSectionTopic('links', 'top')">
 
               <b-card-text>
-                <h5 ref="risks_top" class="mb-3">Risks</h5>
-                <p>Risks:</p>
-                <ul>
-                  <li>Price feed</li>
-                  <li>Collateral token</li>
-                  <li>This smart contract</li>
-                </ul>
-
+                <h5 ref="links_top" class="mb-3">Links</h5>
+                <p>GitHub Zombie Babies UI: <b-link href="https://github.com/bokkypoobah/ZombieBabies" target="_blank">https://github.com/bokkypoobah/ZombieBabies</b-link></p>
+                <p>GitHub ERC-1155 NFT: <b-link href="https://github.com/bokkypoobah/NFT" target="_blank">https://github.com/bokkypoobah/NFT</b-link></p>
+                <p>Twitter: <b-link href="https://twitter.com/BokkyPooBah" target="_blank">https://twitter.com/BokkyPooBah</b-link></p>
               </b-card-text>
             </b-tab>
-            -->
 
             <!-- How To -->
             <!--
@@ -378,7 +372,7 @@ if (spot > 0 && spot > strike) {
     logInfo("Docs", "mounted() $route: " + JSON.stringify(this.$route.params));
     if ("info" == this.$route.params.section) {
       this.section = 0;
-    } else if ("risks" == this.$route.params.section) {
+    } else if ("links" == this.$route.params.section) {
       this.section = 1;
     } else if ("howto" == this.$route.params.section) {
       this.section = 2;
