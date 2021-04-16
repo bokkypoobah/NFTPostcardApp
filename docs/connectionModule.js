@@ -387,7 +387,7 @@ const connectionModule = {
     },
     network: null,
     networkName: null,
-    explorer: null,
+    explorer: "https://etherscan.io/",
     faucets: null,
     coinbase: null,
     balance: null,
