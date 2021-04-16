@@ -38,7 +38,7 @@ const Home = {
                 <b-card body-class="p-1" :img-src="'media/' + 'ZombieBabies_000-008_random.gif'" img-alt="Image" img-top style="max-width: 15rem; height: 23rem;" class="m-1 p-2">
                   <b-card-text class="pt-2">
                     <b-button size="sm" @click="getOne()" variant="info">Adopt A ZombieBaby</b-button><br />
-                    <b-badge>Free + transaction fee</b-badge><br />
+                    <b-badge>FREE + transaction fee</b-badge><br />
                     Next available from the adoption centre, #0 to #7
                   </b-card-text>
                 </b-card>

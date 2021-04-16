@@ -5,14 +5,7 @@ Vue.use(VueApexCharts);
 
 Vue.component('apexchart', VueApexCharts);
 Vue.component('connection', Connection);
-Vue.component('governance', Governance);
 Vue.component('tokens', Tokens);
-Vue.component('payoff', Payoff);
-Vue.component('feeds', Feeds);
-Vue.component('optinoFactory', OptinoFactory);
-// Vue.component('optinoFactory', OptinoFactory, {
-//     name: 'optinoFactory'
-// });
 Vue.component('flat-pickr', VueFlatpickr);
 
 // hljs.registerLanguage('solidity', window.hljsDefineSolidity);
@@ -59,13 +52,6 @@ const store = new Vuex.Store({
   },
   modules: {
     connection: connectionModule,
-    feeds: feedsModule,
-    feedsExplorer: feedsExplorerModule,
-    governance: governanceModule,
-    governanceExplorer: governanceExplorerModule,
-    optinoExplorer: optinoExplorerModule,
-    optinoFactory: optinoFactoryModule,
-    payoff: payoffModule,
     tokens: tokensModule,
     tokensExplorer: tokensExplorerModule,
   }
