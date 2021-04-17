@@ -1,9 +1,14 @@
 const Workshop = {
   template: `
     <div class="mt-5 pt-3">
-      <b-card no-body header="Adoption Centre" class="border-0" header-class="p-1">
+      <b-card no-body header="Workshop" class="border-0" header-class="p-1">
         <b-card no-body class="border-0 m-0 mt-2">
           <b-card-body class="p-0">
+
+          <!-- <b-img src="media/ZombieBaby_000.png" height="1024px" alt="image slot"></b-img> -->
+          <b-img src="https://www.larvalabs.com/public/images/cryptopunks/punk3636.png" height="1024px" style="image-rendering: pixelated;" alt="image slot"></b-img>
+
+
 
             <!--
             <div>
@@ -49,6 +54,7 @@ const Workshop = {
             </div>
             -->
 
+            <!--
             <div>
               <b-card-group class="m-2">
                 <div v-for="tokenId in allTokenIds">
@@ -84,6 +90,7 @@ const Workshop = {
                 </div>
               </b-card-group>
             </div>
+            -->
 
           </b-card-body>
         </b-card>
