@@ -87,7 +87,7 @@ const app = new Vue({
       lastBlockTimeDiff: null,
       reschedule: false,
       jsonData: null,
-      twitterCardId: "000",
+      selectedId: null,
 
       name: 'BootstrapVue',
       show: true,
@@ -119,11 +119,10 @@ const app = new Vue({
       //   }
       //   return o;
       // }
-      // this.twitterCardId = pad3Zeroes(this.$route.params["id"]);
+      // this.selectedId = pad3Zeroes(this.$route.params["id"]);
       // const descEl = document.querySelector('head');
       // logInfo("app", "descEl " + JSON.stringify(descEl));
-      // document.title = this.twitterCardId;
-      // logInfo("app", "mounted() $route: twitterCardId " + JSON.stringify(this.$route.params) + " => " + this.twitterCardId);
+      store.dispatch('tokens/updateSelectedId', parseInt(this.$route.params["id"]));
     }
 
     if (localStorage.getItem('powerOn')) {

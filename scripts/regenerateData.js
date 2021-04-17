@@ -28,6 +28,7 @@ for (let tokenId in Object.keys(config.tokens)) {
   data.image = config.external_url_prefix + 'media/' + token.imageName;
   data.imageTransparentBG = config.external_url_prefix + 'media/' + token.imageTBName;
   attributes.push({ "trait_type": "Collection", "value": config.collection });
+  attributes.push({ "trait_type": "Generation", "value": token.generation });
 
   for (let parentIndex in token.parents) {
     let parent = token.parents[parentIndex];

@@ -10,6 +10,10 @@
       "value": "Zombie Babies"
     },
     {
+      "trait_type": "Generation",
+      "value": "2.0 Apr 2021"
+    },
+    {
       "trait_type": "Parent",
       "value": "Zombie #3636"
     },

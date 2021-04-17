@@ -60,6 +60,7 @@ const tokensModule = {
     allAttributes: null,
     allAncientDNAs: null,
 
+    selectedId: null,
     balances: null,
 
     params: null,
@@ -72,6 +73,7 @@ const tokensModule = {
     allAttributes: state => state.allAttributes,
     allAncientDNAs: state => state.allAncientDNAs,
 
+    selectedId: state => state.selectedId,
     balances: state => state.balances,
 
     params: state => state.params,
@@ -116,6 +118,10 @@ const tokensModule = {
         state.allAncientDNAs = Object.keys(allAncientDNAs).sort();
       }
     },
+    updateSelectedId(state, selectedId) {
+      state.selectedId = selectedId;
+      logInfo("tokensModule", "updateSelectedId('" + JSON.stringify(selectedId) + "')")
+    },
     updateBalances(state, balances) {
       state.balances = balances;
       logInfo("tokensModule", "updateBalances('" + JSON.stringify(balances) + "')")
@@ -133,6 +139,10 @@ const tokensModule = {
     updateNFTData(context, nftData) {
       // logInfo("tokensModule", "actions.updateNFTData(" + JSON.stringify(nftData) + ")");
       context.commit('updateNFTData', nftData);
+    },
+    updateSelectedId(context, selectedId) {
+      logInfo("tokensModule", "actions.updateSelectedId(" + JSON.stringify(selectedId) + ")");
+      context.commit('updateSelectedId', selectedId);
     },
     // Called by Connection.execWeb3()
     async execWeb3({ state, commit, rootState }, { count, networkChanged, blockChanged, coinbaseChanged }) {
