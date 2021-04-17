@@ -5,8 +5,10 @@ const Workshop = {
         <b-card no-body class="border-0 m-0 mt-2">
           <b-card-body class="p-0">
 
+          <canvas id="c"></canvas>
+
           <!-- <b-img src="media/ZombieBaby_000.png" height="1024px" alt="image slot"></b-img> -->
-          <b-img src="https://www.larvalabs.com/public/images/cryptopunks/punk3636.png" height="1024px" style="image-rendering: pixelated;" alt="image slot"></b-img>
+          <b-img src="https://www.larvalabs.com/public/images/cryptopunks/punk3636.png" height="1024px" style="image-rendering: -moz-crisp-edges; image-rendering: crisp-edges; image-rendering: pixelated;" alt="image slot"></b-img>
 
 
 
@@ -544,6 +546,28 @@ const Workshop = {
   mounted() {
     this.reschedule = true;
     this.timeoutCallback();
+
+    var canvas = new fabric.Canvas('c');
+    //
+    // // create a rectangle object
+    var rect = new fabric.Rect({
+      left: 20,
+      top: 20,
+      fill: 'red',
+      width: 150,
+      height: 100
+    });
+    //
+    // // "add" rectangle onto canvas
+    canvas.add(rect);
+
+
+    // var c = document.getElementById("c");
+    // var ctx = c.getContext("2d");
+    // ctx.beginPath();
+    // ctx.rect(20, 20, 150, 100);
+    // ctx.stroke();
+    // this.vueCanvas = ctx;
   },
   destroyed() {
     this.reschedule = false;
