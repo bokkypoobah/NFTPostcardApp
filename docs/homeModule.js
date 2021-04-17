@@ -18,7 +18,7 @@ const Home = {
             <b-card-group class="m-2">
               <div v-for="(tokenId, tokenIdIndex) in allTokenIds">
                 <b-card body-class="p-1" img-alt="Image" img-top style="max-width: 15rem; height: 23rem;" class="m-1 p-2">
-                  <b-card-img :src="'media/' + nftData.tokens[tokenId].imageName" alt="Image" :style='{"background-color": nftData.tokens[tokenId].bgColour}'></b-card-img>
+                  <b-card-img :src="'media/' + nftData.tokens[tokenId].imageTBName" alt="Image" :style='{"background-color": nftData.tokens[tokenId].bgColour}'></b-card-img>
                   <b-card-text class="pt-2">
                     <b v-b-popover.hover="'Zombie Baby #' + tokenId">#{{ tokenId }}</b> <b-badge v-if="connected" v-b-popover.hover="'Number of copies owned'">{{ balances != null && balances[tokenIdIndex] != null ? ("x" + balances[tokenIdIndex]) : 0 }}</b-badge>
                     <span v-for="(parentId, parentIndex) in nftData.tokens[tokenId].parents">

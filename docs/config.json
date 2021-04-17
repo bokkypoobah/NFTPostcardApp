@@ -14,7 +14,8 @@
       "attributes": ["Front Goatee Dark", "Earring", "Top Hat"],
       "ancientDNA": [],
       "imageHash": "QmSexHstXKqRszhXwaXiBp4DJRjFHXdp6t4tw4bR47UmT1",
-      "imageName": "ZombieBaby_000_transparentbg.png",
+      "imageName": "ZombieBaby_000.png",
+      "imageTBName": "ZombieBaby_000_transparentbg.png",
       "bgColour": "#e9fff2"
     },
     "1" : {
@@ -23,7 +24,8 @@
       "attributes": ["Front Goatee Dark", "Purple Hair"],
       "ancientDNA": [],
       "imageHash": "QmZKfMJ6R1kVY8i7jJYTmAHi7igqZzs7Yq9vVdZE183CCC",
-      "imageName": "ZombieBaby_001_transparentbg.png",
+      "imageName": "ZombieBaby_001.png",
+      "imageTBName": "ZombieBaby_001_transparentbg.png",
       "bgColour": "#f8fbd1"
     },
     "2" : {
@@ -32,7 +34,8 @@
       "attributes": ["Front Goatee Dark", "Purple Hair", "Top Hat"],
       "ancientDNA": [],
       "imageHash": "QmfSsD7VfVDXv51QDJqVUbnn6z7xhWyiZjwzSnkb7j4sTb",
-      "imageName": "ZombieBaby_002_transparentbg.png",
+      "imageName": "ZombieBaby_002.png",
+      "imageTBName": "ZombieBaby_002_transparentbg.png",
       "bgColour": "#fdeff7"
     },
     "3" : {
@@ -42,6 +45,7 @@
       "ancientDNA": ["Cowboy Hat"],
       "imageHash": "QmNeAK4t4ZdGb3hhxEP83WpPEnFqFKHu1F5fhgFqZNbNRx",
       "imageName": "ZombieBaby_003.png",
+      "imageTBName": "ZombieBaby_003_transparentbg.png",
       "bgColour": "#c0bfe8"
     },
     "4" : {
@@ -51,6 +55,7 @@
       "ancientDNA": ["Beanie"],
       "imageHash": "QmZrJFwhiBP2QcpqraZ4SZYqXZTADXLTsUCHge9g8Piv5p",
       "imageName": "ZombieBaby_004.png",
+      "imageTBName": "ZombieBaby_004_transparentbg.png",
       "bgColour": "#e2f0cb"
     },
     "5" : {
@@ -60,6 +65,7 @@
       "ancientDNA": ["Cowboy Hat"],
       "imageHash": "QmRnoBqzDTismKF5Ap4opDJmivN1HuB69krNsy9vKU47hq",
       "imageName": "ZombieBaby_005.png",
+      "imageTBName": "ZombieBaby_005_transparentbg.png",
       "bgColour": "#d6ecf9"
     },
     "6" : {
@@ -69,6 +75,7 @@
       "ancientDNA": ["Orange Side"],
       "imageHash": "QmVhZPK273b5aDZiWVZC6asxU5CK4nuFU12yYPcuyFZRwg",
       "imageName": "ZombieBaby_006.png",
+      "imageTBName": "ZombieBaby_006_transparentbg.png",
       "bgColour": "#e9fff2"
     },
     "7" : {
@@ -78,6 +85,7 @@
       "ancientDNA": ["Mohawk"],
       "imageHash": "Qme3jfJrXVDKAKqUCtAz4XovSxHwHGiaKivyhZdFgn4ahs",
       "imageName": "ZombieBaby_007.png",
+      "imageTBName": "ZombieBaby_007_transparentbg.png",
       "bgColour": "#e3e39d"
     }
   }

@@ -25,6 +25,7 @@ for (let tokenId in Object.keys(config.tokens)) {
   data.description = config.description;
   data.external_url = config.external_url_prefix + 'json/' + filenamePrefix + ".json";
   data.image = config.external_url_prefix + 'media/' + token.imageName;
+  data.imageTransparentBG = config.external_url_prefix + 'media/' + token.imageTBName;
   data.name = config.name_prefix + ' #' + pad3Zeroes(tokenId);
   attributes.push({ "trait_type": "Collection", "value": config.collection });
 
