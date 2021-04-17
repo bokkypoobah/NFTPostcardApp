@@ -17,39 +17,59 @@ const Home = {
             -->
             <b-card-group class="m-2">
               <div v-for="(tokenId, tokenIdIndex) in allTokenIds">
-                <b-card body-class="p-1" img-alt="Image" img-top style="max-width: 15rem; height: 23rem;" class="m-1 p-2">
+                <b-card body-class="p-1" img-alt="Image" img-top style="max-width: 15rem;" class="m-1 p-0">
                   <b-card-img :src="'media/' + nftData.tokens[tokenId].imageTBName" alt="Image" :style='{"background-color": nftData.tokens[tokenId].bgColour}'></b-card-img>
-                  <b-card-text class="pt-2">
+                  <b-card-text class="pt-2" style="height: 9rem;">
                     <b v-b-popover.hover="'Zombie Baby #' + tokenId">#{{ tokenId }}</b> <b-badge v-if="connected" v-b-popover.hover="'Number of copies owned'">{{ balances != null && balances[tokenIdIndex] != null ? ("x" + balances[tokenIdIndex]) : 0 }}</b-badge>
-                    <span v-for="(parentId, parentIndex) in nftData.tokens[tokenId].parents">
-                      <span v-if="parentIndex > 0">
-                       +
+                    <span class="float-right">
+                      <span v-for="(parentId, parentIndex) in nftData.tokens[tokenId].parents">
+                        <span v-if="parentIndex > 0">
+                         +
+                        </span>
+                        <b-link :href="'https://www.larvalabs.com/cryptopunks/details/' + nftData.tokens[tokenId].parents[parentIndex].number" v-b-popover.hover="'Parent CryptoPunk #' + nftData.tokens[tokenId].parents[parentIndex].number" class="card-link" target="_blank"><b-avatar variant="light" size="2.0rem" :src="'https://www.larvalabs.com/public/images/cryptopunks/punk' + nftData.tokens[tokenId].parents[parentIndex].number + '.png'"></b-avatar></b-link>
                       </span>
-                      <b-link :href="'https://www.larvalabs.com/cryptopunks/details/' + nftData.tokens[tokenId].parents[parentIndex].number" v-b-popover.hover="'Parent CryptoPunk #' + nftData.tokens[tokenId].parents[parentIndex].number" class="card-link" target="_blank"><b-avatar variant="light" size="2.0rem" :src="'https://www.larvalabs.com/public/images/cryptopunks/punk' + nftData.tokens[tokenId].parents[parentIndex].number + '.png'"></b-avatar></b-link>
                     </span>
+                    <br />
                     <br />
                     <span v-for="attribute in nftData.tokens[tokenId].attributes"><b-badge pill variant="success" class="mr-1" v-b-popover.hover="'Zombie Baby attributes'">{{ attribute }}</b-badge></span>
                     <span v-for="ancientDNA in nftData.tokens[tokenId].ancientDNA"><b-badge pill variant="warning" class="mr-1" v-b-popover.hover="'Activated ancient DNA'">{{ ancientDNA }} <font size="-1">🧬</font></b-badge></span>
-                    <p><b-link :href="'https://opensea.io/assets/'+ nftData.nftAddress + '/' + tokenId" v-b-popover.hover="'View on OpenSea.io'" target="_blank"><img src="images/381114e-opensea-logomark-flat-colored-blue.png" width="30px" /></b-link></p>
                   </b-card-text>
+                  <template #footer>
+                    <span class="float-right">
+                      <b-link :href="'https://opensea.io/assets/'+ nftData.nftAddress + '/' + tokenId" v-b-popover.hover="'View on OpenSea.io'" target="_blank"><img src="images/381114e-opensea-logomark-flat-colored-blue.png" width="20px" /></b-link>
+                      <b-link :href="'https://rarible.com/token/'+ nftData.nftAddress + ':' + tokenId" v-b-popover.hover="'View on Rarible.com'" target="_blank"><img src="images/rarible_feb7c08ba34c310f059947d23916f76c12314e85.png" height="20px" /></b-link>
+                    </span>
+                  </template>
                 </b-card>
               </div>
               <div>
-                <b-card body-class="p-1" :img-src="'media/' + 'ZombieBabies_000-008_random.gif'" img-alt="Image" img-top style="max-width: 15rem; height: 23rem;" class="m-1 p-2">
-                  <b-card-text class="pt-2">
+                <b-card body-class="p-1" img-alt="Image" img-top style="max-width: 15rem;" class="m-1 p-0">
+                  <b-card-img src="media/ZombieBabies_000-008_random.gif" alt="Image"></b-card-img>
+                  <b-card-text class="pt-2" style="height: 9rem;">
                     <b-button size="sm" @click="getOne()" variant="info">Adopt A ZombieBaby</b-button><br />
                     <b-badge>FREE + transaction fee</b-badge><br />
                     Next available from the adoption centre, #0 to #7
                   </b-card-text>
+                  <template #footer>
+                    <span class="float-right">
+                      &nbsp;
+                    </span>
+                  </template>
                 </b-card>
               </div>
               <div>
-                <b-card body-class="p-1" :img-src="'media/' + 'ZombieBabies_000-008_set.gif'" img-alt="Image" img-top style="max-width: 15rem; height: 23rem;" class="m-1 p-2">
-                  <b-card-text class="pt-2">
+                <b-card body-class="p-1" img-alt="Image" img-top style="max-width: 15rem;" class="m-1 p-0">
+                  <b-card-img src="media/ZombieBabies_000-008_set.gif" alt="Image"></b-card-img>
+                  <b-card-text class="pt-2" style="height: 9rem;">
                     <b-button size="sm" @click="getSet()" variant="info">Adopt A Clowder Of ZombieBabies</b-button><br />
                     <b-badge>0.05 ETH + transaction fee</b-badge><br />
                     ZombieBabies #0 to #7
                   </b-card-text>
+                  <template #footer>
+                    <span class="float-right">
+                      &nbsp;
+                    </span>
+                  </template>
                 </b-card>
               </div>
             </b-card-group>

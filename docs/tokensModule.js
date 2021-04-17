@@ -10,7 +10,12 @@ const Tokens = {
       <b-collapse id="contracts" visible class="mt-2">
         <b-card no-body class="border-0" v-if="network == 1337 || network == 1 || network == 3">
           <b-row>
-            <b-col cols="4" class="small">ERC-1155 NFT</b-col><b-col class="small truncate" cols="8"><b-link :href="explorer + 'address/' + nftData.nftAddress + '#code'" class="card-link" target="_blank">{{ nftData.nftAddress == null ? '' : (nftData.nftAddress.substring(0, 10) + '...') }}</b-link> <b-link v-b-popover.hover="'View on OpenSea.io'" :href="nftData.openSeaUrl" target="_blank"><img src="images/381114e-opensea-logomark-flat-colored-blue.png" width="20px" /></b-link></b-col>
+            <b-col cols="4" class="small">ERC-1155 NFT</b-col>
+            <b-col class="small truncate" cols="8">
+              <b-link :href="explorer + 'address/' + nftData.nftAddress + '#code'" class="card-link" target="_blank">{{ nftData.nftAddress == null ? '' : (nftData.nftAddress.substring(0, 10) + '...') }}</b-link>
+              <span class="float-right"><b-link v-b-popover.hover="'View on OpenSea.io'" :href="nftData.openSeaUrl" target="_blank"><img src="images/381114e-opensea-logomark-flat-colored-blue.png" width="20px" /></b-link> <b-link :href="'https://rarible.com/collection/'+ nftData.nftAddress" v-b-popover.hover="'View on Rarible.com'" target="_blank"><img src="images/rarible_feb7c08ba34c310f059947d23916f76c12314e85.png" height="20px" /></b-link>
+              </span>
+            </b-col>
           </b-row>
           <b-row>
             <b-col cols="4" class="small">Adoption Centre</b-col><b-col class="small truncate" cols="8"><b-link :href="explorer + 'address/' + nftData.adoptionCentreV1Address + '#code'" class="card-link" target="_blank">{{ nftData.adoptionCentreV1Address == null ? '' : (nftData.adoptionCentreV1Address.substring(0, 10) + '...') }}</b-link></b-col>

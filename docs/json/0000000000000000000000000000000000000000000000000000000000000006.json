@@ -1,9 +1,9 @@
 {
-  "description": "Zombie Babies by The Officious BokkyPooBahs. Inspired by, but not affiliated with CryptoPunks & CryptoBabyPunks",
-  "external_url": "https://zombiebabies.eth.link/json/0000000000000000000000000000000000000000000000000000000000000006.json",
+  "name": "Zombie Baby #006",
+  "description": "Zombie Baby #006. Zombie Babies by The Officious BokkyPooBahs. Inspired by, but not affiliated with CryptoPunks & CryptoBabyPunks. https://zombiebabies.eth.link or https://bokkypoobah.github.io/ZombieBabies/",
+  "external_url": "https://zombiebabies.eth.link/#/6",
   "image": "https://zombiebabies.eth.link/media/ZombieBaby_006.png",
   "imageTransparentBG": "https://zombiebabies.eth.link/media/ZombieBaby_006_transparentbg.png",
-  "name": "Zombie Baby #006",
   "attributes": [
     {
       "trait_type": "Collection",
