@@ -17,7 +17,7 @@ const Home = {
             -->
             <b-card-group class="m-2">
               <div v-for="(tokenId, tokenIdIndex) in allTokenIds">
-                <b-card body-class="p-1" img-top style="max-width: 15rem;" class="m-1 p-0">
+                <b-card body-class="p-1" footer-class="p-1" img-top style="max-width: 15rem;" class="m-1 p-0">
                   <b-card-img :src="'media/' + nftData.tokens[tokenId].imageTBName" alt="Image" :style='{"background-color": nftData.tokens[tokenId].bgColour}'></b-card-img>
                   <b-card-text class="pt-2" style="height: 8rem;">
                     <b v-b-popover.hover="'Zombie Baby #' + tokenId">#{{ tokenId }}</b> <b-badge v-if="connected" v-b-popover.hover="'Number of copies owned'">{{ balances != null && balances[tokenIdIndex] != null ? ("x" + balances[tokenIdIndex]) : 0 }}</b-badge>
@@ -43,7 +43,7 @@ const Home = {
                 </b-card>
               </div>
               <div>
-                <b-card body-class="p-1" img-top style="max-width: 15rem;" class="m-1 p-0">
+                <b-card body-class="p-1" footer-class="p-1" img-top style="max-width: 15rem;" class="m-1 p-0">
                   <b-card-img src="media/ZombieBabies_000-008_random.gif" alt="media/ZombieBabies_000-008_random.gif"></b-card-img>
                   <b-card-text class="pt-2" style="height: 8rem;">
                     <b-button size="sm" @click="getOne()" variant="info">Adopt A ZombieBaby</b-button><br />
@@ -58,7 +58,7 @@ const Home = {
                 </b-card>
               </div>
               <div>
-                <b-card body-class="p-1" img-top style="max-width: 15rem;" class="m-1 p-0">
+                <b-card body-class="p-1" footer-class="p-1" img-top style="max-width: 15rem;" class="m-1 p-0">
                   <b-card-img src="media/ZombieBabies_000-008_set.gif" alt="media/ZombieBabies_000-008_set.gif"></b-card-img>
                   <b-card-text class="pt-2" style="height: 8rem;">
                     <b-button size="sm" @click="getSet()" variant="info">Adopt A Clowder Of ZombieBabies</b-button><br />
