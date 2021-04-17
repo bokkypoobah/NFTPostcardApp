@@ -20,17 +20,17 @@ const Home = {
                 <b-card body-class="p-1" img-alt="Image" img-top style="max-width: 15rem; height: 23rem;" class="m-1 p-2">
                   <b-card-img :src="'media/' + nftData.tokens[tokenId].imageName" alt="Image" :style='{"background-color": nftData.tokens[tokenId].bgColour}'></b-card-img>
                   <b-card-text class="pt-2">
-                    <b>#{{ tokenId }}</b> <b-badge v-if="connected">{{ balances != null && balances[tokenIdIndex] != null ? ("x" + balances[tokenIdIndex]) : 0 }}</b-badge>
+                    <b v-b-popover.hover="'Zombie Baby #' + tokenId">#{{ tokenId }}</b> <b-badge v-if="connected" v-b-popover.hover="'Number of copies owned'">{{ balances != null && balances[tokenIdIndex] != null ? ("x" + balances[tokenIdIndex]) : 0 }}</b-badge>
                     <span v-for="(parentId, parentIndex) in nftData.tokens[tokenId].parents">
                       <span v-if="parentIndex > 0">
                        +
                       </span>
-                      <b-link :href="'https://www.larvalabs.com/cryptopunks/details/' + nftData.tokens[tokenId].parents[parentIndex].number" class="card-link" target="_blank"><b-avatar variant="light" size="2.0rem" :src="'https://www.larvalabs.com/public/images/cryptopunks/punk' + nftData.tokens[tokenId].parents[parentIndex].number + '.png'"></b-avatar></b-link>
+                      <b-link :href="'https://www.larvalabs.com/cryptopunks/details/' + nftData.tokens[tokenId].parents[parentIndex].number" v-b-popover.hover="'Parent CryptoPunk #' + nftData.tokens[tokenId].parents[parentIndex].number" class="card-link" target="_blank"><b-avatar variant="light" size="2.0rem" :src="'https://www.larvalabs.com/public/images/cryptopunks/punk' + nftData.tokens[tokenId].parents[parentIndex].number + '.png'"></b-avatar></b-link>
                     </span>
-                    <b-link :href="'https://opensea.io/assets/'+ nftData.nftAddress + '/' + tokenId" target="_blank"><img src="images/381114e-opensea-logomark-flat-colored-blue.png" width="30px" /></b-link>
                     <br />
-                    <span v-for="attribute in nftData.tokens[tokenId].attributes"><b-badge pill variant="success" class="mr-1">{{ attribute }}</b-badge></span>
-                    <span v-for="ancientDNA in nftData.tokens[tokenId].ancientDNA"><b-badge pill variant="warning" class="mr-1">{{ ancientDNA }} <font size="-1">🧬</font></b-badge></span>
+                    <span v-for="attribute in nftData.tokens[tokenId].attributes"><b-badge pill variant="success" class="mr-1" v-b-popover.hover="'Zombie Baby attributes'">{{ attribute }}</b-badge></span>
+                    <span v-for="ancientDNA in nftData.tokens[tokenId].ancientDNA"><b-badge pill variant="warning" class="mr-1" v-b-popover.hover="'Activated ancient DNA'">{{ ancientDNA }} <font size="-1">🧬</font></b-badge></span>
+                    <p><b-link :href="'https://opensea.io/assets/'+ nftData.nftAddress + '/' + tokenId" v-b-popover.hover="'View on OpenSea.io'" target="_blank"><img src="images/381114e-opensea-logomark-flat-colored-blue.png" width="30px" /></b-link></p>
                   </b-card-text>
                 </b-card>
               </div>
