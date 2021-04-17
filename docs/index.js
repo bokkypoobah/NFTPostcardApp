@@ -53,7 +53,7 @@ const store = new Vuex.Store({
   modules: {
     connection: connectionModule,
     tokens: tokensModule,
-    tokensExplorer: tokensExplorerModule,
+    workshop: workshopModule,
   }
 });
 

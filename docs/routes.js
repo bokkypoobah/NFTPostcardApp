@@ -1,7 +1,7 @@
 const routes = [{
-    path: '/tokensExplorer/:param',
-    component: TokensExplorer,
-    name: 'Tokens',
+    path: '/workshop/:param',
+    component: Workshop,
+    name: 'Workshop',
   }, {
     path: '/docs/:section/:topic',
     component: Docs,

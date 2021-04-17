@@ -1,4 +1,4 @@
-const TokensExplorer = {
+const Workshop = {
   template: `
     <div class="mt-5 pt-3">
       <b-card no-body header="Adoption Centre" class="border-0" header-class="p-1">
@@ -543,7 +543,7 @@ const TokensExplorer = {
   },
 };
 
-const tokensExplorerModule = {
+const workshopModule = {
   namespaced: true,
   state: {
     params: null,
@@ -556,16 +556,16 @@ const tokensExplorerModule = {
   },
   mutations: {
     deQueue (state) {
-      logDebug("tokensExplorerModule", "deQueue(" + JSON.stringify(state.executionQueue) + ")");
+      logDebug("workshopModule", "deQueue(" + JSON.stringify(state.executionQueue) + ")");
       state.executionQueue.shift();
     },
     updateParams (state, params) {
       state.params = params;
-      logDebug("tokensExplorerModule", "updateParams('" + params + "')")
+      logDebug("workshopModule", "updateParams('" + params + "')")
     },
     updateExecuting (state, executing) {
       state.executing = executing;
-      logDebug("tokensExplorerModule", "updateExecuting(" + executing + ")")
+      logDebug("workshopModule", "updateExecuting(" + executing + ")")
     },
   },
   actions: {

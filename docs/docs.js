@@ -3,10 +3,10 @@ const Docs = {
     <div class="mt-5 pt-3">
       <b-card no-body class="border-0">
         <b-card no-body class="border-0 m-0 mt-2">
-          <b-tabs v-model="section" pills card vertical end nav-class="m-1 p-1" active-tab-class="m-1 mt-2 p-1">
+          <!-- <b-tabs v-model="section" pills card vertical end nav-class="m-1 p-1" active-tab-class="m-1 mt-2 p-1"> -->
 
             <!-- Info -->
-            <b-tab title="Info" @click.prevent="updateRouterParamsSectionTopic('info', 'top')">
+            <!-- <b-tab title="Info" @click.prevent="updateRouterParamsSectionTopic('info', 'top')"> -->
               <b-card-text>
                 <h5 ref="info_top" class="mb-3">Info</h5>
 
@@ -82,7 +82,7 @@ const Docs = {
             </b-tab>
 
             <!-- Links -->
-            <b-tab title="Links" @click.prevent="updateRouterParamsSectionTopic('links', 'top')">
+            <!-- <b-tab title="Links" @click.prevent="updateRouterParamsSectionTopic('links', 'top')"> -->
 
               <b-card-text>
                 <h5 ref="links_top" class="mb-3">Links</h5>
@@ -90,7 +90,7 @@ const Docs = {
                 <p>GitHub ERC-1155 NFT: <b-link href="https://github.com/bokkypoobah/NFT" target="_blank">https://github.com/bokkypoobah/NFT</b-link></p>
                 <p>Twitter: <b-link href="https://twitter.com/BokkyPooBah" target="_blank">https://twitter.com/BokkyPooBah</b-link></p>
               </b-card-text>
-            </b-tab>
+            <!-- </b-tab> -->
 
             <!-- How To -->
             <!--
@@ -247,7 +247,7 @@ if (spot > 0 && spot > strike) {
               <b-card-text>Reference</b-card-text>
             </b-tab>
             -->
-          </b-tabs>
+          <!-- </b-tabs> -->
         </b-card>
       </b-card>
 
