@@ -5,10 +5,14 @@ const Bodyshop = {
         <b-card no-body class="border-0 m-0 mt-2">
           <b-card-body class="p-0">
 
+          <canvas id="c" width="500" height="500" style="border:1px solid"></canvas>
+
           <b-card-group deck class="m-2">
             <div v-for="(tokenId, tokenIdIndex) in allTokenIds">
               <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                <b-avatar variant="light" size="5.0rem" :src="'media/' + nftData.tokens[tokenId].imageTBName" class="pixelated"></b-avatar>
+                <b-link @click="addImage('ZombieBaby', tokenId, 'media/' + nftData.tokens[tokenId].imageTBName)">
+                  <b-avatar variant="light" size="5.0rem" :src="'media/' + nftData.tokens[tokenId].imageTBName" class="pixelated"></b-avatar>
+                </b-link>
                 <template #footer>
                   <span class="small truncate">
                     #{{ tokenId }}
@@ -21,7 +25,9 @@ const Bodyshop = {
           <b-card-group deck class="m-2">
             <div v-for="punkData in punksDataList">
               <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                <b-avatar variant="light" size="5.0rem" :src="punkData.imageURL" class="pixelated"></b-avatar>
+                <b-link @click="addImage('CryptoPunk', punkData.id, punkData.imageURL)">
+                  <b-avatar variant="light" size="5.0rem" :src="punkData.imageURL" class="pixelated"></b-avatar>
+                </b-link>
                 <template #footer>
                   <span class="small truncate">
                     #{{ punkData.id }}
@@ -70,10 +76,9 @@ const Bodyshop = {
           <br />
           <!-- <b-card-img :src="punkData.imageURL" alt="Punk image" width="100px" class="pixelated"></b-card-img> -->
 
-          <canvas id="c" width="500" height="500" style="border:1px solid"></canvas>
 
           <!-- <b-img src="media/ZombieBaby_000.png" height="1024px" alt="image slot"></b-img> -->
-          <b-img src="https://www.larvalabs.com/public/images/cryptopunks/punk3636.png" height="256px" style="image-rendering: -moz-crisp-edges; image-rendering: crisp-edges; image-rendering: pixelated;" alt="image slot"></b-img>
+          <!-- <b-img src="https://www.larvalabs.com/public/images/cryptopunks/punk3636.png" height="256px" style="image-rendering: -moz-crisp-edges; image-rendering: crisp-edges; image-rendering: pixelated;" alt="image slot"></b-img> -->
 
 
           </b-card-body>
@@ -120,6 +125,9 @@ const Bodyshop = {
     },
   },
   methods: {
+    async addImage(nftType, id, image) {
+      logInfo("Bodyshop", "addImage() type: " + nftType + ", id: " + id + ", image: " + image);
+    },
     async loadNFTs(event) {
       logInfo("Bodyshop", "loadNFTs()");
 
@@ -129,7 +137,7 @@ const Bodyshop = {
       cryptoPunksReq.overrideMimeType("application/json");
       logInfo("Bodyshop", "loadNFTs() openSeaPunkData cryptoPunksUrl: " + cryptoPunksUrl);
       cryptoPunksReq.open('GET', cryptoPunksUrl, true);
-      const cryptoPunksThis = this;
+      const t = this;
       cryptoPunksReq.onload  = function() {
         if (cryptoPunksReq.readyState == 4) {
           const punkDataTemp = [];
@@ -140,18 +148,19 @@ const Bodyshop = {
             var imageURL = "https://www.larvalabs.com/public/images/cryptopunks/punk" + id + ".png"
             punkDataTemp.push({ id: id, imageURL: imageURL });
           }
-          cryptoPunksThis.punksDataList = punkDataTemp;
+          t.punksDataList = punkDataTemp;
+          t.punksDataList.sort(function(a, b) { return a.id - b.id; });
         }
       };
       cryptoPunksReq.send(null);
 
+      /*
       // Pixel Portraits - OpenSea
       let pixelPortraitsUrl = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&order_direction=desc&offset=0&limit=50&collection=the-pixel-portraits";
       pixelPortraitsReq = new XMLHttpRequest();
       pixelPortraitsReq.overrideMimeType("application/json");
       logInfo("Bodyshop", "loadNFTs() openSeaPixelPortraitsData pixelPortraitsUrl: " + pixelPortraitsUrl);
       pixelPortraitsReq.open('GET', pixelPortraitsUrl, true);
-      const pixelPortraitsThis = this;
       pixelPortraitsReq.onload  = function() {
         if (pixelPortraitsReq.readyState == 4) {
           const pixelPortraitsDataListTemp = [];
@@ -162,7 +171,8 @@ const Bodyshop = {
             var imageUrl = asset.image_url;
             pixelPortraitsDataListTemp.push({ id: id, imageUrl: imageUrl });
           }
-          pixelPortraitsThis.pixelPortraitsDataList = pixelPortraitsDataListTemp;
+          t.pixelPortraitsDataList = pixelPortraitsDataListTemp;
+          t.pixelPortraitsDataList.sort(function(a, b) { return ('' + a.id).localeCompare(b.id) });
         }
       };
       pixelPortraitsReq.send(null);
@@ -173,7 +183,6 @@ const Bodyshop = {
       bganpunkv2Req.overrideMimeType("application/json");
       logInfo("Bodyshop", "loadNFTs() openSeaBganpunkv2Data bganpunkv2Url: " + bganpunkv2Url);
       bganpunkv2Req.open('GET', bganpunkv2Url, true);
-      const bganpunkv2This = this;
       bganpunkv2Req.onload  = function() {
         if (bganpunkv2Req.readyState == 4) {
           const bganpunkv2DataListTemp = [];
@@ -185,10 +194,12 @@ const Bodyshop = {
             // logInfo("Bodyshop", "loadNFTs() openSeaBganpunkv2Data imageUrl: " + imageUrl);
             bganpunkv2DataListTemp.push({ id: id, imageUrl: imageUrl });
           }
-          bganpunkv2This.bganpunkv2DataList = bganpunkv2DataListTemp;
+          t.bganpunkv2DataList = bganpunkv2DataListTemp;
+          t.bganpunkv2DataList.sort(function(a, b) { return a.id - b.id; });
         }
       };
       bganpunkv2Req.send(null);
+      */
 
       // PunkBodies - OpenSea
       let punkBodiesUrl = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&asset_contract_address=" + PUNKBODIESADDRESS + "&order_direction=desc&offset=0&limit=50";
@@ -196,7 +207,6 @@ const Bodyshop = {
       punkBodiesReq.overrideMimeType("application/json");
       logInfo("Bodyshop", "loadNFTs() openSeaPunkBodyData punkBodiesUrl: " + punkBodiesUrl);
       punkBodiesReq.open('GET', punkBodiesUrl, true);
-      const punkBodiesThis = this;
       punkBodiesReq.onload  = function() {
         if (punkBodiesReq.readyState == 4) {
           const punkBodiesDataListTemp = [];
@@ -207,49 +217,11 @@ const Bodyshop = {
             var imageURL = "https://api.punkbodies.com/get-images/" + id + ".png"
             punkBodiesDataListTemp.push({ id: id, imageURL: imageURL });
           }
-          punkBodiesThis.punkBodiesDataList = punkBodiesDataListTemp;
+          t.punkBodiesDataList = punkBodiesDataListTemp;
+          t.punkBodiesDataList.sort(function(a, b) { return a.id - b.id; });
         }
       };
       punkBodiesReq.send(null);
-
-      /*
-      // PunkBodies - Direct to contract
-      const punkBodiesContract = new ethers.Contract(PUNKBODIESADDRESS, PUNKBODIESABI, store.getters['connection/connection'].provider);
-      const pbBalanceOf = await punkBodiesContract.balanceOf(store.getters['connection/coinbase']);
-      logInfo("tokensModule", "execWeb3() pbBalanceOf: " + pbBalanceOf);
-
-      for (let i = 0; i < pbBalanceOf; i++) {
-          const tokenId = await punkBodiesContract.tokenOfOwnerByIndex(store.getters['connection/coinbase'], i);
-          logInfo("tokensModule", "execWeb3() i: " + i + ", tokenId: " + tokenId);
-      }
-      */
-
-      // if (false) {
-      //   var tokenToolz = web3.eth.contract(TOKENTOOLZABI).at(TOKENTOOLZADDRESS);
-      //   try {
-      //     var _tokenInfo = promisify(cb => tokenToolz.getTokenInfo(this.tokenInfo.address, store.getters['connection/coinbase'], store.getters['optinoFactory/address'], cb));
-      //     var tokenInfo = await _tokenInfo;
-      //     logInfo("Bodyshop", "checkTokenAddress: " + JSON.stringify(tokenInfo));
-      //     this.tokenInfo.symbol = tokenInfo[4];
-      //     this.tokenInfo.name = tokenInfo[5];
-      //     this.tokenInfo.decimals = parseInt(tokenInfo[0]);
-      //     this.tokenInfo.totalSupply = tokenInfo[1].shift(-this.tokenInfo.decimals).toString();
-      //     this.tokenInfo.balance = tokenInfo[2].shift(-this.tokenInfo.decimals).toString();
-      //     this.tokenInfo.allowance = tokenInfo[3].shift(-this.tokenInfo.decimals).toString();
-      //     this.tokenInfo.source = "search";
-      //     this.tokenInfo.ok = true;
-      //   } catch (e) {
-      //     this.tokenInfo.symbol = null;
-      //     this.tokenInfo.name = null;
-      //     this.tokenInfo.decimals = null;
-      //     this.tokenInfo.totalSupply = null;
-      //     this.tokenInfo.balance = null;
-      //     this.tokenInfo.allowance = null;
-      //     this.tokenInfo.source = null;
-      //     this.tokenInfo.ok = false;
-      //   }
-        // logInfo("Bodyshop", "checkTokenAddress: " + JSON.stringify(this.tokenInfo));
-      // }
     },
     async timeoutCallback() {
       logInfo("Bodyshop", "timeoutCallback() count: " + this.count);
