@@ -75,24 +75,14 @@
     <div id="app">
       <b-container fluid class="m-0 p-1">
         <div>
-          <!-- <b-navbar type="outline-primary" fixed="top" active-class="blah"> -->
           <b-navbar variant="light" fixed="top">
             <b-navbar-brand to="/" variant="primary">
               <img src="images/Baby_000_cropped.png" style="max-width: 30px; margin-top: -4px;" alt="Zombie Babies" />
               Zombie Babies
             </b-navbar-brand>
             <b-navbar-nav class="ml-auto">
-              <!--
-              <b-nav-item size="sm" to="/optinoExplorer/all" active-class="active" v-b-popover.hover="'View and create optinos'" :disabled="!connect">Optinos</b-nav-item>
-              <b-nav-item size="sm" to="/feedsExplorer/all" active-class="active" v-b-popover.hover="'View and set feeds'" :disabled="!connect">Feeds</b-nav-item>
-              -->
               <b-nav-item size="sm" to="/bodyshop/all" active-class="active" v-b-popover.hover="'Bodyshop'">Bodyshop</b-nav-item>
               <b-nav-item size="sm" to="/docs/info/top" active-class="active" v-b-popover.hover="'Info'">Info</b-nav-item>
-              <!--
-              <b-nav-item size="sm" to="/governance/all" active-class="active" v-b-popover.hover="'Governance'" :disabled="!connect">Governance</b-nav-item>
-              <b-nav-item size="sm" href="https://help.com" target="blank" active-class="active" v-b-popover.hover="'Info'">Info</b-nav-item>
-              -->
-              <!-- <b-nav-item href="https://github.com/bokkypoobah/Optino/wiki" target="_blank" v-b-popover.hover="'View the docs (work in progress)'">Docs</b-nav-item> -->
               <b-nav-form>
                 <b-button size="sm" variant="link" class="ml-4" v-b-popover.hover="'Power up this app'" @click="setPowerOn();" v-if="!powerOn"><b-icon-power shift-v="-1" font-scale="1.5"></b-icon-power></b-button>
                 <b-button size="sm" variant="link" v-b-popover.hover="'Show status'" v-b-toggle.sidebar-status v-if="powerOn"><b-icon-layout-sidebar-reverse class="ml-4 mr-2" shift-v="-1" font-scale="1.3"></b-icon-layout-sidebar-reverse><b-spinner class="m-0" :variant="spinnerVariant" v-if="powerOn" style="animation: spinner-grow 3.75s linear infinite;" small type="grow" label="Spinning"></b-spinner></b-button>
@@ -114,18 +104,7 @@
                     <b-card-body class="m-1 p-0">
                       <connection></connection>
                       <br />
-                      <!--
-                      <optino-factory></optino-factory>
-                      <br />
-                      -->
                       <tokens></tokens>
-                      <br />
-                      <!--
-                      <feeds></feeds>
-                      <br />
-                      <governance></governance>
-                      <br />
-                      -->
                     </b-card-body>
                   </b-card>
                 </b-sidebar>
