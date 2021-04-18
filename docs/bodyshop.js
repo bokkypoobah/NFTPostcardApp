@@ -1,7 +1,7 @@
-const Workshop = {
+const Bodyshop = {
   template: `
     <div class="mt-5 pt-3">
-      <b-card no-body header="Workshop" class="border-0" header-class="p-1">
+      <b-card no-body header="Bodyshop" class="border-0" header-class="p-1">
         <b-card no-body class="border-0 m-0 mt-2">
           <b-card-body class="p-0">
 
@@ -108,7 +108,7 @@ const Workshop = {
   },
   methods: {
     async loadNFTs(event) {
-      logInfo("Workshop", "loadNFTs()");
+      logInfo("Bodyshop", "loadNFTs()");
 
       /*
       let url = "https://wrappedpunks.com:3000/api/punks?user=" + store.getters['connection/coinbase'] + "&type=punk&page=1&pageSize=1200";
@@ -127,25 +127,25 @@ const Workshop = {
       let cryptoPunksUrl = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&asset_contract_address=" + CRYPTOPUNKMARKETADDRESS + "&order_direction=desc&offset=0&limit=50";
       cryptoPunksReq = new XMLHttpRequest();
       cryptoPunksReq.overrideMimeType("application/json");
-      logInfo("Workshop", "loadNFTs() openSeaPunkData cryptoPunksUrl: " + cryptoPunksUrl);
+      logInfo("Bodyshop", "loadNFTs() openSeaPunkData cryptoPunksUrl: " + cryptoPunksUrl);
       cryptoPunksReq.open('GET', cryptoPunksUrl, true);
       const cryptoPunksThis = this;
       cryptoPunksReq.onload  = function() {
-        // logInfo("Workshop", "loadNFTs() openSeaPunkData txt: " + cryptoPunksReq.readyState + " => " + cryptoPunksReq.responseText);
+        // logInfo("Bodyshop", "loadNFTs() openSeaPunkData txt: " + cryptoPunksReq.readyState + " => " + cryptoPunksReq.responseText);
         if (cryptoPunksReq.readyState == 4) {
           const punkDataTemp = [];
           const openSeaPunkData = JSON.parse(cryptoPunksReq.responseText);
-          // logInfo("Workshop", "loadNFTs() openSeaPunkData JSON: " + JSON.stringify(openSeaPunkData.assets).substring(0, 1000));
+          // logInfo("Bodyshop", "loadNFTs() openSeaPunkData JSON: " + JSON.stringify(openSeaPunkData.assets).substring(0, 1000));
           for (let assetIndex in Object.keys(openSeaPunkData.assets)) {
             const asset = openSeaPunkData.assets[assetIndex];
-            // logInfo("Workshop", "loadNFTs() openSeaPunkData asset: " + assetIndex + " => " + JSON.stringify(asset));
+            // logInfo("Bodyshop", "loadNFTs() openSeaPunkData asset: " + assetIndex + " => " + JSON.stringify(asset));
             var punkId = asset.token_id;
             var punkImageURL = "https://www.larvalabs.com/public/images/cryptopunks/punk" + punkId + ".png"
-            // logInfo("Workshop", "loadNFTs() openSeaPunkData punkId: " + punkId + " => " + punkImageURL);
+            // logInfo("Bodyshop", "loadNFTs() openSeaPunkData punkId: " + punkId + " => " + punkImageURL);
             punkDataTemp.push({ punkId: punkId, punkImageURL: punkImageURL });
           }
           cryptoPunksThis.punksDataList = punkDataTemp;
-          // logInfo("Workshop", "loadNFTs() openSeaPunkData punkDataTemp: " + JSON.stringify(punkDataTemp));
+          // logInfo("Bodyshop", "loadNFTs() openSeaPunkData punkDataTemp: " + JSON.stringify(punkDataTemp));
         }
       };
       cryptoPunksReq.send(null);
@@ -155,7 +155,7 @@ const Workshop = {
       // let pixelPortraitsUrl = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&asset_contract_address=" + PUNKBODIESADDRESS + "&order_direction=desc&offset=0&limit=50";
       pixelPortraitsReq = new XMLHttpRequest();
       pixelPortraitsReq.overrideMimeType("application/json");
-      logInfo("Workshop", "loadNFTs() openSeaPixelPortraitsData pixelPortraitsUrl: " + pixelPortraitsUrl);
+      logInfo("Bodyshop", "loadNFTs() openSeaPixelPortraitsData pixelPortraitsUrl: " + pixelPortraitsUrl);
       pixelPortraitsReq.open('GET', pixelPortraitsUrl, true);
       const pixelPortraitsThis = this;
       pixelPortraitsReq.onload  = function() {
@@ -166,14 +166,14 @@ const Workshop = {
           // logInfo("tokensModule", "execWeb3() openSeaPixelPortraitData JSON: " + JSON.stringify(openSeaPixelPortraitData));
           for (let assetIndex in Object.keys(openSeaPixelPortraitData.assets)) {
             const asset = openSeaPixelPortraitData.assets[assetIndex];
-            // logInfo("Workshop", "loadNFTs() openSeaPixelPortraitData asset: " + assetIndex + " => " + JSON.stringify(asset));
+            // logInfo("Bodyshop", "loadNFTs() openSeaPixelPortraitData asset: " + assetIndex + " => " + JSON.stringify(asset));
             var id = asset.name;
             var imageUrl = asset.image_url;
-            // // logInfo("Workshop", "loadNFTs() openSeaPunkData punkId: " + punkId + " => " + imageUrl);
+            // // logInfo("Bodyshop", "loadNFTs() openSeaPunkData punkId: " + punkId + " => " + imageUrl);
             pixelPortraitsDataListTemp.push({ id: id, imageUrl: imageUrl });
           }
           pixelPortraitsThis.pixelPortraitsDataList = pixelPortraitsDataListTemp;
-          // logInfo("Workshop", "loadNFTs() openSeaPunkData punkDataTemp: " + JSON.stringify(punkDataTemp));
+          // logInfo("Bodyshop", "loadNFTs() openSeaPunkData punkDataTemp: " + JSON.stringify(punkDataTemp));
           // https://api.punkbodies.com/get-images/7273.png
         }
         // https://api.punkbodies.com/get-images/7273.png
@@ -200,7 +200,7 @@ const Workshop = {
       let punkBodiesUrl = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&asset_contract_address=" + PUNKBODIESADDRESS + "&order_direction=desc&offset=0&limit=50";
       punkBodiesReq = new XMLHttpRequest();
       punkBodiesReq.overrideMimeType("application/json");
-      logInfo("Workshop", "loadNFTs() openSeaPunkBodyData punkBodiesUrl: " + punkBodiesUrl);
+      logInfo("Bodyshop", "loadNFTs() openSeaPunkBodyData punkBodiesUrl: " + punkBodiesUrl);
       punkBodiesReq.open('GET', punkBodiesUrl, true);
       const punkBodiesThis = this;
       punkBodiesReq.onload  = function() {
@@ -211,14 +211,14 @@ const Workshop = {
           // logInfo("tokensModule", "execWeb3() openSeaPunkBodyData JSON: " + JSON.stringify(openSeaPunkBodyData));
           for (let assetIndex in Object.keys(openSeaPunkBodyData.assets)) {
             const asset = openSeaPunkBodyData.assets[assetIndex];
-            // logInfo("Workshop", "loadNFTs() openSeaPunkBodyData asset: " + assetIndex + " => " + JSON.stringify(asset));
+            // logInfo("Bodyshop", "loadNFTs() openSeaPunkBodyData asset: " + assetIndex + " => " + JSON.stringify(asset));
             var punkBodyId = asset.token_id;
             var punkBodyImageURL = "https://api.punkbodies.com/get-images/" + punkBodyId + ".png"
-            // // logInfo("Workshop", "loadNFTs() openSeaPunkData punkId: " + punkId + " => " + punkBodyImageURL);
+            // // logInfo("Bodyshop", "loadNFTs() openSeaPunkData punkId: " + punkId + " => " + punkBodyImageURL);
             punkBodiesDataListTemp.push({ punkBodyId: punkBodyId, punkBodyImageURL: punkBodyImageURL });
           }
           punkBodiesThis.punkBodiesDataList = punkBodiesDataListTemp;
-          // logInfo("Workshop", "loadNFTs() openSeaPunkData punkDataTemp: " + JSON.stringify(punkDataTemp));
+          // logInfo("Bodyshop", "loadNFTs() openSeaPunkData punkDataTemp: " + JSON.stringify(punkDataTemp));
           // https://api.punkbodies.com/get-images/7273.png
         }
         // https://api.punkbodies.com/get-images/7273.png
@@ -242,7 +242,7 @@ const Workshop = {
       //   try {
       //     var _tokenInfo = promisify(cb => tokenToolz.getTokenInfo(this.tokenInfo.address, store.getters['connection/coinbase'], store.getters['optinoFactory/address'], cb));
       //     var tokenInfo = await _tokenInfo;
-      //     logInfo("Workshop", "checkTokenAddress: " + JSON.stringify(tokenInfo));
+      //     logInfo("Bodyshop", "checkTokenAddress: " + JSON.stringify(tokenInfo));
       //     this.tokenInfo.symbol = tokenInfo[4];
       //     this.tokenInfo.name = tokenInfo[5];
       //     this.tokenInfo.decimals = parseInt(tokenInfo[0]);
@@ -261,11 +261,11 @@ const Workshop = {
       //     this.tokenInfo.source = null;
       //     this.tokenInfo.ok = false;
       //   }
-        // logInfo("Workshop", "checkTokenAddress: " + JSON.stringify(this.tokenInfo));
+        // logInfo("Bodyshop", "checkTokenAddress: " + JSON.stringify(this.tokenInfo));
       // }
     },
     async timeoutCallback() {
-      logInfo("Workshop", "timeoutCallback() count: " + this.count);
+      logInfo("Bodyshop", "timeoutCallback() count: " + this.count);
       // var tokenToolz = web3.eth.contract(TOKENTOOLZABI).at(TOKENTOOLZADDRESS);
       // var fakeTokenContract = web3.eth.contract(FAKETOKENFACTORYABI).at(FAKETOKENFACTORYADDRESS);
       //
@@ -273,7 +273,7 @@ const Workshop = {
       //   var _fakeTokensLength = promisify(cb => fakeTokenContract.fakeTokensLength.call(cb));
       //   var fakeTokensLength = await _fakeTokensLength;
       //   this.tokenPickerTotalRows = parseInt(COMMONTOKENLIST.length) + parseInt(fakeTokensLength);
-      //   // logInfo("Workshop", "timeoutCallback() - tokenPickerTotalRows: " + this.tokenPickerTotalRows);
+      //   // logInfo("Bodyshop", "timeoutCallback() - tokenPickerTotalRows: " + this.tokenPickerTotalRows);
       //   this.tokenPickerLoadingRow = 0;
       //
       //   for (var i = 0; i < COMMONTOKENLIST.length; i++) {
@@ -290,7 +290,7 @@ const Workshop = {
       //     Vue.set(this.tokenPickerMap, address.toLowerCase(), token);
       //     this.tokenPickerList.push(token);
       //     this.tokenPickerLoadingRow++;
-      //     // logInfo("Workshop", "timeoutCallback() - loading " + this.tokenPickerLoadingRow + " of " + this.tokenPickerTotalRows + " " + symbol);
+      //     // logInfo("Bodyshop", "timeoutCallback() - loading " + this.tokenPickerLoadingRow + " of " + this.tokenPickerTotalRows + " " + symbol);
       //   }
       //
       //   for (var fakeTokensIndex = 0; fakeTokensIndex < fakeTokensLength; fakeTokensIndex++) {
@@ -309,13 +309,13 @@ const Workshop = {
       //       Vue.set(this.tokenPickerMap, fakeTokenAddress.toLowerCase(), token);
       //       this.tokenPickerList.push(token);
       //       this.tokenPickerLoadingRow++;
-      //       // logInfo("Workshop", "timeoutCallback() - loading " + this.tokenPickerLoadingRow + " of " + this.tokenPickerTotalRows + " " + symbol);
+      //       // logInfo("Bodyshop", "timeoutCallback() - loading " + this.tokenPickerLoadingRow + " of " + this.tokenPickerTotalRows + " " + symbol);
       //     }
       //   }
       //
       //   this.tokenPickerTotalRows = this.tokenPickerLoadingRow;
       //   this.tokenPickerLoadingRow = null;
-      //   logDebug("Workshop", "timeoutCallback() - loaded " + this.tokenPickerTotalRows);
+      //   logDebug("Bodyshop", "timeoutCallback() - loaded " + this.tokenPickerTotalRows);
       //
       //   // this.tokenPickerList.sort(function(a, b) {
       //   //   return ('' + a.symbol + a.name).localeCompare(b.symbol + b.name);
@@ -339,7 +339,7 @@ const Workshop = {
       //       Vue.set(this.tokenPickerMap, address, token);
       //     }
       //   }
-      //   logDebug("Workshop", "timeoutCallback() - refreshed " + addressesLength);
+      //   logDebug("Bodyshop", "timeoutCallback() - refreshed " + addressesLength);
       //   // logInfo("tokensModule", "timeoutCallback() tokenPickerList: " + JSON.stringify(this.tokenPickerList));
       // }
 
@@ -353,12 +353,12 @@ const Workshop = {
     },
   },
   mounted() {
-    logInfo("Workshop", "mounted()");
+    logInfo("Bodyshop", "mounted()");
     this.reschedule = true;
-    logInfo("Workshop", "Calling timeoutCallback()");
+    logInfo("Bodyshop", "Calling timeoutCallback()");
     this.timeoutCallback();
 
-    logInfo("Workshop", "Canvas");
+    logInfo("Bodyshop", "Canvas");
     var canvas = new fabric.Canvas('c', {
       hoverCursor: 'pointer',
       selection: false,
@@ -412,7 +412,7 @@ const Workshop = {
   },
 };
 
-const workshopModule = {
+const bodyshopModule = {
   namespaced: true,
   state: {
     params: null,
@@ -425,16 +425,16 @@ const workshopModule = {
   },
   mutations: {
     deQueue (state) {
-      logDebug("workshopModule", "deQueue(" + JSON.stringify(state.executionQueue) + ")");
+      logDebug("bodyshopModule", "deQueue(" + JSON.stringify(state.executionQueue) + ")");
       state.executionQueue.shift();
     },
     updateParams (state, params) {
       state.params = params;
-      logDebug("workshopModule", "updateParams('" + params + "')")
+      logDebug("bodyshopModule", "updateParams('" + params + "')")
     },
     updateExecuting (state, executing) {
       state.executing = executing;
-      logDebug("workshopModule", "updateExecuting(" + executing + ")")
+      logDebug("bodyshopModule", "updateExecuting(" + executing + ")")
     },
   },
   actions: {

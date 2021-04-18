@@ -1,7 +1,7 @@
 const routes = [{
-    path: '/workshop/:param',
-    component: Workshop,
-    name: 'Workshop',
+    path: '/bodyshop/:param',
+    component: Bodyshop,
+    name: 'Bodyshop',
   }, {
     path: '/docs/:section/:topic',
     component: Docs,
