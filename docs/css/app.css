@@ -95,3 +95,12 @@ span.icon {
 .navbar-default .navbar-brand {
     color: #000;
 }
+
+
+img {
+    -ms-interpolation-mode: nearest-neighbor;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -o-pixelated;
+    image-rendering: pixelated;
+}

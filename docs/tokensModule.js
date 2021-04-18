@@ -199,6 +199,88 @@ const tokensModule = {
           logInfo("tokensModule", "execWeb3() balanceOfs: " + JSON.stringify(balanceOfs.map((x) => { return x.toString(); })));
           commit('updateBalances', balanceOfs.map((x) => { return x.toString(); }));
 
+          const cryptoPunksMarketContract = new ethers.Contract(CRYPTOPUNKMARKETADDRESS, CRYPTOPUNKMARKETABI, store.getters['connection/connection'].provider);
+          const cpBalanceOf = await cryptoPunksMarketContract.balanceOf(store.getters['connection/coinbase']);
+          logInfo("tokensModule", "execWeb3() cpBalanceOf: " + cpBalanceOf);
+
+          // Direct query. Could deploy contract to perform multicall
+          // for (let i = 0; i < 10000; i++) {
+          //   const owner = await cryptoPunksMarketContract.punkIndexToAddress(i);
+          //   if (i % 100 == 0) {
+          //     logInfo("tokensModule", "execWeb3() owner: " + owner + " " + i);
+          //   }
+          //   // if (owner == store.getters['connection/coinbase']) {
+          //   // }
+          // }
+
+          /*
+          let url = "https://wrappedpunks.com:3000/api/punks?user=" + store.getters['connection/coinbase'] + "&type=punk&page=1&pageSize=1200";
+          let req = new XMLHttpRequest();
+          req.overrideMimeType("application/json");
+          req.open('GET', url, true);
+          req.onload  = function() {
+            logInfo("tokensModule", "execWeb3() punkData txt: " + req.readyState + " => " + req.responseText);
+            const punkData = JSON.parse(req.responseText);
+            logInfo("tokensModule", "execWeb3() punkData: " + JSON.stringify(punkData));
+          };
+          req.send(null);
+
+          // CryptoPunks - OpenSea
+          url = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&asset_contract_address=" + CRYPTOPUNKMARKETADDRESS + "&order_direction=desc&offset=0&limit=50";
+          req = new XMLHttpRequest();
+          req.overrideMimeType("application/json");
+          req.open('GET', url, true);
+          req.onload  = function() {
+            logInfo("tokensModule", "execWeb3() openSeaPunkData txt: " + req.readyState + " => " + req.responseText);
+            if (req.readyState == 4) {
+              const openSeaPunkData = JSON.parse(req.responseText);
+              logInfo("tokensModule", "execWeb3() openSeaPunkData JSON: " + JSON.stringify(openSeaPunkData));
+            }
+          };
+          req.send(null);
+
+          // Pixel Portraits - OpenSea
+          url = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&order_direction=desc&offset=0&limit=50&collection=the-pixel-portraits";
+          req = new XMLHttpRequest();
+          req.overrideMimeType("application/json");
+          req.open('GET', url, true);
+          req.onload  = function() {
+            logInfo("tokensModule", "execWeb3() pixelPortraitsData txt: " + req.readyState + " => " + req.responseText);
+            if (req.readyState == 4) {
+              const pixelPortraitsData = JSON.parse(req.responseText);
+              logInfo("tokensModule", "execWeb3() pixelPortraitsData JSON: " + JSON.stringify(pixelPortraitsData));
+            }
+          };
+          req.send(null);
+
+          // PunkBodies - OpenSea
+          url = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&asset_contract_address=" + PUNKBODIESADDRESS + "&order_direction=desc&offset=0&limit=50";
+          req = new XMLHttpRequest();
+          req.overrideMimeType("application/json");
+          req.open('GET', url, true);
+          req.onload  = function() {
+            logInfo("tokensModule", "execWeb3() openSeaPunkData txt: " + req.readyState + " => " + req.responseText);
+            if (req.readyState == 4) {
+              const openSeaPunkData = JSON.parse(req.responseText);
+              logInfo("tokensModule", "execWeb3() openSeaPunkData JSON: " + JSON.stringify(openSeaPunkData));
+            }
+          };
+          req.send(null);
+
+          // PunkBodies - Direct to contract
+          const punkBodiesContract = new ethers.Contract(PUNKBODIESADDRESS, PUNKBODIESABI, store.getters['connection/connection'].provider);
+          const pbBalanceOf = await punkBodiesContract.balanceOf(store.getters['connection/coinbase']);
+          logInfo("tokensModule", "execWeb3() pbBalanceOf: " + pbBalanceOf);
+
+          for (let i = 0; i < pbBalanceOf; i++) {
+              const tokenId = await punkBodiesContract.tokenOfOwnerByIndex(store.getters['connection/coinbase'], i);
+              logInfo("tokensModule", "execWeb3() i: " + i + ", tokenId: " + tokenId);
+          }
+          */
+
+
+
+
           // var tokenToolz = web3.eth.contract(TOKENTOOLZABI).at(TOKENTOOLZADDRESS);
           //
           // // TODO: Load up STARTUPTOKENLIST ?

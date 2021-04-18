@@ -5,94 +5,64 @@ const Workshop = {
         <b-card no-body class="border-0 m-0 mt-2">
           <b-card-body class="p-0">
 
-          <canvas id="c"></canvas>
+          <b-card-group deck class="m-2">
+            <div v-for="(tokenId, tokenIdIndex) in allTokenIds">
+              <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
+                <b-avatar variant="light" size="5.0rem" :src="'media/' + nftData.tokens[tokenId].imageTBName" class="pixelated"></b-avatar>
+                <template #footer>
+                  <span class="float-none">
+                    #{{ tokenId }}
+                  </span>
+                </template>
+              </b-card>
+            </div>
+          </b-card-group>
+          <b-button size="sm" @click="loadNFTs()" variant="info">Load Other NFTs</b-button><br />
+          <b-card-group deck class="m-2">
+            <div v-for="punkData in punksDataList">
+              <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
+                <b-avatar variant="light" size="5.0rem" :src="punkData.punkImageURL" class="pixelated"></b-avatar>
+                <template #footer>
+                  <span class="float-none">
+                    #{{ punkData.punkId }}
+                  </span>
+                </template>
+              </b-card>
+            </div>
+          </b-card-group>
+          <b-card-group deck class="m-2">
+            <div v-for="pixelPortraitData in pixelPortraitsDataList">
+              <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
+                <b-avatar variant="light" size="5.0rem" :src="pixelPortraitData.imageUrl" class="pixelated"></b-avatar>
+                <template #footer>
+                  <span class="float-none small truncate">
+                    {{ pixelPortraitData.id }}
+                  </span>
+                </template>
+              </b-card>
+            </div>
+          </b-card-group>
+          <b-card-group deck class="m-2">
+            <div v-for="punkBodyData in punkBodiesDataList">
+              <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
+                <b-avatar variant="light" size="5.0rem" :src="punkBodyData.punkBodyImageURL" class="pixelated"></b-avatar>
+                <template #footer>
+                  <span class="float-none">
+                    #{{ punkBodyData.punkBodyId }}
+                  </span>
+                </template>
+              </b-card>
+            </div>
+          </b-card-group>
+
+          <br />
+          <!-- <b-card-img :src="punkData.punkImageURL" alt="Punk image" width="100px" class="pixelated"></b-card-img> -->
+
+          <canvas id="c" width="500" height="500" style="border:1px solid"></canvas>
 
           <!-- <b-img src="media/ZombieBaby_000.png" height="1024px" alt="image slot"></b-img> -->
-          <b-img src="https://www.larvalabs.com/public/images/cryptopunks/punk3636.png" height="1024px" style="image-rendering: -moz-crisp-edges; image-rendering: crisp-edges; image-rendering: pixelated;" alt="image slot"></b-img>
+          <b-img src="https://www.larvalabs.com/public/images/cryptopunks/punk3636.png" height="256px" style="image-rendering: -moz-crisp-edges; image-rendering: crisp-edges; image-rendering: pixelated;" alt="image slot"></b-img>
 
-
-
-            <!--
-            <div>
-              <b-container class="bv-example-row">
-                <b-row>
-                  <b-col>
-                    <b-form-group label-cols="3" label-size="sm" label="Baby #" label-for="all-tokens-list-id">
-                      <b-form-input list="all-tokens-list-id" size="sm"></b-form-input>
-                      <datalist id="all-tokens-list-id">
-                        <option>None</option>
-                        <option v-for="tokenId in allTokenIds">{{ tokenId }}</option>
-                      </datalist>
-                    </b-form-group>
-                  </b-col>
-                  <b-col>
-                    <b-form-group label-cols="3" label-size="sm" label="Parent #" label-for="all-parents-list-id">
-                      <b-form-input list="all-parents-list-id" size="sm"></b-form-input>
-                      <datalist id="all-parents-list-id">
-                        <option v-for="parent in allParents">{{ parent }}</option>
-                      </datalist>
-                    </b-form-group>
-                  </b-col>
-                </b-row>
-                <b-row>
-                  <b-col>
-                    <b-form-group label-cols="3" label-size="sm" label="Attributes" label-for="all-attributes-list-id">
-                      <b-form-input list="all-attributes-list-id" size="sm"></b-form-input>
-                      <datalist id="all-attributes-list-id">
-                        <option v-for="attribute in allAttributes">{{ attribute }}</option>
-                      </datalist>
-                    </b-form-group>
-                  </b-col>
-                  <b-col>
-                    <b-form-group label-cols="3" label-size="sm" label="Ancient DNA" label-for="all-ancientdnas-list-id">
-                      <b-form-input list="all-ancientdnas-list-id" size="sm"></b-form-input>
-                      <datalist id="all-ancientdnas-list-id">
-                        <option v-for="ancientDNA in allAncientDNAs">{{ ancientDNA }}</option>
-                      </datalist>
-                    </b-form-group>
-                  </b-col>
-                </b-row>
-              </b-container>
-            </div>
-            -->
-
-            <!--
-            <div>
-              <b-card-group class="m-2">
-                <div v-for="tokenId in allTokenIds">
-                  <b-card body-class="p-1" :img-src="'media/' + nftData.tokens[tokenId].imageName" img-alt="Image" img-top style="max-width: 15rem;" class="m-1 p-2">
-                    <b-card-text class="pt-2">
-                      <b>#{{ tokenId }}</b>:
-                      <span v-for="(parentId, parentIndex) in nftData.tokens[tokenId].parents">
-                        <span v-if="parentIndex > 0">
-                         +
-                        </span>
-                        <b-avatar variant="light" size="1.5rem" :src="'media/' + nftData.tokens[tokenId].parents[parentIndex].image"></b-avatar>
-                      </span><br />
-                      <span v-for="attribute in nftData.tokens[tokenId].attributes"><b-badge pill variant="success" class="mr-1">{{ attribute }}</b-badge></span>
-                      <span v-for="ancientDNA in nftData.tokens[tokenId].ancientDNA"><b-badge pill variant="warning" class="mr-1">{{ ancientDNA }} <font size="-1">🧬</font></b-badge></span>
-                    </b-card-text>
-                  </b-card>
-                </div>
-                <div>
-                  <b-card body-class="p-1" :img-src="'media/' + 'ZombieBabies_000-008_random.gif'" img-alt="Image" img-top style="max-width: 15rem;" class="m-1 p-2">
-                    <b-card-text class="pt-2">
-                      <b>Adopt A ZombieBaby</b><br />
-                      #000 to #007 chosen by the adoption centre.
-                    </b-card-text>
-                  </b-card>
-                </div>
-                <div>
-                  <b-card body-class="p-1" :img-src="'media/' + 'ZombieBabies_000-008_set.gif'" img-alt="Image" img-top style="max-width: 15rem;" class="m-1 p-2">
-                    <b-card-text class="pt-2">
-                      <b>Adopt A Clowder Of ZombieBabies</b><br />
-                      #000 to #008
-                    </b-card-text>
-                  </b-card>
-                </div>
-              </b-card-group>
-            </div>
-            -->
 
           </b-card-body>
         </b-card>
@@ -102,66 +72,11 @@ const Workshop = {
   data: function () {
     return {
       count: 0,
-      reschedule: false,
+      reschedule: true,
 
-      search: null,
-      currentPage: 1,
-      perPage: 10,
-      pageOptions: [
-        { text: "5", value: 5 },
-        { text: "10", value: 10 },
-        { text: "25", value: 25 },
-        { text: "50", value: 50 },
-        { text: "All", value: 0 },
-      ],
-
-      addTokenTabIndex: 0,
-
-      tokenPickerMap: {},
-      tokenPickerList: [],
-      tokenPickerLoadingRow: null,
-      tokenPickerTotalRows: null,
-
-      commonTokenMap: {},
-      fakeTokenMap: {},
-      searchCommon: null,
-      searchFake: null,
-      selectedTokens: {},
-
-      tokenInfo: {
-        address: "0x7E0480Ca9fD50EB7A3855Cf53c347A1b4d6A2FF5",
-        symbol: null,
-        name: null,
-        decimals: null,
-        totalSupply: null,
-        balance: null,
-        allowance: null,
-        ok: null,
-      },
-      newAllowance: "0",
-
-      addTokenTableFields: [
-        { key: 'symbol', label: 'Symbol', sortable: true },
-        { key: 'name', label: 'Name', sortable: true },
-        { key: 'decimals', label: 'Decimals', sortable: true, tdClass: 'text-right' },
-        { key: 'totalSupply', label: 'Total Supply', sortable: true, tdClass: 'text-right' },
-        { key: 'balance', label: 'Balance', sortable: true, tdClass: 'text-right' },
-        { key: 'allowance', label: 'Allowance', sortable: true, tdClass: 'text-right' },
-        { key: 'address', label: 'Address', sortable: true },
-        { key: 'selected', label: 'Select', sortable: false },
-      ],
-
-      tokenDataFields: [
-        { key: 'symbol', label: 'Symbol', sortable: true },
-        { key: 'name', label: 'Name', sortable: true },
-        { key: 'decimals', label: 'Decimals', sortable: true, thClass: 'text-right', tdClass: 'text-right' },
-        { key: 'totalSupply', label: 'Total Supply', sortable: true, thClass: 'text-right', tdClass: 'text-right' },
-        { key: 'balance', label: 'Balance', sortable: true, thClass: 'text-right', tdClass: 'text-right' },
-        { key: 'allowance', label: 'Allowance', sortable: true, thClass: 'text-right', tdClass: 'text-right' },
-        { key: 'address', label: 'Address', sortable: true, thClass: 'text-right', tdClass: 'text-right' },
-        { key: 'extra', label: '', sortable: false },
-      ],
-      show: true,
+      punksDataList: [],
+      pixelPortraitsDataList: [],
+      punkBodiesDataList: [],
     }
   },
   computed: {
@@ -190,273 +105,167 @@ const Workshop = {
     allAncientDNAs() {
       return store.getters['tokens/allAncientDNAs'];
     },
-
-    owner() {
-      return store.getters['priceFeed/owner'];
-    },
-    tokenData() {
-      return store.getters['tokens/tokenData'];
-    },
-    tokenDataSorted() {
-      var results = [];
-      var tokenData = store.getters['tokens/tokenData'];
-      for (token in tokenData) {
-        results.push(tokenData[token]);
-      }
-      results.sort(function(a, b) {
-        return ('' + a.symbol + a.name).localeCompare(b.symbol + a.name);
-      });
-      return results;
-    },
-    commonTokenList() {
-      var tokenData = store.getters['tokens/tokenData'];
-      var results = [];
-      this.tokenPickerList.forEach(function(e) {
-        // logInfo("TokensExplorer", "commonTokenList(" + e.symbol + ")");
-        if (typeof tokenData[e.address.toLowerCase()] === "undefined" && e.source == "common") {
-          results.push(e);
-        }
-      });
-      results.sort(function(a, b) {
-        return ('' + a.symbol + a.name).localeCompare(b.symbol + a.name);
-      });
-      return results;
-    },
-    selectedCommonTokenList() {
-      var tokenData = store.getters['tokens/tokenData'];
-      var results = [];
-      var t = this;
-      this.tokenPickerList.forEach(function(e) {
-        var address = e.address.toLowerCase();
-        if (typeof tokenData[address] === "undefined" && e.source == "common"  && typeof t.selectedTokens[address] !== "undefined" && t.selectedTokens[address]) {
-          results.push(e);
-        }
-      });
-      return results;
-    },
-    fakeTokenList() {
-      var tokenData = store.getters['tokens/tokenData'];
-      var results = [];
-      this.tokenPickerList.forEach(function(e) {
-        if (typeof tokenData[e.address.toLowerCase()] === "undefined" && e.source == "fake") {
-          results.push(e);
-        }
-      });
-      results.sort(function(a, b) {
-        return ('' + a.symbol + a.name).localeCompare(b.symbol + a.name);
-      });
-      return results;
-    },
-    selectedFakeTokenList() {
-      var tokenData = store.getters['tokens/tokenData'];
-      var results = [];
-      var t = this;
-      this.tokenPickerList.forEach(function(e) {
-        var address = e.address.toLowerCase();
-        if (typeof tokenData[address] === "undefined" && e.source == "fake" && typeof t.selectedTokens[address] !== "undefined" && t.selectedTokens[address]) {
-          results.push(e);
-        }
-      });
-      return results;
-    },
   },
   methods: {
-    rowClicked(record, index) {
-      var address = record.address.toLowerCase();
-      Vue.set(this.selectedTokens, address, !this.selectedTokens[address]);
-    },
-    onFiltered(filteredItems) {
-      if (this.totalRows !== filteredItems.length) {
-        this.totalRows = filteredItems.length;
-        this.currentPage = 1
-      }
-    },
-    truncate(s, l) {
-      if (s.length > l) {
-        return s.substr(0, l) + '...';
-      }
-      return s;
-    },
-    formatNumberForDisplay(value, decimals) {
-      // return parseFloat(new BigNumber(value).toFixed(decimals));
-      return parseFloat(new BigNumber(value).toFixed(decimals)).toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 9});
-    },
-    addTokensToList(list) {
-      logInfo("TokensExplorer", "addTokensToList(" + JSON.stringify(list) + ")");
-      this.$bvToast.toast(`Added ${list.length} item(s) to your token list`, {
-        title: 'Tokens',
-        variant: 'primary',
-        autoHideDelay: 5000,
-        appendToast: true
-      })
-      for (var i = 0; i < list.length; i++) {
-        store.dispatch('tokens/updateToken', list[i]);
-      }
-      for (var i = 0; i < list.length; i++) {
-        Vue.set(this.selectedTokens, list[i].address.toLowerCase(), false);
-      }
-      this.$bvModal.hide('bv-modal-addtoken');
-    },
-    removeTokenFromList(address, symbol) {
-      logInfo("TokensExplorer", "removeTokenFromList(" + address + ", '" + symbol + "')?");
-      this.$bvModal.msgBoxConfirm('Remove ' + symbol + ' from token list? This can be added back later', {
-          title: 'Please Confirm',
-          size: 'sm',
-          buttonSize: 'sm',
-          okVariant: 'danger',
-          okTitle: 'Yes',
-          cancelTitle: 'No',
-          footerClass: 'p-2',
-          hideHeaderClose: false,
-          centered: true
-        })
-        .then(value1 => {
-          if (value1) {
-            logInfo("TokensExplorer", "removeTokenFromList(" + address + ")");
-            store.dispatch('tokens/removeToken', address);
-            fakeTokenAddress.preventDefault();
+    async loadNFTs(event) {
+      logInfo("Workshop", "loadNFTs()");
+
+      /*
+      let url = "https://wrappedpunks.com:3000/api/punks?user=" + store.getters['connection/coinbase'] + "&type=punk&page=1&pageSize=1200";
+      let req = new XMLHttpRequest();
+      req.overrideMimeType("application/json");
+      req.open('GET', url, true);
+      req.onload  = function() {
+        logInfo("tokensModule", "execWeb3() punkData txt: " + req.readyState + " => " + req.responseText);
+        const punkData = JSON.parse(req.responseText);
+        logInfo("tokensModule", "execWeb3() punkData: " + JSON.stringify(punkData));
+      };
+      req.send(null);
+      */
+
+      // CryptoPunks - OpenSea
+      let cryptoPunksUrl = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&asset_contract_address=" + CRYPTOPUNKMARKETADDRESS + "&order_direction=desc&offset=0&limit=50";
+      cryptoPunksReq = new XMLHttpRequest();
+      cryptoPunksReq.overrideMimeType("application/json");
+      logInfo("Workshop", "loadNFTs() openSeaPunkData cryptoPunksUrl: " + cryptoPunksUrl);
+      cryptoPunksReq.open('GET', cryptoPunksUrl, true);
+      const cryptoPunksThis = this;
+      cryptoPunksReq.onload  = function() {
+        // logInfo("Workshop", "loadNFTs() openSeaPunkData txt: " + cryptoPunksReq.readyState + " => " + cryptoPunksReq.responseText);
+        if (cryptoPunksReq.readyState == 4) {
+          const punkDataTemp = [];
+          const openSeaPunkData = JSON.parse(cryptoPunksReq.responseText);
+          // logInfo("Workshop", "loadNFTs() openSeaPunkData JSON: " + JSON.stringify(openSeaPunkData.assets).substring(0, 1000));
+          for (let assetIndex in Object.keys(openSeaPunkData.assets)) {
+            const asset = openSeaPunkData.assets[assetIndex];
+            // logInfo("Workshop", "loadNFTs() openSeaPunkData asset: " + assetIndex + " => " + JSON.stringify(asset));
+            var punkId = asset.token_id;
+            var punkImageURL = "https://www.larvalabs.com/public/images/cryptopunks/punk" + punkId + ".png"
+            // logInfo("Workshop", "loadNFTs() openSeaPunkData punkId: " + punkId + " => " + punkImageURL);
+            punkDataTemp.push({ punkId: punkId, punkImageURL: punkImageURL });
           }
-        })
-        .catch(err => {
-          // An error occurred
-        });
-    },
-    resetTokenList() {
-      logInfo("TokensExplorer", "resetTokenList()?");
-      this.$bvModal.msgBoxConfirm('Reset token list? Tokens can be added back later', {
-          title: 'Please Confirm',
-          size: 'sm',
-          buttonSize: 'sm',
-          okVariant: 'danger',
-          okTitle: 'Yes',
-          cancelTitle: 'No',
-          footerClass: 'p-2',
-          hideHeaderClose: false,
-          centered: true
-        })
-        .then(value1 => {
-          if (value1) {
-            logInfo("TokensExplorer", "resetTokenList()");
-            store.dispatch('tokens/removeAllTokens', true);
-            fakeTokenAddress.preventDefault();
-          }
-        })
-        .catch(err => {
-          // An error occurred
-        });
-    },
-    async checkTokenAddress(event) {
-      logInfo("TokensExplorer", "checkTokenAddress(" + this.tokenInfo.address + ")");
-      if (false) {
-        var tokenToolz = web3.eth.contract(TOKENTOOLZABI).at(TOKENTOOLZADDRESS);
-        try {
-          var _tokenInfo = promisify(cb => tokenToolz.getTokenInfo(this.tokenInfo.address, store.getters['connection/coinbase'], store.getters['optinoFactory/address'], cb));
-          var tokenInfo = await _tokenInfo;
-          logInfo("TokensExplorer", "checkTokenAddress: " + JSON.stringify(tokenInfo));
-          this.tokenInfo.symbol = tokenInfo[4];
-          this.tokenInfo.name = tokenInfo[5];
-          this.tokenInfo.decimals = parseInt(tokenInfo[0]);
-          this.tokenInfo.totalSupply = tokenInfo[1].shift(-this.tokenInfo.decimals).toString();
-          this.tokenInfo.balance = tokenInfo[2].shift(-this.tokenInfo.decimals).toString();
-          this.tokenInfo.allowance = tokenInfo[3].shift(-this.tokenInfo.decimals).toString();
-          this.tokenInfo.source = "search";
-          this.tokenInfo.ok = true;
-        } catch (e) {
-          this.tokenInfo.symbol = null;
-          this.tokenInfo.name = null;
-          this.tokenInfo.decimals = null;
-          this.tokenInfo.totalSupply = null;
-          this.tokenInfo.balance = null;
-          this.tokenInfo.allowance = null;
-          this.tokenInfo.source = null;
-          this.tokenInfo.ok = false;
+          cryptoPunksThis.punksDataList = punkDataTemp;
+          // logInfo("Workshop", "loadNFTs() openSeaPunkData punkDataTemp: " + JSON.stringify(punkDataTemp));
         }
+      };
+      cryptoPunksReq.send(null);
+
+      // Pixel Portraits - OpenSea
+      let pixelPortraitsUrl = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&order_direction=desc&offset=0&limit=50&collection=the-pixel-portraits";
+      // let pixelPortraitsUrl = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&asset_contract_address=" + PUNKBODIESADDRESS + "&order_direction=desc&offset=0&limit=50";
+      pixelPortraitsReq = new XMLHttpRequest();
+      pixelPortraitsReq.overrideMimeType("application/json");
+      logInfo("Workshop", "loadNFTs() openSeaPixelPortraitsData pixelPortraitsUrl: " + pixelPortraitsUrl);
+      pixelPortraitsReq.open('GET', pixelPortraitsUrl, true);
+      const pixelPortraitsThis = this;
+      pixelPortraitsReq.onload  = function() {
+        // logInfo("tokensModule", "execWeb3() openSeaPixelPortraitsData txt: " + pixelPortraitsReq.readyState + " => " + pixelPortraitsReq.responseText);
+        if (pixelPortraitsReq.readyState == 4) {
+          const pixelPortraitsDataListTemp = [];
+          const openSeaPixelPortraitData = JSON.parse(pixelPortraitsReq.responseText);
+          // logInfo("tokensModule", "execWeb3() openSeaPixelPortraitData JSON: " + JSON.stringify(openSeaPixelPortraitData));
+          for (let assetIndex in Object.keys(openSeaPixelPortraitData.assets)) {
+            const asset = openSeaPixelPortraitData.assets[assetIndex];
+            // logInfo("Workshop", "loadNFTs() openSeaPixelPortraitData asset: " + assetIndex + " => " + JSON.stringify(asset));
+            var id = asset.name;
+            var imageUrl = asset.image_url;
+            // // logInfo("Workshop", "loadNFTs() openSeaPunkData punkId: " + punkId + " => " + imageUrl);
+            pixelPortraitsDataListTemp.push({ id: id, imageUrl: imageUrl });
+          }
+          pixelPortraitsThis.pixelPortraitsDataList = pixelPortraitsDataListTemp;
+          // logInfo("Workshop", "loadNFTs() openSeaPunkData punkDataTemp: " + JSON.stringify(punkDataTemp));
+          // https://api.punkbodies.com/get-images/7273.png
+        }
+        // https://api.punkbodies.com/get-images/7273.png
+      };
+      pixelPortraitsReq.send(null);
+
+      /*
+      // Pixel Portraits - OpenSea
+      url = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&order_direction=desc&offset=0&limit=50&collection=the-pixel-portraits";
+      req = new XMLHttpRequest();
+      req.overrideMimeType("application/json");
+      req.open('GET', url, true);
+      req.onload  = function() {
+        logInfo("tokensModule", "execWeb3() pixelPortraitsData txt: " + req.readyState + " => " + req.responseText);
+        if (req.readyState == 4) {
+          const pixelPortraitsData = JSON.parse(req.responseText);
+          logInfo("tokensModule", "execWeb3() pixelPortraitsData JSON: " + JSON.stringify(pixelPortraitsData));
+        }
+      };
+      req.send(null);
+      */
+
+      // PunkBodies - OpenSea
+      let punkBodiesUrl = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&asset_contract_address=" + PUNKBODIESADDRESS + "&order_direction=desc&offset=0&limit=50";
+      punkBodiesReq = new XMLHttpRequest();
+      punkBodiesReq.overrideMimeType("application/json");
+      logInfo("Workshop", "loadNFTs() openSeaPunkBodyData punkBodiesUrl: " + punkBodiesUrl);
+      punkBodiesReq.open('GET', punkBodiesUrl, true);
+      const punkBodiesThis = this;
+      punkBodiesReq.onload  = function() {
+        // logInfo("tokensModule", "execWeb3() openSeaPunkBodyData txt: " + punkBodiesReq.readyState + " => " + punkBodiesReq.responseText);
+        if (punkBodiesReq.readyState == 4) {
+          const punkBodiesDataListTemp = [];
+          const openSeaPunkBodyData = JSON.parse(punkBodiesReq.responseText);
+          // logInfo("tokensModule", "execWeb3() openSeaPunkBodyData JSON: " + JSON.stringify(openSeaPunkBodyData));
+          for (let assetIndex in Object.keys(openSeaPunkBodyData.assets)) {
+            const asset = openSeaPunkBodyData.assets[assetIndex];
+            // logInfo("Workshop", "loadNFTs() openSeaPunkBodyData asset: " + assetIndex + " => " + JSON.stringify(asset));
+            var punkBodyId = asset.token_id;
+            var punkBodyImageURL = "https://api.punkbodies.com/get-images/" + punkBodyId + ".png"
+            // // logInfo("Workshop", "loadNFTs() openSeaPunkData punkId: " + punkId + " => " + punkBodyImageURL);
+            punkBodiesDataListTemp.push({ punkBodyId: punkBodyId, punkBodyImageURL: punkBodyImageURL });
+          }
+          punkBodiesThis.punkBodiesDataList = punkBodiesDataListTemp;
+          // logInfo("Workshop", "loadNFTs() openSeaPunkData punkDataTemp: " + JSON.stringify(punkDataTemp));
+          // https://api.punkbodies.com/get-images/7273.png
+        }
+        // https://api.punkbodies.com/get-images/7273.png
+      };
+      punkBodiesReq.send(null);
+
+      /*
+      // PunkBodies - Direct to contract
+      const punkBodiesContract = new ethers.Contract(PUNKBODIESADDRESS, PUNKBODIESABI, store.getters['connection/connection'].provider);
+      const pbBalanceOf = await punkBodiesContract.balanceOf(store.getters['connection/coinbase']);
+      logInfo("tokensModule", "execWeb3() pbBalanceOf: " + pbBalanceOf);
+
+      for (let i = 0; i < pbBalanceOf; i++) {
+          const tokenId = await punkBodiesContract.tokenOfOwnerByIndex(store.getters['connection/coinbase'], i);
+          logInfo("tokensModule", "execWeb3() i: " + i + ", tokenId: " + tokenId);
       }
-      logInfo("TokensExplorer", "checkTokenAddress: " + JSON.stringify(this.tokenInfo));
-    },
-    getSomeTokens(fakeTokenAddress) {
-      fakeTokenAddress = fakeTokenAddress.toLowerCase();
-      logInfo("TokensExplorer", "getSomeTokens(" + JSON.stringify(fakeTokenAddress) + ")");
-      this.$bvModal.msgBoxConfirm('Get 1,000 ' + this.tokenData[fakeTokenAddress].symbol + ' tokens from the faucet for testing?', {
-          title: 'Please Confirm',
-          size: 'sm',
-          buttonSize: 'sm',
-          okVariant: 'danger',
-          okTitle: 'Yes',
-          cancelTitle: 'No',
-          footerClass: 'p-2',
-          hideHeaderClose: false,
-          centered: true
-        })
-        .then(value1 => {
-          if (value1) {
-            logInfo("TokensExplorer", "getSomeTokens(" + this.tokenData[fakeTokenAddress].symbol + ")");
-            var factoryAddress = store.getters['optinoFactory/address']
-            logInfo("TokensExplorer", "getSomeTokens(" + fakeTokenAddress + ")");
-            web3.eth.sendTransaction({ to: fakeTokenAddress, from: store.getters['connection/coinbase'] }, function(error, tx) {
-                logInfo("TokensExplorer", "getSomeTokens() DEBUG2");
-              if (!error) {
-                logInfo("TokensExplorer", "getSomeTokens() token.approve() tx: " + tx);
-                store.dispatch('connection/addTx', tx);
-              } else {
-                logInfo("TokensExplorer", "getSomeTokens() token.approve() error: ");
-                console.table(error);
-                store.dispatch('connection/setTxError', error.message);
-              }
-            });
-            fakeTokenAddress.preventDefault();
-          }
-        })
-        .catch(err => {
-          // An error occurred
-        });
-    },
-    setAllowance(address, decimals, newAllowance) {
-      logInfo("TokensExplorer", "setAllowance(" + address + ", " + decimals + ", " + newAllowance + ")?");
-      this.$bvModal.msgBoxConfirm('Set allowance for factory to transfer ' + this.newAllowance + ' tokens?', {
-          title: 'Please Confirm',
-          size: 'sm',
-          buttonSize: 'sm',
-          okVariant: 'danger',
-          okTitle: 'Yes',
-          cancelTitle: 'No',
-          footerClass: 'p-2',
-          hideHeaderClose: false,
-          centered: true
-        })
-        .then(value1 => {
-          if (value1) {
-            logInfo("TokensExplorer", "setAllowance(" + address + ", " + decimals + ", " + newAllowance + ")");
-            var factoryAddress = store.getters['optinoFactory/address']
-            logInfo("TokensExplorer", "setAllowance() factoryAddress=" + factoryAddress);
-            var token = web3.eth.contract(ERC20ABI).at(address);
-            var allowance = new BigNumber(newAllowance).shift(decimals);
-            logInfo("TokensExplorer", "setAllowance() allowance=" + allowance);
+      */
 
-            var data = token.approve.getData(factoryAddress, allowance.toString());
-            logInfo("TokensExplorer", "data=" + data);
-
-            token.approve(factoryAddress, allowance.toString(), { from: store.getters['connection/coinbase'] }, function(error, tx) {
-                logInfo("TokensExplorer", "setAllowance() DEBUG2");
-              if (!error) {
-                logInfo("TokensExplorer", "setAllowance() token.approve() tx: " + tx);
-                store.dispatch('connection/addTx', tx);
-              } else {
-                logInfo("TokensExplorer", "setAllowance() token.approve() error: ");
-                console.table(error);
-                store.dispatch('connection/setTxError', error.message);
-              }
-            });
-
-            event.preventDefault();
-          }
-        })
-        .catch(err => {
-          // An error occurred
-        });
+      // if (false) {
+      //   var tokenToolz = web3.eth.contract(TOKENTOOLZABI).at(TOKENTOOLZADDRESS);
+      //   try {
+      //     var _tokenInfo = promisify(cb => tokenToolz.getTokenInfo(this.tokenInfo.address, store.getters['connection/coinbase'], store.getters['optinoFactory/address'], cb));
+      //     var tokenInfo = await _tokenInfo;
+      //     logInfo("Workshop", "checkTokenAddress: " + JSON.stringify(tokenInfo));
+      //     this.tokenInfo.symbol = tokenInfo[4];
+      //     this.tokenInfo.name = tokenInfo[5];
+      //     this.tokenInfo.decimals = parseInt(tokenInfo[0]);
+      //     this.tokenInfo.totalSupply = tokenInfo[1].shift(-this.tokenInfo.decimals).toString();
+      //     this.tokenInfo.balance = tokenInfo[2].shift(-this.tokenInfo.decimals).toString();
+      //     this.tokenInfo.allowance = tokenInfo[3].shift(-this.tokenInfo.decimals).toString();
+      //     this.tokenInfo.source = "search";
+      //     this.tokenInfo.ok = true;
+      //   } catch (e) {
+      //     this.tokenInfo.symbol = null;
+      //     this.tokenInfo.name = null;
+      //     this.tokenInfo.decimals = null;
+      //     this.tokenInfo.totalSupply = null;
+      //     this.tokenInfo.balance = null;
+      //     this.tokenInfo.allowance = null;
+      //     this.tokenInfo.source = null;
+      //     this.tokenInfo.ok = false;
+      //   }
+        // logInfo("Workshop", "checkTokenAddress: " + JSON.stringify(this.tokenInfo));
+      // }
     },
     async timeoutCallback() {
-      // logInfo("TokensExplorer", "timeoutCallback() count: " + this.count);
+      logInfo("Workshop", "timeoutCallback() count: " + this.count);
       // var tokenToolz = web3.eth.contract(TOKENTOOLZABI).at(TOKENTOOLZADDRESS);
       // var fakeTokenContract = web3.eth.contract(FAKETOKENFACTORYABI).at(FAKETOKENFACTORYADDRESS);
       //
@@ -464,7 +273,7 @@ const Workshop = {
       //   var _fakeTokensLength = promisify(cb => fakeTokenContract.fakeTokensLength.call(cb));
       //   var fakeTokensLength = await _fakeTokensLength;
       //   this.tokenPickerTotalRows = parseInt(COMMONTOKENLIST.length) + parseInt(fakeTokensLength);
-      //   // logInfo("TokensExplorer", "timeoutCallback() - tokenPickerTotalRows: " + this.tokenPickerTotalRows);
+      //   // logInfo("Workshop", "timeoutCallback() - tokenPickerTotalRows: " + this.tokenPickerTotalRows);
       //   this.tokenPickerLoadingRow = 0;
       //
       //   for (var i = 0; i < COMMONTOKENLIST.length; i++) {
@@ -481,7 +290,7 @@ const Workshop = {
       //     Vue.set(this.tokenPickerMap, address.toLowerCase(), token);
       //     this.tokenPickerList.push(token);
       //     this.tokenPickerLoadingRow++;
-      //     // logInfo("TokensExplorer", "timeoutCallback() - loading " + this.tokenPickerLoadingRow + " of " + this.tokenPickerTotalRows + " " + symbol);
+      //     // logInfo("Workshop", "timeoutCallback() - loading " + this.tokenPickerLoadingRow + " of " + this.tokenPickerTotalRows + " " + symbol);
       //   }
       //
       //   for (var fakeTokensIndex = 0; fakeTokensIndex < fakeTokensLength; fakeTokensIndex++) {
@@ -500,13 +309,13 @@ const Workshop = {
       //       Vue.set(this.tokenPickerMap, fakeTokenAddress.toLowerCase(), token);
       //       this.tokenPickerList.push(token);
       //       this.tokenPickerLoadingRow++;
-      //       // logInfo("TokensExplorer", "timeoutCallback() - loading " + this.tokenPickerLoadingRow + " of " + this.tokenPickerTotalRows + " " + symbol);
+      //       // logInfo("Workshop", "timeoutCallback() - loading " + this.tokenPickerLoadingRow + " of " + this.tokenPickerTotalRows + " " + symbol);
       //     }
       //   }
       //
       //   this.tokenPickerTotalRows = this.tokenPickerLoadingRow;
       //   this.tokenPickerLoadingRow = null;
-      //   logDebug("TokensExplorer", "timeoutCallback() - loaded " + this.tokenPickerTotalRows);
+      //   logDebug("Workshop", "timeoutCallback() - loaded " + this.tokenPickerTotalRows);
       //
       //   // this.tokenPickerList.sort(function(a, b) {
       //   //   return ('' + a.symbol + a.name).localeCompare(b.symbol + b.name);
@@ -530,7 +339,7 @@ const Workshop = {
       //       Vue.set(this.tokenPickerMap, address, token);
       //     }
       //   }
-      //   logDebug("TokensExplorer", "timeoutCallback() - refreshed " + addressesLength);
+      //   logDebug("Workshop", "timeoutCallback() - refreshed " + addressesLength);
       //   // logInfo("tokensModule", "timeoutCallback() tokenPickerList: " + JSON.stringify(this.tokenPickerList));
       // }
 
@@ -544,23 +353,52 @@ const Workshop = {
     },
   },
   mounted() {
+    logInfo("Workshop", "mounted()");
     this.reschedule = true;
+    logInfo("Workshop", "Calling timeoutCallback()");
     this.timeoutCallback();
 
-    var canvas = new fabric.Canvas('c');
+    logInfo("Workshop", "Canvas");
+    var canvas = new fabric.Canvas('c', {
+      hoverCursor: 'pointer',
+      selection: false,
+      targetFindTolerance: 2
+    });
     //
     // // create a rectangle object
     var rect = new fabric.Rect({
-      left: 20,
-      top: 20,
-      fill: 'red',
-      width: 150,
-      height: 100
+      left: 50,
+      top: 50,
+      fill: 'yellow',
+      width: 400,
+      height: 400
     });
     //
     // // "add" rectangle onto canvas
     canvas.add(rect);
 
+    canvas.on({
+      'object:moving': function(e) {
+        e.target.opacity = 0.5;
+      },
+      'object:modified': function(e) {
+        e.target.opacity = 1;
+      }
+    });
+
+    // fabric.Image.fromURL('https://www.larvalabs.com/public/images/cryptopunks/punk3636.png', function(oImg) {
+
+    fabric.Image.fromURL('https://zombiebabies.eth.link/media/ZombieBaby_000_transparentbg.png', function(oImg) {
+      oImg.set('imageSmoothing', false).scale(5.0/40).set('flipX', true);
+      // oImg.filters.push(new fabric.Image.filters.Grayscale());
+      // oImg.applyFilters();
+      canvas.add(oImg);
+    });
+
+    fabric.Image.fromURL('https://api.punkbodies.com/get-images/9031.png', function(oImg) {
+      oImg.set('imageSmoothing', false).scale(5.0).set('flipX', true);
+      canvas.add(oImg);
+    });
 
     // var c = document.getElementById("c");
     // var ctx = c.getContext("2d");
