@@ -10,7 +10,7 @@ const Bodyshop = {
               <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
                 <b-avatar variant="light" size="5.0rem" :src="'media/' + nftData.tokens[tokenId].imageTBName" class="pixelated"></b-avatar>
                 <template #footer>
-                  <span class="float-none">
+                  <span class="small truncate">
                     #{{ tokenId }}
                   </span>
                 </template>
@@ -21,10 +21,10 @@ const Bodyshop = {
           <b-card-group deck class="m-2">
             <div v-for="punkData in punksDataList">
               <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                <b-avatar variant="light" size="5.0rem" :src="punkData.punkImageURL" class="pixelated"></b-avatar>
+                <b-avatar variant="light" size="5.0rem" :src="punkData.imageURL" class="pixelated"></b-avatar>
                 <template #footer>
-                  <span class="float-none">
-                    #{{ punkData.punkId }}
+                  <span class="small truncate">
+                    #{{ punkData.id }}
                   </span>
                 </template>
               </b-card>
@@ -35,7 +35,7 @@ const Bodyshop = {
               <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
                 <b-avatar variant="light" size="5.0rem" :src="pixelPortraitData.imageUrl" class="pixelated"></b-avatar>
                 <template #footer>
-                  <span class="float-none small truncate">
+                  <span class="small truncate">
                     {{ pixelPortraitData.id }}
                   </span>
                 </template>
@@ -45,10 +45,10 @@ const Bodyshop = {
           <b-card-group deck class="m-2">
             <div v-for="punkBodyData in punkBodiesDataList">
               <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                <b-avatar variant="light" size="5.0rem" :src="punkBodyData.punkBodyImageURL" class="pixelated"></b-avatar>
+                <b-avatar variant="light" size="5.0rem" :src="punkBodyData.imageURL" class="pixelated"></b-avatar>
                 <template #footer>
-                  <span class="float-none">
-                    #{{ punkBodyData.punkBodyId }}
+                  <span class="small truncate">
+                    #{{ punkBodyData.id }}
                   </span>
                 </template>
               </b-card>
@@ -56,7 +56,7 @@ const Bodyshop = {
           </b-card-group>
 
           <br />
-          <!-- <b-card-img :src="punkData.punkImageURL" alt="Punk image" width="100px" class="pixelated"></b-card-img> -->
+          <!-- <b-card-img :src="punkData.imageURL" alt="Punk image" width="100px" class="pixelated"></b-card-img> -->
 
           <canvas id="c" width="500" height="500" style="border:1px solid"></canvas>
 
@@ -139,10 +139,10 @@ const Bodyshop = {
           for (let assetIndex in Object.keys(openSeaPunkData.assets)) {
             const asset = openSeaPunkData.assets[assetIndex];
             // logInfo("Bodyshop", "loadNFTs() openSeaPunkData asset: " + assetIndex + " => " + JSON.stringify(asset));
-            var punkId = asset.token_id;
-            var punkImageURL = "https://www.larvalabs.com/public/images/cryptopunks/punk" + punkId + ".png"
-            // logInfo("Bodyshop", "loadNFTs() openSeaPunkData punkId: " + punkId + " => " + punkImageURL);
-            punkDataTemp.push({ punkId: punkId, punkImageURL: punkImageURL });
+            var id = asset.token_id;
+            var imageURL = "https://www.larvalabs.com/public/images/cryptopunks/punk" + id + ".png"
+            // logInfo("Bodyshop", "loadNFTs() openSeaPunkData id: " + id + " => " + imageURL);
+            punkDataTemp.push({ id: id, imageURL: imageURL });
           }
           cryptoPunksThis.punksDataList = punkDataTemp;
           // logInfo("Bodyshop", "loadNFTs() openSeaPunkData punkDataTemp: " + JSON.stringify(punkDataTemp));
@@ -169,7 +169,7 @@ const Bodyshop = {
             // logInfo("Bodyshop", "loadNFTs() openSeaPixelPortraitData asset: " + assetIndex + " => " + JSON.stringify(asset));
             var id = asset.name;
             var imageUrl = asset.image_url;
-            // // logInfo("Bodyshop", "loadNFTs() openSeaPunkData punkId: " + punkId + " => " + imageUrl);
+            // // logInfo("Bodyshop", "loadNFTs() openSeaPunkData id: " + id + " => " + imageUrl);
             pixelPortraitsDataListTemp.push({ id: id, imageUrl: imageUrl });
           }
           pixelPortraitsThis.pixelPortraitsDataList = pixelPortraitsDataListTemp;
@@ -212,10 +212,10 @@ const Bodyshop = {
           for (let assetIndex in Object.keys(openSeaPunkBodyData.assets)) {
             const asset = openSeaPunkBodyData.assets[assetIndex];
             // logInfo("Bodyshop", "loadNFTs() openSeaPunkBodyData asset: " + assetIndex + " => " + JSON.stringify(asset));
-            var punkBodyId = asset.token_id;
-            var punkBodyImageURL = "https://api.punkbodies.com/get-images/" + punkBodyId + ".png"
-            // // logInfo("Bodyshop", "loadNFTs() openSeaPunkData punkId: " + punkId + " => " + punkBodyImageURL);
-            punkBodiesDataListTemp.push({ punkBodyId: punkBodyId, punkBodyImageURL: punkBodyImageURL });
+            var id = asset.token_id;
+            var imageURL = "https://api.punkbodies.com/get-images/" + id + ".png"
+            // // logInfo("Bodyshop", "loadNFTs() openSeaPunkData id: " + id + " => " + imageURL);
+            punkBodiesDataListTemp.push({ id: id, imageURL: imageURL });
           }
           punkBodiesThis.punkBodiesDataList = punkBodiesDataListTemp;
           // logInfo("Bodyshop", "loadNFTs() openSeaPunkData punkDataTemp: " + JSON.stringify(punkDataTemp));
