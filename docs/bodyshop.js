@@ -11,7 +11,7 @@ const Bodyshop = {
             <div v-for="(tokenId, tokenIdIndex) in allTokenIds">
               <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
                 <b-link @click="addImage('ZombieBaby', tokenId, 'media/' + nftData.tokens[tokenId].imageTBName)">
-                  <b-avatar variant="light" size="5.0rem" :src="'media/' + nftData.tokens[tokenId].imageTBName" class="pixelated"></b-avatar>
+                  <b-avatar variant="light" size="5.0rem" :src="'https://zombiebabies.eth.link/media/' + nftData.tokens[tokenId].imageTBName" class="pixelated"></b-avatar>
                 </b-link>
                 <template #footer>
                   <span class="small truncate">
@@ -95,6 +95,8 @@ const Bodyshop = {
       pixelPortraitsDataList: [],
       bganpunkv2DataList: [],
       punkBodiesDataList: [],
+
+      canvas: null,
     }
   },
   computed: {
@@ -127,6 +129,13 @@ const Bodyshop = {
   methods: {
     async addImage(nftType, id, image) {
       logInfo("Bodyshop", "addImage() type: " + nftType + ", id: " + id + ", image: " + image);
+      const t = this;
+      fabric.Image.fromURL(image, function(oImg) {
+        oImg.set('imageSmoothing', false).scale(5.0/40).set('flipX', true);
+        // oImg.filters.push(new fabric.Image.filters.Grayscale());
+        // oImg.applyFilters();
+        t.canvas.add(oImg);
+      });
     },
     async loadNFTs(event) {
       logInfo("Bodyshop", "loadNFTs()");
@@ -318,7 +327,7 @@ const Bodyshop = {
     this.timeoutCallback();
 
     logInfo("Bodyshop", "Canvas");
-    var canvas = new fabric.Canvas('c', {
+    this.canvas = new fabric.Canvas('c', {
       hoverCursor: 'pointer',
       selection: false,
       targetFindTolerance: 2
@@ -334,29 +343,36 @@ const Bodyshop = {
     });
     //
     // // "add" rectangle onto canvas
-    canvas.add(rect);
+    this.canvas.add(rect);
 
-    canvas.on({
+    this.canvas.on({
       'object:moving': function(e) {
         e.target.opacity = 0.5;
       },
       'object:modified': function(e) {
         e.target.opacity = 1;
+      },
+      'mouse:down': function(options) {
+        if (options.target) {
+          logInfo("Bodyshop", "Canvas mouse:down(): " + JSON.stringify(options.target));
+          // console.log('an object was clicked! ', options.target.type);
+        }
       }
     });
 
     // fabric.Image.fromURL('https://www.larvalabs.com/public/images/cryptopunks/punk3636.png', function(oImg) {
 
+    const t = this;
     fabric.Image.fromURL('https://zombiebabies.eth.link/media/ZombieBaby_000_transparentbg.png', function(oImg) {
       oImg.set('imageSmoothing', false).scale(5.0/40).set('flipX', true);
       // oImg.filters.push(new fabric.Image.filters.Grayscale());
       // oImg.applyFilters();
-      canvas.add(oImg);
+      t.canvas.add(oImg);
     });
 
     fabric.Image.fromURL('https://api.punkbodies.com/get-images/9031.png', function(oImg) {
       oImg.set('imageSmoothing', false).scale(5.0).set('flipX', true);
-      canvas.add(oImg);
+      t.canvas.add(oImg);
     });
 
     // var c = document.getElementById("c");
