@@ -63,7 +63,9 @@ const Bodyshop = {
           <b-card-group deck class="m-2">
             <div v-for="punkBodyData in punkBodiesDataList">
               <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                <b-avatar variant="light" size="5.0rem" :src="punkBodyData.imageURL" class="pixelated"></b-avatar>
+                <b-link @click="addImage('PunkBody', punkBodyData.id, punkBodyData.imageURL)">
+                  <b-avatar variant="light" size="5.0rem" :src="punkBodyData.imageURL" class="pixelated"></b-avatar>
+                </b-link>
                 <template #footer>
                   <span class="small truncate">
                     #{{ punkBodyData.id }}
@@ -130,8 +132,17 @@ const Bodyshop = {
     async addImage(nftType, id, image) {
       logInfo("Bodyshop", "addImage() type: " + nftType + ", id: " + id + ", image: " + image);
       const t = this;
+      let scale = 5.0;
+      if (nftType == 'ZombieBaby') {
+        scale = 5.0 / 40;
+      } else if (nftType == 'CryptoPunk') {
+        scale = 5.0;
+      } else if (nftType == 'PunkBody') {
+        scale = 5.0;
+      }
+      const flipX = false;
       fabric.Image.fromURL(image, function(oImg) {
-        oImg.set('imageSmoothing', false).scale(5.0/40).set('flipX', true);
+        oImg.set('imageSmoothing', false).scale(scale).set('flipX', flipX);
         // oImg.filters.push(new fabric.Image.filters.Grayscale());
         // oImg.applyFilters();
         t.canvas.add(oImg);
