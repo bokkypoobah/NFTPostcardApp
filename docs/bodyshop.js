@@ -25,7 +25,7 @@ const Bodyshop = {
           <b-card-group deck class="m-2">
             <div v-for="punkData in punksDataList">
               <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                <b-link @click="addImage('CryptoPunk', punkData.id, punkData.imageUrl)">
+                <b-link @click="addImage('CryptoCat', punkData.id, punkData.imageUrl)">
                   <b-avatar rounded="sm" variant="light" size="5.0rem" :src="punkData.imageUrl" class="pixelated"></b-avatar>
                 </b-link>
                 <template #footer>
@@ -92,7 +92,34 @@ const Bodyshop = {
               </b-card>
             </div>
           </b-card-group>
-
+          <b-card-group deck class="m-2">
+            <div v-for="cryptoCatData in cryptoCatsDataList">
+              <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
+                <b-link @click="addImage('CryptoCat', cryptoCatData.id, cryptoCatData.imageUrl)">
+                  <b-avatar rounded="sm" variant="light" size="5.0rem" :src="cryptoCatData.imageUrl" class="pixelated"></b-avatar>
+                </b-link>
+                <template #footer>
+                  <span class="small truncate">
+                    #{{ cryptoCatData.id }}
+                  </span>
+                </template>
+              </b-card>
+            </div>
+          </b-card-group>
+          <b-card-group deck class="m-2">
+            <div v-for="cryptoCatData in wrappedCryptoCatsDataList">
+              <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
+                <b-link @click="addImage('CryptoCat', cryptoCatData.id, cryptoCatData.imageUrl)">
+                  <b-avatar rounded="sm" variant="light" size="5.0rem" :src="cryptoCatData.imageUrl" class="pixelated"></b-avatar>
+                </b-link>
+                <template #footer>
+                  <span class="small truncate">
+                    #{{ cryptoCatData.id }}
+                  </span>
+                </template>
+              </b-card>
+            </div>
+          </b-card-group>
           <br />
           <!-- <b-card-img :src="punkData.imageUrl" alt="Punk image" width="100px" class="pixelated"></b-card-img> -->
 
@@ -116,6 +143,8 @@ const Bodyshop = {
       bganpunkv2DataList: [],
       punkBodiesDataList: [],
       mooncatsDataList: [],
+      cryptoCatsDataList: [],
+      wrappedCryptoCatsDataList: [],
 
       canvas: null,
     }
@@ -163,7 +192,9 @@ const Bodyshop = {
       } else if (nftType == 'PunkBody') {
         scale = 5.0;
       } else if (nftType == 'MoonCat') {
-        scale = 5.0 / 8;
+        scale = 5.0 / 12;
+      } else if (nftType == 'CryptoCat') {
+        scale = 5.0 / 80;
       }
       const flipX = false;
       fabric.Image.fromURL(image, function(oImg) {
@@ -176,11 +207,6 @@ const Bodyshop = {
     async loadNFTs(event) {
       logInfo("Bodyshop", "loadNFTs()");
       const t = this;
-
-      // const one = JSON.stringify({"operationName":"cats","variables":{"addr":"0x000001f568875f378bf6d170b790967fe429c81a"},"query":"query cats($addr: ID!) {\n  cats(first: 1000, where: {owner: $addr}) {\n    id\n    rescueIndex\n    name\n    maxAdoptionPrice\n    askPrice\n    owner {\n      id\n      __typename\n    }\n    __typename\n  }\n}\n"});
-      // logInfo("Bodyshop", "loadNFTs() one: " + one);
-      // const two = JSON.stringify({"operationName":"cats","variables":{"addr":store.getters['connection/coinbase']},"query":"query cats($addr: ID!) {\n  cats(first: 1000, where: {owner: $addr}) {\n    id\n    rescueIndex\n    name\n    maxAdoptionPrice\n    askPrice\n    owner {\n      id\n      __typename\n    }\n    __typename\n  }\n}\n"});
-      // logInfo("Bodyshop", "loadNFTs() two: " + two);
 
       fetch('https://api.thegraph.com/subgraphs/name/merklejerk/moon-cats-rescue', {
         method: 'POST',
@@ -295,6 +321,75 @@ const Bodyshop = {
         }
       };
       punkBodiesReq.send(null);
+
+
+      // CryptoCats
+      let cryptoCatsUrl = "https://us-central1-cryptocats-ws-prod.cloudfunctions.net/listing/ccat/" + store.getters['connection/coinbase'].toLowerCase();
+      cryptoCatsReq = new XMLHttpRequest();
+      cryptoCatsReq.overrideMimeType("application/json");
+      logInfo("Bodyshop", "loadNFTs() cryptoCatsUrl: " + cryptoCatsUrl);
+      cryptoCatsReq.open('GET', cryptoCatsUrl, true);
+      cryptoCatsReq.onload  = function() {
+        if (cryptoCatsReq.readyState == 4) {
+          const cryptoCatsDataListTemp = [];
+          const cryptoCatsData = JSON.parse(cryptoCatsReq.responseText);
+          logInfo("Bodyshop", "loadNFTs() cryptoCatsData: " + JSON.stringify(cryptoCatsData));
+          if (cryptoCatsData.ccat != null) {
+            logInfo("Bodyshop", "loadNFTs() cryptoCatsData.ccat: " + JSON.stringify(cryptoCatsData.ccat));
+            for (const [id, value] of Object.entries(cryptoCatsData.ccat)) {
+              // const ccat = cryptoCatsData.ccat[ccatIndex];
+              logInfo("Bodyshop", "loadNFTs() id: " + id + " => " + JSON.stringify(value));
+              var imageUrl = "https://cryptocats.thetwentysix.io/contents/images/cats/" + id + ".png"
+              logInfo("Bodyshop", "loadNFTs() id: " + id + " => " + imageUrl);
+              cryptoCatsDataListTemp.push({ id: id, imageUrl: imageUrl });
+            }
+            t.cryptoCatsDataList = cryptoCatsDataListTemp;
+            t.cryptoCatsDataList.sort(function(a, b) { return a.id - b.id; });
+          }
+        }
+      };
+      cryptoCatsReq.send(null);
+
+      // WrappedCryptoCats
+      // Testing let wrappedCryptoCatsUrl = "https://us-central1-cryptocats-ws-prod.cloudfunctions.net/listing/wccat/0xad9f11d1dd6d202243473a0cdae606308ab243b4";
+      let wrappedCryptoCatsUrl = "https://us-central1-cryptocats-ws-prod.cloudfunctions.net/listing/wccat/" + store.getters['connection/coinbase'].toLowerCase();
+      wrappedCryptoCatsReq = new XMLHttpRequest();
+      wrappedCryptoCatsReq.overrideMimeType("application/json");
+      logInfo("Bodyshop", "loadNFTs() wrappedCryptoCatsUrl: " + wrappedCryptoCatsUrl);
+      wrappedCryptoCatsReq.open('GET', wrappedCryptoCatsUrl, true);
+      wrappedCryptoCatsReq.onload  = function() {
+        if (wrappedCryptoCatsReq.readyState == 4) {
+          const wrappedCryptoCatsDataListTemp = [];
+          const wrappedCryptoCatsData = JSON.parse(wrappedCryptoCatsReq.responseText);
+          logInfo("Bodyshop", "loadNFTs() wrappedCryptoCatsData: " + JSON.stringify(wrappedCryptoCatsData));
+          // 00:47:36 INFO Bodyshop:loadNFTs() wrappedCryptoCatsData: {"ccat":{"207":"wrapped"}}
+          if (wrappedCryptoCatsData.ccat != null) {
+            logInfo("Bodyshop", "loadNFTs() wrappedCryptoCatsData.ccat: " + JSON.stringify(wrappedCryptoCatsData.ccat));
+            for (const [id, value] of Object.entries(wrappedCryptoCatsData.ccat)) {
+              // const ccat = cryptoCatsData.ccat[ccatIndex];
+              logInfo("Bodyshop", "loadNFTs() id: " + id + " => " + JSON.stringify(value));
+              var imageUrl = "https://cryptocats.thetwentysix.io/contents/images/cats/" + id + ".png"
+              logInfo("Bodyshop", "loadNFTs() id: " + id + " => " + imageUrl);
+              wrappedCryptoCatsDataListTemp.push({ id: id, imageUrl: imageUrl });
+            }
+            t.wrappedCryptoCatsDataList = wrappedCryptoCatsDataListTemp;
+            t.wrappedCryptoCatsDataList.sort(function(a, b) { return a.id - b.id; });
+          }
+
+
+
+      //     for (let assetIndex in Object.keys(openSeaPunkData.assets)) {
+      //       const asset = openSeaPunkData.assets[assetIndex];
+      //       var id = asset.token_id;
+      //       var imageUrl = "https://www.larvalabs.com/public/images/cryptopunks/punk" + id + ".png"
+      //       punkDataTemp.push({ id: id, imageUrl: imageUrl });
+      //     }
+      //     t.punksDataList = punkDataTemp;
+      //     t.punksDataList.sort(function(a, b) { return a.id - b.id; });
+        }
+      };
+      wrappedCryptoCatsReq.send(null);
+
     },
     async timeoutCallback() {
       logInfo("Bodyshop", "timeoutCallback() count: " + this.count);
