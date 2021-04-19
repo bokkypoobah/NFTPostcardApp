@@ -1,0 +1,92 @@
+{
+  "network": "1",
+  "nftAddress": "0xFe9231f0e6753a8412a00eC1f0028A24d5220Ba9",
+  "adoptionCentreV1Address": "0xEd81cd3223e2a9355C2BAC14cD3d734e9FF3Cc35",
+  "collection": "Zombie Babies",
+  "description": "Zombie Babies by BokkyPooBah. Not affiliated with other projects",
+  "name_prefix": "Zombie Baby",
+  "external_url_prefix": "https://zombiebabies.eth.link/",
+  "tokens": {
+    "0" : {
+      "generation": 2,
+      "parents": [{"name": "Zombie #3636", "image": "Punk_3636.png"}, {"name": "Zombie #4472", "image": "Punk_4472.png"}],
+      "attributes": ["Front Goatee Dark", "Earring", "Top Hat"],
+      "ancientDNA": [],
+      "imageHash": "QmSexHstXKqRszhXwaXiBp4DJRjFHXdp6t4tw4bR47UmT1",
+      "imageName": "ZombieBaby_000_transparentbg.png",
+      "bgColour": "#e9fff2"
+    },
+    "1" : {
+      "generation": 2,
+      "parents": [{"name": "Zombie #3636", "image": "Punk_3636.png"}, {"name": "Zombie #4472", "image": "Punk_4472.png"}],
+      "attributes": ["Front Goatee Dark", "Purple Hair"],
+      "ancientDNA": [],
+      "imageHash": "QmZKfMJ6R1kVY8i7jJYTmAHi7igqZzs7Yq9vVdZE183CCC",
+      "imageName": "ZombieBaby_001_transparentbg.png",
+      "bgColour": "#f8fbd1"
+    },
+    "2" : {
+      "generation": 2,
+      "parents": [{"name": "Zombie #3636", "image": "Punk_3636.png"}, {"name": "Zombie #4472", "image": "Punk_4472.png"}],
+      "attributes": ["Front Goatee Dark", "Purple Hair", "Top Hat"],
+      "ancientDNA": [],
+      "imageHash": "QmfSsD7VfVDXv51QDJqVUbnn6z7xhWyiZjwzSnkb7j4sTb",
+      "imageName": "ZombieBaby_002_transparentbg.png",
+      "bgColour": "#fdeff7"
+    },
+    "3" : {
+      "generation": 2,
+      "parents": [{"name": "Zombie #3636", "image": "Punk_3636.png"}, {"name": "Zombie #4472", "image": "Punk_4472.png"}],
+      "attributes": ["Front Goatee Dark", "Earring"],
+      "ancientDNA": ["Cowboy Hat"],
+      "imageHash": "QmNeAK4t4ZdGb3hhxEP83WpPEnFqFKHu1F5fhgFqZNbNRx",
+      "imageName": "ZombieBaby_003.png",
+      "bgColour": "#c0bfe8"
+    },
+    "4" : {
+      "generation": 2,
+      "parents": [{"name": "Zombie #3636", "image": "Punk_3636.png"}, {"name": "Zombie #4472", "image": "Punk_4472.png"}],
+      "attributes": ["Front Goatee Dark", "Earring"],
+      "ancientDNA": ["Beanie"],
+      "imageHash": "QmZrJFwhiBP2QcpqraZ4SZYqXZTADXLTsUCHge9g8Piv5p",
+      "imageName": "ZombieBaby_004.png",
+      "bgColour": "#e2f0cb"
+    },
+    "5" : {
+      "generation": 2,
+      "parents": [{"name": "Zombie #3636", "image": "Punk_3636.png"}, {"name": "Zombie #4472", "image": "Punk_4472.png"}],
+      "attributes": ["Front Goatee Dark", "Earring", "Purple Hair"],
+      "ancientDNA": ["Cowboy Hat"],
+      "imageHash": "QmRnoBqzDTismKF5Ap4opDJmivN1HuB69krNsy9vKU47hq",
+      "imageName": "ZombieBaby_005.png",
+      "bgColour": "#d6ecf9"
+    },
+    "6" : {
+      "generation": 2,
+      "parents": [{"name": "Zombie #3636", "image": "Punk_3636.png"}, {"name": "Zombie #4472", "image": "Punk_4472.png"}],
+      "attributes": ["Front Goatee Dark", "Orange Hair"],
+      "ancientDNA": ["Orange Side"],
+      "imageHash": "QmVhZPK273b5aDZiWVZC6asxU5CK4nuFU12yYPcuyFZRwg",
+      "imageName": "ZombieBaby_006.png",
+      "bgColour": "#e9fff2"
+    },
+    "7" : {
+      "generation": 2,
+      "parents": [{"name": "Zombie #3636", "image": "Punk_3636.png"}, {"name": "Zombie #4472", "image": "Punk_4472.png"}],
+      "attributes": ["Earring"],
+      "ancientDNA": ["Mohawk"],
+      "imageHash": "Qme3jfJrXVDKAKqUCtAz4XovSxHwHGiaKivyhZdFgn4ahs",
+      "imageName": "ZombieBaby_007.png",
+      "bgColour": "#e3e39d"
+    },
+    "8" : {
+      "generation": 2,
+      "parents": [{"name": "Zombie #3636", "image": "Punk_3636.png"}, {"name": "Zombie #4472", "image": "Punk_4472.png"}],
+      "attributes": ["Earring"],
+      "ancientDNA": ["Police Cap"],
+      "imageHash": "QmTmyUU1wJGRdbyPxmA2yo7ocLgLbuXVVFxehRxMD6Z2pk",
+      "imageName": "ZombieBaby_008.png",
+      "bgColour": "#c8d5e5"
+    }
+  }
+}

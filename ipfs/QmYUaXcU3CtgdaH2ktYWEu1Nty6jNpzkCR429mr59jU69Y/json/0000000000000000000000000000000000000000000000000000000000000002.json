@@ -1,0 +1,33 @@
+{
+  "description": "Zombie Babies by The Officious BokkyPooBahs. Inspired by, but not affiliated with CryptoPunks & CryptoBabyPunks",
+  "external_url": "https://zombiebabies.eth.link/json/0000000000000000000000000000000000000000000000000000000000000002.json",
+  "image": "https://zombiebabies.eth.link/media/ZombieBaby_002.png",
+  "imageTransparentBG": "https://zombiebabies.eth.link/media/ZombieBaby_002_transparentbg.png",
+  "name": "Zombie Baby #002",
+  "attributes": [
+    {
+      "trait_type": "Collection",
+      "value": "Zombie Babies"
+    },
+    {
+      "trait_type": "Parent",
+      "value": "Zombie #3636"
+    },
+    {
+      "trait_type": "Parent",
+      "value": "Zombie #4472"
+    },
+    {
+      "trait_type": "Attribute",
+      "value": "Front Goatee Dark"
+    },
+    {
+      "trait_type": "Attribute",
+      "value": "Purple Hair"
+    },
+    {
+      "trait_type": "Attribute",
+      "value": "Top Hat"
+    }
+  ]
+}

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Babies Of Zombie Xtreme High Yield Procreators & Subjects</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Zombie Babies (c) Bok Consulting Pty Ltd 2021" />
+    <meta name="author" content="BokkyPooBah" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@BokkyPooBah" />
+    <meta name="twitter:creator" content="@BokkyPooBah" />
+    <meta property="og:url" content="https://bokkypoobah.github.io/ZombieBabies/" />
+    <meta property="og:title" content="Zombie Babies (c) Bok Consulting Pty Ltd 2021" />
+    <meta property="og:description" content="Zombie Babies by The Officious BokkyPooBahs. Inspired by, but not affiliated with CryptoPunks & CryptoBabyPunks" />
+    <meta property="og:image" content="https://bokkypoobah.github.io/ZombieBabies/media/ZombieBaby_000.png" />
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="css/bootstrap-vue.min.css"/>
+    <link type="text/css" rel="stylesheet" href="css/bootstrap-vue-icons.min.css"/>
+    <link type="text/css" rel="stylesheet" href="css/flatpickr.css"/>
+    <link type="text/css" rel="stylesheet" href="css/highlight-docco.css"/>
+    <link type="text/css" rel="stylesheet" href="css/app.css"/>
+    <!--<link href="css/app.css" rel="stylesheet" media="screen" />-->
+    <!-- <link type="text/css" rel="stylesheet" href="css/theme.css" /> -->
+    <!-- <script src="js/polyfill.js"></script> -->
+    <script src="js/flatpickr.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/bootstrap-vue.min.js"></script>
+    <script src="js/bootstrap-vue-icons.min.js"></script>
+    <script src="js/vue-flatpickr-component@8.js"></script>
+    <script src="js/vue-router.min.js"></script>
+    <script src="js/vuex.js"></script>
+    <script src="js/vuex-router-sync.js"></script>
+    <script src="js/apexcharts.js"></script>
+    <script src="js/vue-apexcharts.js"></script>
+
+    <script src="js/ethers-5.0.umd.min.js" type="application/javascript"></script>
+
+    <script src="js/bignumber.min.js"></script>
+    <script src="js/moment.min.js"></script>
+    <script src="js/web3.js"></script>
+    <script src="js/sha3.js"></script>
+
+    <script src="js/vue-apollo.umd.min.js"></script>
+
+    <script src="js/highlight.min.js"></script>
+    <script src="js/highlight-solidity.js"></script>
+
+    <script src="deploymentData.js"></script>
+    <script src="functions.js"></script>
+    <script src="connectionModule.js"></script>
+    <script src="tokensModule.js"></script>
+    <script src="homeModule.js"></script>
+    <script src="tokensExplorerModule.js"></script>
+    <script src="docs.js"></script>
+    <script src="routes.js"></script>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="images/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="images/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="images/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="images/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="images/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="images/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="images/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="images/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="manifest" href="images/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="images/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+  </head>
+  <body>
+    <div id="app">
+      <b-container fluid class="m-0 p-1">
+        <div>
+          <!-- <b-navbar type="outline-primary" fixed="top" active-class="blah"> -->
+          <b-navbar variant="light" fixed="top">
+            <b-navbar-brand to="/" variant="primary">
+              <img src="images/Baby_000_cropped.png" style="max-width: 30px; margin-top: -4px;" alt="Zombie Babies" />
+              Babies Of Zombie Xtreme High Yield Procreators & Subjects<!--<span v-if="moduleName != null && moduleName.length > 0">- {{ moduleName }}</span>-->
+            </b-navbar-brand>
+            <b-navbar-nav class="ml-auto">
+              <!--
+              <b-nav-item size="sm" to="/optinoExplorer/all" active-class="active" v-b-popover.hover="'View and create optinos'" :disabled="!connect">Optinos</b-nav-item>
+              <b-nav-item size="sm" to="/feedsExplorer/all" active-class="active" v-b-popover.hover="'View and set feeds'" :disabled="!connect">Feeds</b-nav-item>
+              -->
+              <b-nav-item size="sm" disabled to="/tokensExplorer/all" active-class="active" v-b-popover.hover="'Adoption Centre'">Adoption Centre</b-nav-item>
+              <b-nav-item size="sm" to="/docs/info/top" active-class="active" v-b-popover.hover="'Info'">Info</b-nav-item>
+              <!--
+              <b-nav-item size="sm" to="/governance/all" active-class="active" v-b-popover.hover="'Governance'" :disabled="!connect">Governance</b-nav-item>
+              <b-nav-item size="sm" href="https://help.com" target="blank" active-class="active" v-b-popover.hover="'Info'">Info</b-nav-item>
+              -->
+              <!-- <b-nav-item href="https://github.com/bokkypoobah/Optino/wiki" target="_blank" v-b-popover.hover="'View the docs (work in progress)'">Docs</b-nav-item> -->
+              <b-nav-form>
+                <b-button size="sm" variant="link" class="ml-4" v-b-popover.hover="'Power up this app'" @click="setPowerOn();" v-if="!powerOn"><b-icon-power shift-v="-1" font-scale="1.5"></b-icon-power></b-button>
+                <b-button size="sm" variant="link" v-b-popover.hover="'Show status'" v-b-toggle.sidebar-status v-if="powerOn"><b-icon-layout-sidebar-reverse class="ml-4 mr-2" shift-v="-1" font-scale="1.3"></b-icon-layout-sidebar-reverse><b-spinner class="m-0" :variant="spinnerVariant" v-if="powerOn" style="animation: spinner-grow 3.75s linear infinite;" small type="grow" label="Spinning"></b-spinner></b-button>
+                <b-sidebar id="sidebar-status" v-model="statusSidebar" title="Status" width="400px" right shadow no-header-close header-class="m-0 p-0">
+                  <template v-slot:title="{ hide }">
+                    <div class="d-flex flex-row justify-content-between m-0 p-0" style="height: 37px;">
+                      <div class="m-0 p-0">
+                        <b-button size="sm" variant="link" class="m-0 p-0" v-b-popover.hover="'Close sidebar'" @click="hide"><b-icon-x shift-v="-1" font-scale="1.7"></b-icon-x></b-button>
+                      </div>
+                      <div class="m-0 p-0">
+                        <b-button size="sm" variant="link" class="m-0 p-0" v-b-popover.hover="'Power down this app'" @click="setPowerOff();" v-if="powerOn"><b-icon-power shift-v="-1" font-scale="1.5"></b-icon-power></b-button>
+                      </div>
+                      <div class="m-0 p-0 pl-4">
+                        Status
+                      </div>
+                    </div>
+                  </template>
+                  <b-card no-body class="m-2 p-1">
+                    <b-card-body class="m-1 p-0">
+                      <connection></connection>
+                      <br />
+                      <!--
+                      <optino-factory></optino-factory>
+                      <br />
+                      -->
+                      <tokens></tokens>
+                      <br />
+                      <!--
+                      <feeds></feeds>
+                      <br />
+                      <governance></governance>
+                      <br />
+                      -->
+                    </b-card-body>
+                  </b-card>
+                </b-sidebar>
+              </b-nav-form>
+            </b-navbar-nav>
+          </b-navbar>
+        </div>
+        <router-view></router-view>
+      </b-container>
+    </div>
+    <div>
+    </div>
+    <script src="index.js"></script>
+  </body>
+</html>
