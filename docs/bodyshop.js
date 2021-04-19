@@ -343,8 +343,6 @@ const Bodyshop = {
       selection: false,
       targetFindTolerance: 2
     });
-    //
-    // // create a rectangle object
     var rect = new fabric.Rect({
       left: 50,
       top: 50,
@@ -352,8 +350,6 @@ const Bodyshop = {
       width: 400,
       height: 400
     });
-    //
-    // // "add" rectangle onto canvas
     this.canvas.add(rect);
 
     this.canvas.on({
@@ -366,32 +362,22 @@ const Bodyshop = {
       'mouse:down': function(options) {
         if (options.target) {
           logInfo("Bodyshop", "Canvas mouse:down(): " + JSON.stringify(options.target));
-          // console.log('an object was clicked! ', options.target.type);
         }
       }
     });
 
-    // fabric.Image.fromURL('https://www.larvalabs.com/public/images/cryptopunks/punk3636.png', function(oImg) {
-
-    const t = this;
-    fabric.Image.fromURL('https://zombiebabies.eth.link/media/ZombieBaby_000_transparentbg.png', function(oImg) {
-      oImg.set('imageSmoothing', false).scale(5.0/40).set('flipX', true);
-      // oImg.filters.push(new fabric.Image.filters.Grayscale());
-      // oImg.applyFilters();
-      t.canvas.add(oImg);
-    });
-
-    fabric.Image.fromURL('https://api.punkbodies.com/get-images/9031.png', function(oImg) {
-      oImg.set('imageSmoothing', false).scale(5.0).set('flipX', true);
-      t.canvas.add(oImg);
-    });
-
-    // var c = document.getElementById("c");
-    // var ctx = c.getContext("2d");
-    // ctx.beginPath();
-    // ctx.rect(20, 20, 150, 100);
-    // ctx.stroke();
-    // this.vueCanvas = ctx;
+    // const t = this;
+    // fabric.Image.fromURL('https://zombiebabies.eth.link/media/ZombieBaby_000_transparentbg.png', function(oImg) {
+    //   oImg.set('imageSmoothing', false).scale(5.0/40).set('flipX', true);
+    //   // oImg.filters.push(new fabric.Image.filters.Grayscale());
+    //   // oImg.applyFilters();
+    //   t.canvas.add(oImg);
+    // });
+    //
+    // fabric.Image.fromURL('https://api.punkbodies.com/get-images/9031.png', function(oImg) {
+    //   oImg.set('imageSmoothing', false).scale(5.0).set('flipX', true);
+    //   t.canvas.add(oImg);
+    // });
   },
   destroyed() {
     this.reschedule = false;
