@@ -11,7 +11,7 @@ const Bodyshop = {
             <div v-for="(tokenId, tokenIdIndex) in allTokenIds">
               <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
                 <b-link @click="addImage('ZombieBaby', tokenId, 'media/' + nftData.tokens[tokenId].imageTBName)">
-                  <b-avatar variant="light" size="5.0rem" :src="'https://zombiebabies.eth.link/media/' + nftData.tokens[tokenId].imageTBName" class="pixelated"></b-avatar>
+                  <b-avatar rounded="sm" variant="light" size="5.0rem" :src="'https://zombiebabies.eth.link/media/' + nftData.tokens[tokenId].imageTBName" class="pixelated"></b-avatar>
                 </b-link>
                 <template #footer>
                   <span class="small truncate">
@@ -26,7 +26,7 @@ const Bodyshop = {
             <div v-for="punkData in punksDataList">
               <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
                 <b-link @click="addImage('CryptoPunk', punkData.id, punkData.imageUrl)">
-                  <b-avatar variant="light" size="5.0rem" :src="punkData.imageUrl" class="pixelated"></b-avatar>
+                  <b-avatar rounded="sm" variant="light" size="5.0rem" :src="punkData.imageUrl" class="pixelated"></b-avatar>
                 </b-link>
                 <template #footer>
                   <span class="small truncate">
@@ -40,7 +40,7 @@ const Bodyshop = {
             <div v-for="pixelPortraitData in pixelPortraitsDataList">
               <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
                 <b-link @click="addImage('PixelPortrait', pixelPortraitData.id, pixelPortraitData.imageUrl)">
-                  <b-avatar variant="light" size="5.0rem" :src="pixelPortraitData.imageUrl" class="pixelated"></b-avatar>
+                  <b-avatar rounded="sm" variant="light" size="5.0rem" :src="pixelPortraitData.imageUrl" class="pixelated"></b-avatar>
                 </b-link>
                 <template #footer>
                   <span class="small truncate">
@@ -54,7 +54,7 @@ const Bodyshop = {
             <div v-for="bganpunkv2Data in bganpunkv2DataList">
               <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
                 <b-link @click="addImage('BGANPUNKV2', bganpunkv2Data.id, bganpunkv2Data.imageUrl)">
-                  <b-avatar variant="light" size="5.0rem" :src="bganpunkv2Data.imageUrl" class="pixelated"></b-avatar>
+                  <b-avatar rounded="sm" variant="light" size="5.0rem" :src="bganpunkv2Data.imageUrl" class="pixelated"></b-avatar>
                 </b-link>
                 <template #footer>
                   <span class="small truncate">
@@ -68,7 +68,7 @@ const Bodyshop = {
             <div v-for="punkBodyData in punkBodiesDataList">
               <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
                 <b-link @click="addImage('PunkBody', punkBodyData.id, punkBodyData.imageUrl)">
-                  <b-avatar variant="light" size="5.0rem" :src="punkBodyData.imageUrl" class="pixelated"></b-avatar>
+                  <b-avatar rounded="sm" variant="light" size="5.0rem" :src="punkBodyData.imageUrl" class="pixelated"></b-avatar>
                 </b-link>
                 <template #footer>
                   <span class="small truncate">
