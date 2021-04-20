@@ -5,7 +5,78 @@ const Bodyshop = {
         <b-card no-body class="border-0 m-0 mt-2">
           <b-card-body class="p-0">
 
-          <canvas id="c" width="500" height="500" style="border:1px solid"></canvas>
+          <canvas id="thecanvas" width="1024" height="480" style="border:1px solid"></canvas>
+
+          <div>
+            <b-card no-body>
+              <b-tabs card>
+                <b-tab title="Canvas" active>
+                  <b-card-text>
+                    <b-form-group label-cols="2" label-size="sm" label="Width" description="e.g., 500">
+                      <b-form-input type="text" v-model.trim="canvasSetting.width" class="w-25"></b-form-input>
+                    </b-form-group>
+                    <b-form-group label-cols="2" label-size="sm" label="Height" description="e.g., 500">
+                      <b-form-input type="text" v-model.trim="canvasSetting.height" class="w-25"></b-form-input>
+                    </b-form-group>
+                    <b-form-group label-cols="2" label-size="sm">
+                      <b-button size="sm" @click="setCanvasSize()" variant="info">Set Canvas Size</b-button>
+                    </b-form-group>
+                  </b-card-text>
+                </b-tab>
+                <b-tab title="Sample NFTs">
+                  <b-card-group deck class="m-2">
+                    <div>
+                      <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
+                        <b-link @click="addImage('ZombieBaby', freeTokenId, 'media/' + nftData.tokens[freeTokenId].imageTBName)">
+                          <b-avatar rounded="sm" variant="light" size="5.0rem" :src="(nftData == null || nftData.tokens == null) ? null : ('https://zombiebabies.eth.link/media/' + nftData.tokens[freeTokenId].imageTBName)" class="pixelated"></b-avatar>
+                        </b-link>
+                        <template #footer>
+                          <span class="small truncate">
+                            #{{ freeTokenId }}
+                          </span>
+                        </template>
+                      </b-card>
+                    </div>
+                  </b-card-group>
+                </b-tab>
+                <b-tab active title="Upload Image">
+                  <b-card-text>
+
+                    <b-row  align-h="start">
+                      <b-col cols="2">Scale</b-col>
+                      <b-col cols="3">
+                        <b-form-group description="Scale width. e.g., 0.5">
+                          <b-form-input type="text" v-model.trim="settings['ImageUpload'].scaleWidth"></b-form-input>
+                        </b-form-group>
+                      </b-col>
+                      <b-col cols="3">
+                        <b-form-group description="Scale height. e.g., 0.5">
+                          <b-form-input type="text" v-model.trim="settings['ImageUpload'].scaleHeight"></b-form-input>
+                        </b-form-group>
+                      </b-col>
+                      <b-col cols="2">
+                        <b-form-group>
+                          <b-form-checkbox v-model.trim="settings['ImageUpload'].flipX">
+                            Flip X
+                          </b-form-checkbox>
+                        </b-form-group>
+                      </b-col>
+                      <b-col cols="2">
+                        <b-form-group>
+                          <b-form-checkbox v-model.trim="settings['ImageUpload'].flipY">
+                            Flip Y
+                          </b-form-checkbox>
+                        </b-form-group>
+                      </b-col>
+                    </b-row>
+                    <b-form-group label-cols="2" label-size="sm" label="Select image" description="From local filesystem">
+                      <b-form-file v-model="file" @input="onFileChange" accept="image/jpeg, image/png, image/gif"  class="w-50" placeholder="Choose a JPEG, PNG or GIF file or drop it here..." drop-placeholder="Drop file here..."></b-form-file>
+                    </b-form-group>
+                  </b-card-text>
+                </b-tab>
+              </b-tabs>
+            </b-card>
+          </div>
 
           <b-card-group deck class="m-2">
             <div v-for="(tokenId, tokenIdIndex) in allTokenIds">
@@ -22,6 +93,7 @@ const Bodyshop = {
             </div>
           </b-card-group>
           <b-button size="sm" @click="loadNFTs()" variant="info">Load Other NFTs</b-button><br />
+
           <b-card-group deck class="m-2">
             <div v-for="punkData in punksDataList">
               <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
@@ -146,6 +218,68 @@ const Bodyshop = {
       cryptoCatsDataList: [],
       wrappedCryptoCatsDataList: [],
 
+      canvasSetting: {
+        width: 1024,
+        height: 480
+      },
+      imageSetting: {
+        scaleWidth: 0.5,
+        scaleHeight: 0.5,
+        flipX: false,
+        flipY: false
+      },
+      settings: {
+        "ImageUpload": {
+          scaleWidth: 0.5,
+          scaleHeight: 0.5,
+          flipX: false,
+          flipY: false
+        },
+        "ZombieBaby": {
+          scaleWidth: 5.0 / 40,
+          scaleHeight: 5.0 / 40,
+          flipX: false,
+          flipY: false
+        },
+        "CryptoPunk": {
+          scaleWidth: 5.0,
+          scaleHeight: 5.0,
+          flipX: false,
+          flipY: false
+        },
+        "PixelPortrait": {
+          scaleWidth: 5.0 / 20,
+          scaleHeight: 5.0 / 20,
+          flipX: false,
+          flipY: false
+        },
+        "BGANPUNKV2": {
+          scaleWidth: 5.0 / 40,
+          scaleHeight: 5.0 / 40,
+          flipX: false,
+          flipY: false
+        },
+        "PunkBody": {
+          scaleWidth: 5.0,
+          scaleHeight: 5.0,
+          flipX: false,
+          flipY: false
+        },
+        "MoonCat": {
+          scaleWidth: 5.0 / 12,
+          scaleHeight: 5.0 / 12,
+          flipX: false,
+          flipY: false
+        },
+        "CryptoCat": {
+          scaleWidth: 5.0 / 80,
+          scaleHeight: 5.0 / 80,
+          flipX: false,
+          flipY: false
+        },
+      },
+      file: null,
+
       canvas: null,
     }
   },
@@ -175,8 +309,55 @@ const Bodyshop = {
     allAncientDNAs() {
       return store.getters['tokens/allAncientDNAs'];
     },
+    freeTokenId() {
+      const tokenIds = store.getters['tokens/allTokenIds'];
+      return tokenIds == null ? null : tokenIds[Math.floor(Math.random() * tokenIds.length)];
+    },
+
   },
   methods: {
+    setCanvasSize() {
+      logInfo("Bodyshop", "setCanvasSize() canvasSetting: " + JSON.stringify(this.canvasSetting));
+      var canvas = document.getElementById("thecanvas");
+      canvas.width = this.canvasSetting.width;
+      canvas.height = this.canvasSetting.height;
+    },
+    onFileChange(file) {
+      const t = this;
+      const url = URL.createObjectURL(file);
+      logInfo("Bodyshop", "onFileChange() url: " + JSON.stringify(url));
+      var imgObj = new Image();
+      imgObj.src = url;
+      logInfo("Bodyshop", "onFileChange() imgObj: " + JSON.stringify(imgObj));
+      imgObj.onload = function () {
+        const image = new fabric.Image(imgObj);
+
+        // canvas.width = img.width;
+        // canvas.height = img.height;
+        // ctx.drawImage(img,0,0);
+
+        image.set({
+          // width: t.canvas.width,
+          // height: t.canvas.height,
+          left: 0,
+          top: 0,
+          angle: 0,
+          padding: 0,
+          cornersize: 0
+        });
+        logInfo("Bodyshop", "onFileChange() image width: " + image.width + ", height: " + image.height);
+        logInfo("Bodyshop", "onFileChange() t.canvas width: " + t.canvas.width + ", height: " + t.canvas.height);
+        // image.scale(image.width / t.canvas.width / 5, image.width / t.canvas.width / 5).setCoords();
+        image.scale(t.settings['ImageUpload'].scaleWidth, t.settings['ImageUpload'].scaleHeight).set('flipX', t.settings['ImageUpload'].flipX).set('flipY', t.settings['ImageUpload'].flipY);
+        t.canvas.add(image);
+      };
+
+      // var files = e.target.files || e.dataTransfer.files;
+      // logInfo("Bodyshop", "onFileChange() files: " + JSON.stringify(files));
+      // if (!files.length)
+      //   return;
+      // this.createImage(item, files[0]);
+    },
     async addImage(nftType, id, image) {
       logInfo("Bodyshop", "addImage() type: " + nftType + ", id: " + id + ", image: " + image);
       const t = this;
@@ -375,17 +556,6 @@ const Bodyshop = {
             t.wrappedCryptoCatsDataList = wrappedCryptoCatsDataListTemp;
             t.wrappedCryptoCatsDataList.sort(function(a, b) { return a.id - b.id; });
           }
-
-
-
-      //     for (let assetIndex in Object.keys(openSeaPunkData.assets)) {
-      //       const asset = openSeaPunkData.assets[assetIndex];
-      //       var id = asset.token_id;
-      //       var imageUrl = "https://www.larvalabs.com/public/images/cryptopunks/punk" + id + ".png"
-      //       punkDataTemp.push({ id: id, imageUrl: imageUrl });
-      //     }
-      //     t.punksDataList = punkDataTemp;
-      //     t.punksDataList.sort(function(a, b) { return a.id - b.id; });
         }
       };
       wrappedCryptoCatsReq.send(null);
@@ -486,7 +656,7 @@ const Bodyshop = {
     this.timeoutCallback();
 
     logInfo("Bodyshop", "Canvas");
-    this.canvas = new fabric.Canvas('c', {
+    this.canvas = new fabric.Canvas('thecanvas', {
       hoverCursor: 'pointer',
       selection: false,
       targetFindTolerance: 2
