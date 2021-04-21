@@ -8,9 +8,9 @@ const Bodyshop = {
           <canvas id="thecanvas" width="1024" height="480" style="border:1px solid"></canvas>
 
           <div>
-            <b-card no-body>
-              <b-tabs card>
-                <b-tab title="Canvas" active>
+            <b-card no-body class="mt-2">
+              <b-tabs vertical pills card end nav-class="p-2" active-tab-class="p-2">
+                <b-tab title="Canvas" active class="p-1">
                   <b-card-text>
                     <b-form-group label-cols="2" label-size="sm" label="Width" description="e.g., 500">
                       <b-form-input type="text" v-model.trim="canvasSetting.width" class="w-25"></b-form-input>
@@ -23,8 +23,8 @@ const Bodyshop = {
                     </b-form-group>
                   </b-card-text>
                 </b-tab>
-                <b-tab title="Sample NFTs">
-                  <b-card-group deck class="m-2">
+                <b-tab active title="Sample NFTs" class="p-1">
+                  <b-card-group deck class="m-0">
                     <div>
                       <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
                         <b-link @click="addImage('ZombieBaby', freeTokenId, 'media/' + nftData.tokens[freeTokenId].imageTBName)">
@@ -39,9 +39,145 @@ const Bodyshop = {
                     </div>
                   </b-card-group>
                 </b-tab>
-                <b-tab active title="Upload Image">
-                  <b-card-text>
+                <b-tab title="ZombieBabies" class="p-1">
+                  <b-card-group deck class="m-0">
+                    <div v-for="(tokenId, tokenIdIndex) in allTokenIds">
+                      <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
+                        <b-link @click="addImage('ZombieBaby', tokenId, 'media/' + nftData.tokens[tokenId].imageTBName)">
+                          <b-avatar rounded="sm" variant="light" size="5.0rem" :src="'https://zombiebabies.eth.link/media/' + nftData.tokens[tokenId].imageTBName" class="pixelated"></b-avatar>
+                        </b-link>
+                        <template #footer>
+                          <span class="small truncate">
+                            #{{ tokenId }}
+                          </span>
+                        </template>
+                      </b-card>
+                    </div>
+                  </b-card-group>
+                </b-tab>
+                <b-tab title="CryptoPunks" class="p-1">
+                  <b-card-group deck class="m-0">
+                    <div v-for="punkData in punksDataList">
+                      <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
+                        <b-link @click="addImage('CryptoPunk', punkData.id, punkData.imageUrl)">
+                          <b-avatar rounded="sm" variant="light" size="5.0rem" :src="punkData.imageUrl" class="pixelated"></b-avatar>
+                        </b-link>
+                        <template #footer>
+                          <span class="small truncate">
+                            #{{ punkData.id }}
+                          </span>
+                        </template>
+                      </b-card>
+                    </div>
+                  </b-card-group>
+                  <b-button size="sm" @click="loadNFTs('CryptoPunks')" variant="info" class="mt-2">Load CryptoPunks</b-button><br />
+                </b-tab>
 
+                <b-tab title="PixelPortraits" class="p-1">
+                  <b-card-group deck class="m-0">
+                    <div v-for="pixelPortraitData in pixelPortraitsDataList">
+                      <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
+                        <b-link @click="addImage('PixelPortrait', pixelPortraitData.id, pixelPortraitData.imageUrl)">
+                          <b-avatar rounded="sm" variant="light" size="5.0rem" :src="pixelPortraitData.imageUrl" class="pixelated"></b-avatar>
+                        </b-link>
+                        <template #footer>
+                          <span class="small truncate">
+                            {{ pixelPortraitData.id }}
+                          </span>
+                        </template>
+                      </b-card>
+                    </div>
+                  </b-card-group>
+                  <b-button size="sm" @click="loadNFTs('PixelPortraits')" variant="info" class="mt-2">Load PixelPortraits</b-button><br />
+                </b-tab>
+
+                <b-tab title="BGANPUNKV2" class="p-1">
+                  <b-card-group deck class="m-0">
+                    <div v-for="bganpunkv2Data in bganpunkv2DataList">
+                      <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
+                        <b-link @click="addImage('BGANPUNKV2', bganpunkv2Data.id, bganpunkv2Data.imageUrl)">
+                          <b-avatar rounded="sm" variant="light" size="5.0rem" :src="bganpunkv2Data.imageUrl" class="pixelated"></b-avatar>
+                        </b-link>
+                        <template #footer>
+                          <span class="small truncate">
+                            {{ bganpunkv2Data.id }}
+                          </span>
+                        </template>
+                      </b-card>
+                    </div>
+                  </b-card-group>
+                  <b-button size="sm" @click="loadNFTs('BGANPUNKV2')" variant="info" class="mt-2">Load BGANPUNKV2</b-button><br />
+                </b-tab>
+
+                <b-tab title="PunkBodies" class="p-1">
+                  <b-card-group deck class="m-0">
+                    <div v-for="punkBodyData in punkBodiesDataList">
+                      <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
+                        <b-link @click="addImage('PunkBody', punkBodyData.id, punkBodyData.imageUrl)">
+                          <b-avatar rounded="sm" variant="light" size="5.0rem" :src="punkBodyData.imageUrl" class="pixelated"></b-avatar>
+                        </b-link>
+                        <template #footer>
+                          <span class="small truncate">
+                            #{{ punkBodyData.id }}
+                          </span>
+                        </template>
+                      </b-card>
+                    </div>
+                  </b-card-group>
+                  <b-button size="sm" @click="loadNFTs('PunkBodies')" variant="info" class="mt-2">Load PunkBodies</b-button><br />
+                </b-tab>
+
+
+                <b-tab title="MoonCats" class="p-1">
+                  <b-card-group deck class="m-0">
+                    <div v-for="mooncatsData in mooncatsDataList">
+                      <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
+                        <b-link @click="addImage('MoonCat', mooncatsData.id, mooncatsData.imageUrl)">
+                          <b-avatar rounded="sm" variant="light" size="5.0rem" :src="mooncatsData.imageUrl" class="pixelated"></b-avatar>
+                        </b-link>
+                        <template #footer>
+                          <span class="small truncate">
+                            #{{ mooncatsData.id }}
+                          </span>
+                        </template>
+                      </b-card>
+                    </div>
+                  </b-card-group>
+                  <b-button size="sm" @click="loadNFTs('MoonCats')" variant="info" class="mt-2">Load MoonCats</b-button><br />
+                </b-tab>
+
+                <b-tab title="CryptoCats" class="p-1">
+                  <b-card-group deck class="m-0">
+                    <div v-for="cryptoCatData in cryptoCatsDataList">
+                      <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
+                        <b-link @click="addImage('CryptoCat', cryptoCatData.id, cryptoCatData.imageUrl)">
+                          <b-avatar rounded="sm" variant="light" size="5.0rem" :src="cryptoCatData.imageUrl" class="pixelated"></b-avatar>
+                        </b-link>
+                        <template #footer>
+                          <span class="small truncate">
+                            #{{ cryptoCatData.id }}
+                          </span>
+                        </template>
+                      </b-card>
+                    </div>
+                    <div v-for="cryptoCatData in wrappedCryptoCatsDataList">
+                      <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
+                        <b-link @click="addImage('CryptoCat', cryptoCatData.id, cryptoCatData.imageUrl)">
+                          <b-avatar rounded="sm" variant="light" size="5.0rem" :src="cryptoCatData.imageUrl" class="pixelated"></b-avatar>
+                        </b-link>
+                        <template #footer>
+                          <span class="small truncate">
+                            #{{ cryptoCatData.id }}
+                          </span>
+                        </template>
+                      </b-card>
+                    </div>
+                  </b-card-group>
+                  <b-button size="sm" @click="loadNFTs('CryptoCats')" variant="info" class="mt-2">Load CryptoCats</b-button><br />
+                </b-tab>
+
+                <b-tab title="Upload Image" class="p-1">
+                  <b-card-text>
                     <b-row  align-h="start">
                       <b-col cols="2">Scale</b-col>
                       <b-col cols="3">
@@ -74,125 +210,19 @@ const Bodyshop = {
                     </b-form-group>
                   </b-card-text>
                 </b-tab>
+
+                <!--
+                <template #tabs-end>
+                  <b-nav-item role="presentation" @click.prevent="newTab" href="#" class="pull-right"><b>Load NFTs</b></b-nav-item>
+                </template>
+                -->
+
               </b-tabs>
             </b-card>
           </div>
 
-          <b-card-group deck class="m-2">
-            <div v-for="(tokenId, tokenIdIndex) in allTokenIds">
-              <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                <b-link @click="addImage('ZombieBaby', tokenId, 'media/' + nftData.tokens[tokenId].imageTBName)">
-                  <b-avatar rounded="sm" variant="light" size="5.0rem" :src="'https://zombiebabies.eth.link/media/' + nftData.tokens[tokenId].imageTBName" class="pixelated"></b-avatar>
-                </b-link>
-                <template #footer>
-                  <span class="small truncate">
-                    #{{ tokenId }}
-                  </span>
-                </template>
-              </b-card>
-            </div>
-          </b-card-group>
-          <b-button size="sm" @click="loadNFTs()" variant="info">Load Other NFTs</b-button><br />
+          <!-- <b-button size="sm" @click="loadNFTs()" variant="info" class="mt-2">Load Other NFTs</b-button><br /> -->
 
-          <b-card-group deck class="m-2">
-            <div v-for="punkData in punksDataList">
-              <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                <b-link @click="addImage('CryptoCat', punkData.id, punkData.imageUrl)">
-                  <b-avatar rounded="sm" variant="light" size="5.0rem" :src="punkData.imageUrl" class="pixelated"></b-avatar>
-                </b-link>
-                <template #footer>
-                  <span class="small truncate">
-                    #{{ punkData.id }}
-                  </span>
-                </template>
-              </b-card>
-            </div>
-          </b-card-group>
-          <b-card-group deck class="m-2">
-            <div v-for="pixelPortraitData in pixelPortraitsDataList">
-              <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                <b-link @click="addImage('PixelPortrait', pixelPortraitData.id, pixelPortraitData.imageUrl)">
-                  <b-avatar rounded="sm" variant="light" size="5.0rem" :src="pixelPortraitData.imageUrl" class="pixelated"></b-avatar>
-                </b-link>
-                <template #footer>
-                  <span class="small truncate">
-                    {{ pixelPortraitData.id }}
-                  </span>
-                </template>
-              </b-card>
-            </div>
-          </b-card-group>
-          <b-card-group deck class="m-2">
-            <div v-for="bganpunkv2Data in bganpunkv2DataList">
-              <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                <b-link @click="addImage('BGANPUNKV2', bganpunkv2Data.id, bganpunkv2Data.imageUrl)">
-                  <b-avatar rounded="sm" variant="light" size="5.0rem" :src="bganpunkv2Data.imageUrl" class="pixelated"></b-avatar>
-                </b-link>
-                <template #footer>
-                  <span class="small truncate">
-                    {{ bganpunkv2Data.id }}
-                  </span>
-                </template>
-              </b-card>
-            </div>
-          </b-card-group>
-          <b-card-group deck class="m-2">
-            <div v-for="punkBodyData in punkBodiesDataList">
-              <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                <b-link @click="addImage('PunkBody', punkBodyData.id, punkBodyData.imageUrl)">
-                  <b-avatar rounded="sm" variant="light" size="5.0rem" :src="punkBodyData.imageUrl" class="pixelated"></b-avatar>
-                </b-link>
-                <template #footer>
-                  <span class="small truncate">
-                    #{{ punkBodyData.id }}
-                  </span>
-                </template>
-              </b-card>
-            </div>
-          </b-card-group>
-          <b-card-group deck class="m-2">
-            <div v-for="mooncatsData in mooncatsDataList">
-              <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                <b-link @click="addImage('MoonCat', mooncatsData.id, mooncatsData.imageUrl)">
-                  <b-avatar rounded="sm" variant="light" size="5.0rem" :src="mooncatsData.imageUrl" class="pixelated"></b-avatar>
-                </b-link>
-                <template #footer>
-                  <span class="small truncate">
-                    #{{ mooncatsData.id }}
-                  </span>
-                </template>
-              </b-card>
-            </div>
-          </b-card-group>
-          <b-card-group deck class="m-2">
-            <div v-for="cryptoCatData in cryptoCatsDataList">
-              <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                <b-link @click="addImage('CryptoCat', cryptoCatData.id, cryptoCatData.imageUrl)">
-                  <b-avatar rounded="sm" variant="light" size="5.0rem" :src="cryptoCatData.imageUrl" class="pixelated"></b-avatar>
-                </b-link>
-                <template #footer>
-                  <span class="small truncate">
-                    #{{ cryptoCatData.id }}
-                  </span>
-                </template>
-              </b-card>
-            </div>
-          </b-card-group>
-          <b-card-group deck class="m-2">
-            <div v-for="cryptoCatData in wrappedCryptoCatsDataList">
-              <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                <b-link @click="addImage('CryptoCat', cryptoCatData.id, cryptoCatData.imageUrl)">
-                  <b-avatar rounded="sm" variant="light" size="5.0rem" :src="cryptoCatData.imageUrl" class="pixelated"></b-avatar>
-                </b-link>
-                <template #footer>
-                  <span class="small truncate">
-                    #{{ cryptoCatData.id }}
-                  </span>
-                </template>
-              </b-card>
-            </div>
-          </b-card-group>
-          <br />
           <!-- <b-card-img :src="punkData.imageUrl" alt="Punk image" width="100px" class="pixelated"></b-card-img> -->
 
 
@@ -385,180 +415,191 @@ const Bodyshop = {
         t.canvas.add(oImg);
       });
     },
-    async loadNFTs(event) {
-      logInfo("Bodyshop", "loadNFTs()");
+    async loadNFTs(collection) {
+      logInfo("Bodyshop", "loadNFTs() collection: " + collection);
       const t = this;
 
-      fetch('https://api.thegraph.com/subgraphs/name/merklejerk/moon-cats-rescue', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: JSON.stringify({"operationName":"cats","variables":{"addr":store.getters['connection/coinbase'].toLowerCase()},"query":"query cats($addr: ID!) {\n  cats(first: 1000, where: {owner: $addr}) {\n    id\n    rescueIndex\n    name\n    maxAdoptionPrice\n    askPrice\n    owner {\n      id\n      __typename\n    }\n    __typename\n  }\n}\n"})
-      })
-        .then(r => r.json())
-        // .then(data => console.log('data returned:', data));
-        .then(function(data) {
-          // console.log('data returned: ', JSON.stringify(data.data.cats));
-          const mooncatsDataListTemp = [];
-          for (let catIndex in data.data.cats) {
-            const cat = data.data.cats[catIndex];
-            // console.log('cat: ', JSON.stringify(cat));
-            var id = cat.rescueIndex;
-            var imageUrl = "https://ipfs.io/ipfs/bafybeidk4zunuq56w2pf2sncexohlyqae62dzplljkbwswa7jwywh2dava/" + cat.id.substring(4, 6) + "/" + cat.id + ".png"
-            mooncatsDataListTemp.push({ id: id, imageUrl: imageUrl });
-          }
-          t.mooncatsDataList = mooncatsDataListTemp;
-          t.mooncatsDataList.sort(function(a, b) { return a.id - b.id; });
-          // console.log('t.mooncatsDataList: ', JSON.stringify(t.mooncatsDataList));
-        });
-
       // CryptoPunks - OpenSea
-      let cryptoPunksUrl = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&asset_contract_address=" + CRYPTOPUNKMARKETADDRESS + "&order_direction=desc&offset=0&limit=50";
-      cryptoPunksReq = new XMLHttpRequest();
-      cryptoPunksReq.overrideMimeType("application/json");
-      logInfo("Bodyshop", "loadNFTs() openSeaPunkData cryptoPunksUrl: " + cryptoPunksUrl);
-      cryptoPunksReq.open('GET', cryptoPunksUrl, true);
-      cryptoPunksReq.onload  = function() {
-        if (cryptoPunksReq.readyState == 4) {
-          const punkDataTemp = [];
-          const openSeaPunkData = JSON.parse(cryptoPunksReq.responseText);
-          for (let assetIndex in Object.keys(openSeaPunkData.assets)) {
-            const asset = openSeaPunkData.assets[assetIndex];
-            var id = asset.token_id;
-            var imageUrl = "https://www.larvalabs.com/public/images/cryptopunks/punk" + id + ".png"
-            punkDataTemp.push({ id: id, imageUrl: imageUrl });
+      if (collection == "CryptoPunks") {
+        let cryptoPunksUrl = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&asset_contract_address=" + CRYPTOPUNKMARKETADDRESS + "&order_direction=desc&offset=0&limit=50";
+        cryptoPunksReq = new XMLHttpRequest();
+        cryptoPunksReq.overrideMimeType("application/json");
+        logInfo("Bodyshop", "loadNFTs() openSeaPunkData cryptoPunksUrl: " + cryptoPunksUrl);
+        cryptoPunksReq.open('GET', cryptoPunksUrl, true);
+        cryptoPunksReq.onload  = function() {
+          if (cryptoPunksReq.readyState == 4) {
+            const punkDataTemp = [];
+            const openSeaPunkData = JSON.parse(cryptoPunksReq.responseText);
+            for (let assetIndex in Object.keys(openSeaPunkData.assets)) {
+              const asset = openSeaPunkData.assets[assetIndex];
+              var id = asset.token_id;
+              var imageUrl = "https://www.larvalabs.com/public/images/cryptopunks/punk" + id + ".png"
+              punkDataTemp.push({ id: id, imageUrl: imageUrl });
+            }
+            t.punksDataList = punkDataTemp;
+            t.punksDataList.sort(function(a, b) { return a.id - b.id; });
           }
-          t.punksDataList = punkDataTemp;
-          t.punksDataList.sort(function(a, b) { return a.id - b.id; });
-        }
-      };
-      cryptoPunksReq.send(null);
+        };
+        cryptoPunksReq.send(null);
+      }
 
       // Pixel Portraits - OpenSea
-      let pixelPortraitsUrl = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&order_direction=desc&offset=0&limit=50&collection=the-pixel-portraits";
-      pixelPortraitsReq = new XMLHttpRequest();
-      pixelPortraitsReq.overrideMimeType("application/json");
-      logInfo("Bodyshop", "loadNFTs() openSeaPixelPortraitsData pixelPortraitsUrl: " + pixelPortraitsUrl);
-      pixelPortraitsReq.open('GET', pixelPortraitsUrl, true);
-      pixelPortraitsReq.onload  = function() {
-        if (pixelPortraitsReq.readyState == 4) {
-          const pixelPortraitsDataListTemp = [];
-          const openSeaPixelPortraitData = JSON.parse(pixelPortraitsReq.responseText);
-          for (let assetIndex in Object.keys(openSeaPixelPortraitData.assets)) {
-            const asset = openSeaPixelPortraitData.assets[assetIndex];
-            var id = asset.name;
-            var imageUrl = asset.image_url;
-            logInfo("Bodyshop", "loadNFTs() openSeaPixelPortraitsData id: " + id + " => " + imageUrl);
-            pixelPortraitsDataListTemp.push({ id: id, imageUrl: imageUrl });
+      if (collection == "PixelPortraits") {
+        let pixelPortraitsUrl = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&order_direction=desc&offset=0&limit=50&collection=the-pixel-portraits";
+        pixelPortraitsReq = new XMLHttpRequest();
+        pixelPortraitsReq.overrideMimeType("application/json");
+        logInfo("Bodyshop", "loadNFTs() openSeaPixelPortraitsData pixelPortraitsUrl: " + pixelPortraitsUrl);
+        pixelPortraitsReq.open('GET', pixelPortraitsUrl, true);
+        pixelPortraitsReq.onload  = function() {
+          if (pixelPortraitsReq.readyState == 4) {
+            const pixelPortraitsDataListTemp = [];
+            const openSeaPixelPortraitData = JSON.parse(pixelPortraitsReq.responseText);
+            for (let assetIndex in Object.keys(openSeaPixelPortraitData.assets)) {
+              const asset = openSeaPixelPortraitData.assets[assetIndex];
+              var id = asset.name;
+              var imageUrl = asset.image_url;
+              logInfo("Bodyshop", "loadNFTs() openSeaPixelPortraitsData id: " + id + " => " + imageUrl);
+              pixelPortraitsDataListTemp.push({ id: id, imageUrl: imageUrl });
+            }
+            t.pixelPortraitsDataList = pixelPortraitsDataListTemp;
+            t.pixelPortraitsDataList.sort(function(a, b) { return ('' + a.id).localeCompare(b.id) });
           }
-          t.pixelPortraitsDataList = pixelPortraitsDataListTemp;
-          t.pixelPortraitsDataList.sort(function(a, b) { return ('' + a.id).localeCompare(b.id) });
-        }
-      };
-      pixelPortraitsReq.send(null);
+        };
+        pixelPortraitsReq.send(null);
+      }
 
       // BGANPUNKV2 - OpenSea
-      let bganpunkv2Url = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&asset_contract_address=" + BGANPUNKV2ADDRESS + "&order_direction=desc&offset=0&limit=50";
-      bganpunkv2Req = new XMLHttpRequest();
-      bganpunkv2Req.overrideMimeType("application/json");
-      logInfo("Bodyshop", "loadNFTs() openSeaBganpunkv2Data bganpunkv2Url: " + bganpunkv2Url);
-      bganpunkv2Req.open('GET', bganpunkv2Url, true);
-      bganpunkv2Req.onload  = function() {
-        if (bganpunkv2Req.readyState == 4) {
-          const bganpunkv2DataListTemp = [];
-          const openSeaBganpunkv2Data = JSON.parse(bganpunkv2Req.responseText);
-          for (let assetIndex in Object.keys(openSeaBganpunkv2Data.assets)) {
-            const asset = openSeaBganpunkv2Data.assets[assetIndex];
-            var id = asset.token_id;
-            var imageUrl = asset.image_original_url;
-            bganpunkv2DataListTemp.push({ id: id, imageUrl: imageUrl });
+      if (collection == "BGANPUNKV2") {
+        let bganpunkv2Url = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&asset_contract_address=" + BGANPUNKV2ADDRESS + "&order_direction=desc&offset=0&limit=50";
+        bganpunkv2Req = new XMLHttpRequest();
+        bganpunkv2Req.overrideMimeType("application/json");
+        logInfo("Bodyshop", "loadNFTs() openSeaBganpunkv2Data bganpunkv2Url: " + bganpunkv2Url);
+        bganpunkv2Req.open('GET', bganpunkv2Url, true);
+        bganpunkv2Req.onload  = function() {
+          if (bganpunkv2Req.readyState == 4) {
+            const bganpunkv2DataListTemp = [];
+            const openSeaBganpunkv2Data = JSON.parse(bganpunkv2Req.responseText);
+            for (let assetIndex in Object.keys(openSeaBganpunkv2Data.assets)) {
+              const asset = openSeaBganpunkv2Data.assets[assetIndex];
+              var id = asset.token_id;
+              var imageUrl = asset.image_original_url;
+              bganpunkv2DataListTemp.push({ id: id, imageUrl: imageUrl });
+            }
+            t.bganpunkv2DataList = bganpunkv2DataListTemp;
+            t.bganpunkv2DataList.sort(function(a, b) { return a.id - b.id; });
           }
-          t.bganpunkv2DataList = bganpunkv2DataListTemp;
-          t.bganpunkv2DataList.sort(function(a, b) { return a.id - b.id; });
-        }
-      };
-      bganpunkv2Req.send(null);
+        };
+        bganpunkv2Req.send(null);
+      }
 
       // PunkBodies - OpenSea
-      let punkBodiesUrl = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&asset_contract_address=" + PUNKBODIESADDRESS + "&order_direction=desc&offset=0&limit=50";
-      punkBodiesReq = new XMLHttpRequest();
-      punkBodiesReq.overrideMimeType("application/json");
-      logInfo("Bodyshop", "loadNFTs() openSeaPunkBodyData punkBodiesUrl: " + punkBodiesUrl);
-      punkBodiesReq.open('GET', punkBodiesUrl, true);
-      punkBodiesReq.onload  = function() {
-        if (punkBodiesReq.readyState == 4) {
-          const punkBodiesDataListTemp = [];
-          const openSeaPunkBodyData = JSON.parse(punkBodiesReq.responseText);
-          for (let assetIndex in Object.keys(openSeaPunkBodyData.assets)) {
-            const asset = openSeaPunkBodyData.assets[assetIndex];
-            var id = asset.token_id;
-            var imageUrl = "https://api.punkbodies.com/get-images/" + id + ".png"
-            punkBodiesDataListTemp.push({ id: id, imageUrl: imageUrl });
+      if (collection == "PunkBodies") {
+        let punkBodiesUrl = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&asset_contract_address=" + PUNKBODIESADDRESS + "&order_direction=desc&offset=0&limit=50";
+        punkBodiesReq = new XMLHttpRequest();
+        punkBodiesReq.overrideMimeType("application/json");
+        logInfo("Bodyshop", "loadNFTs() openSeaPunkBodyData punkBodiesUrl: " + punkBodiesUrl);
+        punkBodiesReq.open('GET', punkBodiesUrl, true);
+        punkBodiesReq.onload  = function() {
+          if (punkBodiesReq.readyState == 4) {
+            const punkBodiesDataListTemp = [];
+            const openSeaPunkBodyData = JSON.parse(punkBodiesReq.responseText);
+            for (let assetIndex in Object.keys(openSeaPunkBodyData.assets)) {
+              const asset = openSeaPunkBodyData.assets[assetIndex];
+              var id = asset.token_id;
+              var imageUrl = "https://api.punkbodies.com/get-images/" + id + ".png"
+              punkBodiesDataListTemp.push({ id: id, imageUrl: imageUrl });
+            }
+            t.punkBodiesDataList = punkBodiesDataListTemp;
+            t.punkBodiesDataList.sort(function(a, b) { return a.id - b.id; });
           }
-          t.punkBodiesDataList = punkBodiesDataListTemp;
-          t.punkBodiesDataList.sort(function(a, b) { return a.id - b.id; });
-        }
-      };
-      punkBodiesReq.send(null);
+        };
+        punkBodiesReq.send(null);
+      }
 
+      if (collection == "MoonCats") {
+        fetch('https://api.thegraph.com/subgraphs/name/merklejerk/moon-cats-rescue', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+          body: JSON.stringify({"operationName":"cats","variables":{"addr":store.getters['connection/coinbase'].toLowerCase()},"query":"query cats($addr: ID!) {\n  cats(first: 1000, where: {owner: $addr}) {\n    id\n    rescueIndex\n    name\n    maxAdoptionPrice\n    askPrice\n    owner {\n      id\n      __typename\n    }\n    __typename\n  }\n}\n"})
+        })
+          .then(r => r.json())
+          // .then(data => console.log('data returned:', data));
+          .then(function(data) {
+            // console.log('data returned: ', JSON.stringify(data.data.cats));
+            const mooncatsDataListTemp = [];
+            for (let catIndex in data.data.cats) {
+              const cat = data.data.cats[catIndex];
+              // console.log('cat: ', JSON.stringify(cat));
+              var id = cat.rescueIndex;
+              var imageUrl = "https://ipfs.io/ipfs/bafybeidk4zunuq56w2pf2sncexohlyqae62dzplljkbwswa7jwywh2dava/" + cat.id.substring(4, 6) + "/" + cat.id + ".png"
+              mooncatsDataListTemp.push({ id: id, imageUrl: imageUrl });
+            }
+            t.mooncatsDataList = mooncatsDataListTemp;
+            t.mooncatsDataList.sort(function(a, b) { return a.id - b.id; });
+            // console.log('t.mooncatsDataList: ', JSON.stringify(t.mooncatsDataList));
+          });
+      }
 
       // CryptoCats
-      let cryptoCatsUrl = "https://us-central1-cryptocats-ws-prod.cloudfunctions.net/listing/ccat/" + store.getters['connection/coinbase'].toLowerCase();
-      cryptoCatsReq = new XMLHttpRequest();
-      cryptoCatsReq.overrideMimeType("application/json");
-      logInfo("Bodyshop", "loadNFTs() cryptoCatsUrl: " + cryptoCatsUrl);
-      cryptoCatsReq.open('GET', cryptoCatsUrl, true);
-      cryptoCatsReq.onload  = function() {
-        if (cryptoCatsReq.readyState == 4) {
-          const cryptoCatsDataListTemp = [];
-          const cryptoCatsData = JSON.parse(cryptoCatsReq.responseText);
-          logInfo("Bodyshop", "loadNFTs() cryptoCatsData: " + JSON.stringify(cryptoCatsData));
-          if (cryptoCatsData.ccat != null) {
-            logInfo("Bodyshop", "loadNFTs() cryptoCatsData.ccat: " + JSON.stringify(cryptoCatsData.ccat));
-            for (const [id, value] of Object.entries(cryptoCatsData.ccat)) {
-              // const ccat = cryptoCatsData.ccat[ccatIndex];
-              logInfo("Bodyshop", "loadNFTs() id: " + id + " => " + JSON.stringify(value));
-              var imageUrl = "https://cryptocats.thetwentysix.io/contents/images/cats/" + id + ".png"
-              logInfo("Bodyshop", "loadNFTs() id: " + id + " => " + imageUrl);
-              cryptoCatsDataListTemp.push({ id: id, imageUrl: imageUrl });
+      if (collection == "CryptoCats") {
+        let cryptoCatsUrl = "https://us-central1-cryptocats-ws-prod.cloudfunctions.net/listing/ccat/" + store.getters['connection/coinbase'].toLowerCase();
+        cryptoCatsReq = new XMLHttpRequest();
+        cryptoCatsReq.overrideMimeType("application/json");
+        logInfo("Bodyshop", "loadNFTs() cryptoCatsUrl: " + cryptoCatsUrl);
+        cryptoCatsReq.open('GET', cryptoCatsUrl, true);
+        cryptoCatsReq.onload  = function() {
+          if (cryptoCatsReq.readyState == 4) {
+            const cryptoCatsDataListTemp = [];
+            const cryptoCatsData = JSON.parse(cryptoCatsReq.responseText);
+            logInfo("Bodyshop", "loadNFTs() cryptoCatsData: " + JSON.stringify(cryptoCatsData));
+            if (cryptoCatsData.ccat != null) {
+              logInfo("Bodyshop", "loadNFTs() cryptoCatsData.ccat: " + JSON.stringify(cryptoCatsData.ccat));
+              for (const [id, value] of Object.entries(cryptoCatsData.ccat)) {
+                // const ccat = cryptoCatsData.ccat[ccatIndex];
+                logInfo("Bodyshop", "loadNFTs() id: " + id + " => " + JSON.stringify(value));
+                var imageUrl = "https://cryptocats.thetwentysix.io/contents/images/cats/" + id + ".png"
+                logInfo("Bodyshop", "loadNFTs() id: " + id + " => " + imageUrl);
+                cryptoCatsDataListTemp.push({ id: id, imageUrl: imageUrl });
+              }
+              t.cryptoCatsDataList = cryptoCatsDataListTemp;
+              t.cryptoCatsDataList.sort(function(a, b) { return a.id - b.id; });
             }
-            t.cryptoCatsDataList = cryptoCatsDataListTemp;
-            t.cryptoCatsDataList.sort(function(a, b) { return a.id - b.id; });
           }
-        }
-      };
-      cryptoCatsReq.send(null);
+        };
+        cryptoCatsReq.send(null);
 
-      // WrappedCryptoCats
-      // Testing let wrappedCryptoCatsUrl = "https://us-central1-cryptocats-ws-prod.cloudfunctions.net/listing/wccat/0xad9f11d1dd6d202243473a0cdae606308ab243b4";
-      let wrappedCryptoCatsUrl = "https://us-central1-cryptocats-ws-prod.cloudfunctions.net/listing/wccat/" + store.getters['connection/coinbase'].toLowerCase();
-      wrappedCryptoCatsReq = new XMLHttpRequest();
-      wrappedCryptoCatsReq.overrideMimeType("application/json");
-      logInfo("Bodyshop", "loadNFTs() wrappedCryptoCatsUrl: " + wrappedCryptoCatsUrl);
-      wrappedCryptoCatsReq.open('GET', wrappedCryptoCatsUrl, true);
-      wrappedCryptoCatsReq.onload  = function() {
-        if (wrappedCryptoCatsReq.readyState == 4) {
-          const wrappedCryptoCatsDataListTemp = [];
-          const wrappedCryptoCatsData = JSON.parse(wrappedCryptoCatsReq.responseText);
-          logInfo("Bodyshop", "loadNFTs() wrappedCryptoCatsData: " + JSON.stringify(wrappedCryptoCatsData));
-          // 00:47:36 INFO Bodyshop:loadNFTs() wrappedCryptoCatsData: {"ccat":{"207":"wrapped"}}
-          if (wrappedCryptoCatsData.ccat != null) {
-            logInfo("Bodyshop", "loadNFTs() wrappedCryptoCatsData.ccat: " + JSON.stringify(wrappedCryptoCatsData.ccat));
-            for (const [id, value] of Object.entries(wrappedCryptoCatsData.ccat)) {
-              // const ccat = cryptoCatsData.ccat[ccatIndex];
-              logInfo("Bodyshop", "loadNFTs() id: " + id + " => " + JSON.stringify(value));
-              var imageUrl = "https://cryptocats.thetwentysix.io/contents/images/cats/" + id + ".png"
-              logInfo("Bodyshop", "loadNFTs() id: " + id + " => " + imageUrl);
-              wrappedCryptoCatsDataListTemp.push({ id: id, imageUrl: imageUrl });
+        // WrappedCryptoCats
+        // Testing let wrappedCryptoCatsUrl = "https://us-central1-cryptocats-ws-prod.cloudfunctions.net/listing/wccat/0xad9f11d1dd6d202243473a0cdae606308ab243b4";
+        let wrappedCryptoCatsUrl = "https://us-central1-cryptocats-ws-prod.cloudfunctions.net/listing/wccat/" + store.getters['connection/coinbase'].toLowerCase();
+        wrappedCryptoCatsReq = new XMLHttpRequest();
+        wrappedCryptoCatsReq.overrideMimeType("application/json");
+        logInfo("Bodyshop", "loadNFTs() wrappedCryptoCatsUrl: " + wrappedCryptoCatsUrl);
+        wrappedCryptoCatsReq.open('GET', wrappedCryptoCatsUrl, true);
+        wrappedCryptoCatsReq.onload  = function() {
+          if (wrappedCryptoCatsReq.readyState == 4) {
+            const wrappedCryptoCatsDataListTemp = [];
+            const wrappedCryptoCatsData = JSON.parse(wrappedCryptoCatsReq.responseText);
+            logInfo("Bodyshop", "loadNFTs() wrappedCryptoCatsData: " + JSON.stringify(wrappedCryptoCatsData));
+            // 00:47:36 INFO Bodyshop:loadNFTs() wrappedCryptoCatsData: {"ccat":{"207":"wrapped"}}
+            if (wrappedCryptoCatsData.ccat != null) {
+              logInfo("Bodyshop", "loadNFTs() wrappedCryptoCatsData.ccat: " + JSON.stringify(wrappedCryptoCatsData.ccat));
+              for (const [id, value] of Object.entries(wrappedCryptoCatsData.ccat)) {
+                // const ccat = cryptoCatsData.ccat[ccatIndex];
+                logInfo("Bodyshop", "loadNFTs() id: " + id + " => " + JSON.stringify(value));
+                var imageUrl = "https://cryptocats.thetwentysix.io/contents/images/cats/" + id + ".png"
+                logInfo("Bodyshop", "loadNFTs() id: " + id + " => " + imageUrl);
+                wrappedCryptoCatsDataListTemp.push({ id: id, imageUrl: imageUrl });
+              }
+              t.wrappedCryptoCatsDataList = wrappedCryptoCatsDataListTemp;
+              t.wrappedCryptoCatsDataList.sort(function(a, b) { return a.id - b.id; });
             }
-            t.wrappedCryptoCatsDataList = wrappedCryptoCatsDataListTemp;
-            t.wrappedCryptoCatsDataList.sort(function(a, b) { return a.id - b.id; });
           }
-        }
-      };
-      wrappedCryptoCatsReq.send(null);
+        };
+        wrappedCryptoCatsReq.send(null);
+      }
 
     },
     async timeoutCallback() {
