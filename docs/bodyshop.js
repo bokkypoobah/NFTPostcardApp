@@ -4,231 +4,246 @@ const Bodyshop = {
       <b-card no-body header="Bodyshop" class="border-0" header-class="p-1">
         <b-card no-body class="border-0 m-0 mt-2">
           <b-card-body class="p-0">
+            <canvas id="thecanvas" width="1024" height="480" style="border:1px solid; margin: 0 auto; position: absolute;"></canvas>
+            <div>
+              <b-card no-body class="mt-2">
+                <b-tabs vertical pills card end nav-class="p-2" active-tab-class="p-2">
 
-          <canvas id="thecanvas" width="1024" height="480" style="border:1px solid"></canvas>
-
-          <div>
-            <b-card no-body class="mt-2">
-              <b-tabs vertical pills card end nav-class="p-2" active-tab-class="p-2">
-                <b-tab title="Canvas" active class="p-1">
-                  <b-card-text>
-                    <b-form-group label-cols="2" label-size="sm" label="Width" description="e.g., 500">
-                      <b-form-input type="text" v-model.trim="canvasSetting.width" class="w-25"></b-form-input>
-                    </b-form-group>
-                    <b-form-group label-cols="2" label-size="sm" label="Height" description="e.g., 500">
-                      <b-form-input type="text" v-model.trim="canvasSetting.height" class="w-25"></b-form-input>
-                    </b-form-group>
-                    <b-form-group label-cols="2" label-size="sm">
-                      <b-button size="sm" @click="setCanvasSize()" variant="info">Set Canvas Size</b-button>
-                    </b-form-group>
-                  </b-card-text>
-                </b-tab>
-                <b-tab title="Sample NFTs" class="p-1">
-                  <b-card-group deck class="m-0">
-                    <div>
-                      <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                        <b-link @click="addImage('ZombieBaby', freeTokenId, 'media/' + nftData.tokens[freeTokenId].imageTBName)">
-                          <b-avatar rounded="sm" variant="light" size="5.0rem" :src="(nftData == null || nftData.tokens == null) ? null : ('https://zombiebabies.eth.link/media/' + nftData.tokens[freeTokenId].imageTBName)" class="pixelated"></b-avatar>
-                        </b-link>
-                        <template #footer>
-                          <span class="small truncate">
-                            #{{ freeTokenId }}
-                          </span>
-                        </template>
-                      </b-card>
+                  <b-tab title="Canvas" active class="p-1">
+                    <b-card-text>
+                      <b-form-group label-cols="2" label-size="sm" label="Width" description="e.g., 500">
+                        <b-form-input type="text" v-model.trim="canvasSetting.width" class="w-25"></b-form-input>
+                      </b-form-group>
+                      <b-form-group label-cols="2" label-size="sm" label="Height" description="e.g., 500">
+                        <b-form-input type="text" v-model.trim="canvasSetting.height" class="w-25"></b-form-input>
+                      </b-form-group>
+                      <b-form-group label-cols="2" label-size="sm">
+                        <b-button size="sm" @click="setCanvasSize()" variant="info">Set Canvas Size</b-button>
+                      </b-form-group>
+                    </b-card-text>
+                  </b-tab>
+                  <b-tab title="Sample NFTs" class="p-1">
+                    <b-card-group deck class="m-0">
+                      <div>
+                        <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
+                          <b-link @click="addImage('ZombieBaby', freeTokenId, 'media/' + nftData.tokens[freeTokenId].imageTBName)">
+                            <b-avatar rounded="sm" variant="light" size="5.0rem" :src="(nftData == null || nftData.tokens == null) ? null : ('https://zombiebabies.eth.link/media/' + nftData.tokens[freeTokenId].imageTBName)" class="pixelated"></b-avatar>
+                          </b-link>
+                          <template #footer>
+                            <span class="small truncate">
+                              #{{ freeTokenId }}
+                            </span>
+                          </template>
+                        </b-card>
+                      </div>
+                    </b-card-group>
+                  </b-tab>
+                  <b-tab title="ZombieBabies" class="p-1">
+                    <b-card-group deck class="m-0">
+                      <div v-for="(tokenId, tokenIdIndex) in allTokenIds">
+                        <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
+                          <b-link @click="addImage('ZombieBaby', tokenId, 'media/' + nftData.tokens[tokenId].imageTBName)">
+                            <b-avatar rounded="sm" variant="light" size="5.0rem" :src="'https://zombiebabies.eth.link/media/' + nftData.tokens[tokenId].imageTBName" class="pixelated"></b-avatar>
+                          </b-link>
+                          <template #footer>
+                            <span class="small truncate">
+                              #{{ tokenId }}
+                            </span>
+                          </template>
+                        </b-card>
+                      </div>
+                    </b-card-group>
+                  </b-tab>
+                  <b-tab title="CryptoPunks" class="p-1">
+                    <b-card-group deck class="m-0">
+                      <div v-for="punkData in punksDataList">
+                        <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
+                          <b-link @click="addImage('CryptoPunk', punkData.id, punkData.imageUrl)">
+                            <b-avatar rounded="sm" variant="light" size="5.0rem" :src="punkData.imageUrl" class="pixelated"></b-avatar>
+                          </b-link>
+                          <template #footer>
+                            <span class="small truncate">
+                              #{{ punkData.id }}
+                            </span>
+                          </template>
+                        </b-card>
+                      </div>
+                    </b-card-group>
+                    <div v-if="!powerOn" class="mt-4">
+                      Click the power button <b-button size="sm" variant="link" class="m-0 p-0" v-b-popover.hover="'Power up this app'" @click="setPowerOn();" v-if="!powerOn"><b-icon-power shift-v="-1" font-scale="1.5"></b-icon-power></b-button> on the top right to connect via web3 to load your NFTs.
                     </div>
-                  </b-card-group>
-                </b-tab>
-                <b-tab title="ZombieBabies" class="p-1">
-                  <b-card-group deck class="m-0">
-                    <div v-for="(tokenId, tokenIdIndex) in allTokenIds">
-                      <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                        <b-link @click="addImage('ZombieBaby', tokenId, 'media/' + nftData.tokens[tokenId].imageTBName)">
-                          <b-avatar rounded="sm" variant="light" size="5.0rem" :src="'https://zombiebabies.eth.link/media/' + nftData.tokens[tokenId].imageTBName" class="pixelated"></b-avatar>
-                        </b-link>
-                        <template #footer>
-                          <span class="small truncate">
-                            #{{ tokenId }}
-                          </span>
-                        </template>
-                      </b-card>
+                    <div v-else>
+                      <b-button size="sm" @click="loadNFTs('CryptoPunks')" variant="link" class="mt-2"><b-icon-arrow-repeat v-b-popover.hover="'(Re)load your NFTs'" shift-v="+3" font-scale="1.5"></b-icon-arrow-repeat></b-button>CryptoPunks
                     </div>
-                  </b-card-group>
-                </b-tab>
-                <b-tab title="CryptoPunks" class="p-1">
-                  <b-card-group deck class="m-0">
-                    <div v-for="punkData in punksDataList">
-                      <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                        <b-link @click="addImage('CryptoPunk', punkData.id, punkData.imageUrl)">
-                          <b-avatar rounded="sm" variant="light" size="5.0rem" :src="punkData.imageUrl" class="pixelated"></b-avatar>
-                        </b-link>
-                        <template #footer>
-                          <span class="small truncate">
-                            #{{ punkData.id }}
-                          </span>
-                        </template>
-                      </b-card>
+                  </b-tab>
+
+                  <b-tab title="PixelPortraits" class="p-1">
+                    <b-card-group deck class="m-0">
+                      <div v-for="pixelPortraitData in pixelPortraitsDataList">
+                        <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
+                          <b-link @click="addImage('PixelPortrait', pixelPortraitData.id, pixelPortraitData.imageUrl)">
+                            <b-avatar rounded="sm" variant="light" size="5.0rem" :src="pixelPortraitData.imageUrl" class="pixelated"></b-avatar>
+                          </b-link>
+                          <template #footer>
+                            <span class="small truncate">
+                              {{ pixelPortraitData.id }}
+                            </span>
+                          </template>
+                        </b-card>
+                      </div>
+                    </b-card-group>
+                    <div v-if="!powerOn" class="mt-4">
+                      Click the power button <b-button size="sm" variant="link" class="m-0 p-0" v-b-popover.hover="'Power up this app'" @click="setPowerOn();" v-if="!powerOn"><b-icon-power shift-v="-1" font-scale="1.5"></b-icon-power></b-button> on the top right to connect via web3 to load your NFTs.
                     </div>
-                  </b-card-group>
-                  <b-button size="sm" @click="loadNFTs('CryptoPunks')" variant="info" class="mt-2">Load CryptoPunks</b-button><br />
-                </b-tab>
-
-                <b-tab title="PixelPortraits" class="p-1">
-                  <b-card-group deck class="m-0">
-                    <div v-for="pixelPortraitData in pixelPortraitsDataList">
-                      <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                        <b-link @click="addImage('PixelPortrait', pixelPortraitData.id, pixelPortraitData.imageUrl)">
-                          <b-avatar rounded="sm" variant="light" size="5.0rem" :src="pixelPortraitData.imageUrl" class="pixelated"></b-avatar>
-                        </b-link>
-                        <template #footer>
-                          <span class="small truncate">
-                            {{ pixelPortraitData.id }}
-                          </span>
-                        </template>
-                      </b-card>
+                    <div v-else>
+                      <b-button size="sm" @click="loadNFTs('PixelPortraits')" variant="link" class="mt-2"><b-icon-arrow-repeat v-b-popover.hover="'(Re)load your NFTs'" shift-v="+3" font-scale="1.5"></b-icon-arrow-repeat></b-button> PixelPortraits
                     </div>
-                  </b-card-group>
-                  <b-button size="sm" @click="loadNFTs('PixelPortraits')" variant="info" class="mt-2">Load PixelPortraits</b-button><br />
-                </b-tab>
+                  </b-tab>
 
-                <b-tab title="BGANPUNKV2" class="p-1">
-                  <b-card-group deck class="m-0">
-                    <div v-for="bganpunkv2Data in bganpunkv2DataList">
-                      <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                        <b-link @click="addImage('BGANPUNKV2', bganpunkv2Data.id, bganpunkv2Data.imageUrl)">
-                          <b-avatar rounded="sm" variant="light" size="5.0rem" :src="bganpunkv2Data.imageUrl" class="pixelated"></b-avatar>
-                        </b-link>
-                        <template #footer>
-                          <span class="small truncate">
-                            {{ bganpunkv2Data.id }}
-                          </span>
-                        </template>
-                      </b-card>
+                  <b-tab title="BGANPUNKV2" class="p-1">
+                    <b-card-group deck class="m-0">
+                      <div v-for="bganpunkv2Data in bganpunkv2DataList">
+                        <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
+                          <b-link @click="addImage('BGANPUNKV2', bganpunkv2Data.id, bganpunkv2Data.imageUrl)">
+                            <b-avatar rounded="sm" variant="light" size="5.0rem" :src="bganpunkv2Data.imageUrl" class="pixelated"></b-avatar>
+                          </b-link>
+                          <template #footer>
+                            <span class="small truncate">
+                              {{ bganpunkv2Data.id }}
+                            </span>
+                          </template>
+                        </b-card>
+                      </div>
+                    </b-card-group>
+                    <div v-if="!powerOn" class="mt-4">
+                      Click the power button <b-button size="sm" variant="link" class="m-0 p-0" v-b-popover.hover="'Power up this app'" @click="setPowerOn();" v-if="!powerOn"><b-icon-power shift-v="-1" font-scale="1.5"></b-icon-power></b-button> on the top right to connect via web3 to load your NFTs.
                     </div>
-                  </b-card-group>
-                  <b-button size="sm" @click="loadNFTs('BGANPUNKV2')" variant="info" class="mt-2">Load BGANPUNKV2</b-button><br />
-                </b-tab>
-
-                <b-tab title="PunkBodies" class="p-1">
-                  <b-card-group deck class="m-0">
-                    <div v-for="punkBodyData in punkBodiesDataList">
-                      <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                        <b-link @click="addImage('PunkBody', punkBodyData.id, punkBodyData.imageUrl)">
-                          <b-avatar rounded="sm" variant="light" size="5.0rem" :src="punkBodyData.imageUrl" class="pixelated"></b-avatar>
-                        </b-link>
-                        <template #footer>
-                          <span class="small truncate">
-                            #{{ punkBodyData.id }}
-                          </span>
-                        </template>
-                      </b-card>
+                    <div v-else>
+                      <b-button size="sm" @click="loadNFTs('BGANPUNKV2')" variant="link" class="mt-2"><b-icon-arrow-repeat v-b-popover.hover="'(Re)load your NFTs'" shift-v="+3" font-scale="1.5"></b-icon-arrow-repeat></b-button> BGANPUNKV2
                     </div>
-                  </b-card-group>
-                  <b-button size="sm" @click="loadNFTs('PunkBodies')" variant="info" class="mt-2">Load PunkBodies</b-button><br />
-                </b-tab>
+                  </b-tab>
 
-
-                <b-tab title="MoonCats" class="p-1">
-                  <b-card-group deck class="m-0">
-                    <div v-for="mooncatsData in mooncatsDataList">
-                      <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                        <b-link @click="addImage('MoonCat', mooncatsData.id, mooncatsData.imageUrl)">
-                          <b-avatar rounded="sm" variant="light" size="5.0rem" :src="mooncatsData.imageUrl" class="pixelated"></b-avatar>
-                        </b-link>
-                        <template #footer>
-                          <span class="small truncate">
-                            #{{ mooncatsData.id }}
-                          </span>
-                        </template>
-                      </b-card>
+                  <b-tab title="PunkBodies" class="p-1">
+                    <b-card-group deck class="m-0">
+                      <div v-for="punkBodyData in punkBodiesDataList">
+                        <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
+                          <b-link @click="addImage('PunkBody', punkBodyData.id, punkBodyData.imageUrl)">
+                            <b-avatar rounded="sm" variant="light" size="5.0rem" :src="punkBodyData.imageUrl" class="pixelated"></b-avatar>
+                          </b-link>
+                          <template #footer>
+                            <span class="small truncate">
+                              #{{ punkBodyData.id }}
+                            </span>
+                          </template>
+                        </b-card>
+                      </div>
+                    </b-card-group>
+                    <div v-if="!powerOn" class="mt-4">
+                      Click the power button <b-button size="sm" variant="link" class="m-0 p-0" v-b-popover.hover="'Power up this app'" @click="setPowerOn();" v-if="!powerOn"><b-icon-power shift-v="-1" font-scale="1.5"></b-icon-power></b-button> on the top right to connect via web3 to load your NFTs.
                     </div>
-                  </b-card-group>
-                  <b-button size="sm" @click="loadNFTs('MoonCats')" variant="info" class="mt-2">Load MoonCats</b-button><br />
-                </b-tab>
-
-                <b-tab title="CryptoCats" class="p-1">
-                  <b-card-group deck class="m-0">
-                    <div v-for="cryptoCatData in cryptoCatsDataList">
-                      <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                        <b-link @click="addImage('CryptoCat', cryptoCatData.id, cryptoCatData.imageUrl)">
-                          <b-avatar rounded="sm" variant="light" size="5.0rem" :src="cryptoCatData.imageUrl" class="pixelated"></b-avatar>
-                        </b-link>
-                        <template #footer>
-                          <span class="small truncate">
-                            #{{ cryptoCatData.id }}
-                          </span>
-                        </template>
-                      </b-card>
+                    <div v-else>
+                      <b-button size="sm" @click="loadNFTs('PunkBodies')" variant="link" class="mt-2"><b-icon-arrow-repeat v-b-popover.hover="'(Re)load your NFTs'" shift-v="+3" font-scale="1.5"></b-icon-arrow-repeat></b-button> PunkBodies
                     </div>
-                    <div v-for="cryptoCatData in wrappedCryptoCatsDataList">
-                      <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                        <b-link @click="addImage('CryptoCat', cryptoCatData.id, cryptoCatData.imageUrl)">
-                          <b-avatar rounded="sm" variant="light" size="5.0rem" :src="cryptoCatData.imageUrl" class="pixelated"></b-avatar>
-                        </b-link>
-                        <template #footer>
-                          <span class="small truncate">
-                            #{{ cryptoCatData.id }}
-                          </span>
-                        </template>
-                      </b-card>
+                  </b-tab>
+
+
+                  <b-tab title="MoonCats" class="p-1">
+                    <b-card-group deck class="m-0">
+                      <div v-for="mooncatsData in mooncatsDataList">
+                        <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
+                          <b-link @click="addImage('MoonCat', mooncatsData.id, mooncatsData.imageUrl)">
+                            <b-avatar rounded="sm" variant="light" size="5.0rem" :src="mooncatsData.imageUrl" class="pixelated"></b-avatar>
+                          </b-link>
+                          <template #footer>
+                            <span class="small truncate">
+                              #{{ mooncatsData.id }}
+                            </span>
+                          </template>
+                        </b-card>
+                      </div>
+                    </b-card-group>
+                    <div v-if="!powerOn" class="mt-4">
+                      Click the power button <b-button size="sm" variant="link" class="m-0 p-0" v-b-popover.hover="'Power up this app'" @click="setPowerOn();" v-if="!powerOn"><b-icon-power shift-v="-1" font-scale="1.5"></b-icon-power></b-button> on the top right to connect via web3 to load your NFTs.
                     </div>
-                  </b-card-group>
-                  <b-button size="sm" @click="loadNFTs('CryptoCats')" variant="info" class="mt-2">Load CryptoCats</b-button><br />
-                </b-tab>
+                    <div v-else>
+                      <b-button size="sm" @click="loadNFTs('MoonCats')" variant="link" class="mt-2"><b-icon-arrow-repeat v-b-popover.hover="'(Re)load your NFTs'" shift-v="+3" font-scale="1.5"></b-icon-arrow-repeat></b-button> MoonCats
+                    </div>
+                  </b-tab>
 
-                <b-tab title="Upload Image" class="p-1">
-                  <b-card-text>
-                    <b-row  align-h="start">
-                      <b-col cols="2">Scale</b-col>
-                      <b-col cols="3">
-                        <b-form-group description="Scale width. e.g., 0.5">
-                          <b-form-input type="text" v-model.trim="settings['ImageUpload'].scaleWidth"></b-form-input>
-                        </b-form-group>
-                      </b-col>
-                      <b-col cols="3">
-                        <b-form-group description="Scale height. e.g., 0.5">
-                          <b-form-input type="text" v-model.trim="settings['ImageUpload'].scaleHeight"></b-form-input>
-                        </b-form-group>
-                      </b-col>
-                      <b-col cols="2">
-                        <b-form-group>
-                          <b-form-checkbox v-model.trim="settings['ImageUpload'].flipX">
-                            Flip X
-                          </b-form-checkbox>
-                        </b-form-group>
-                      </b-col>
-                      <b-col cols="2">
-                        <b-form-group>
-                          <b-form-checkbox v-model.trim="settings['ImageUpload'].flipY">
-                            Flip Y
-                          </b-form-checkbox>
-                        </b-form-group>
-                      </b-col>
-                    </b-row>
-                    <b-form-group label-cols="2" label-size="sm" label="Select image" description="From local filesystem">
-                      <b-form-file v-model="file" @input="onFileChange" accept="image/jpeg, image/png, image/gif"  class="w-50" placeholder="Choose a JPEG, PNG or GIF file or drop it here..." drop-placeholder="Drop file here..."></b-form-file>
-                    </b-form-group>
-                  </b-card-text>
-                </b-tab>
+                  <b-tab title="CryptoCats" class="p-1">
+                    <b-card-group deck class="m-0">
+                      <div v-for="cryptoCatData in cryptoCatsDataList">
+                        <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
+                          <b-link @click="addImage('CryptoCat', cryptoCatData.id, cryptoCatData.imageUrl)">
+                            <b-avatar rounded="sm" variant="light" size="5.0rem" :src="cryptoCatData.imageUrl" class="pixelated"></b-avatar>
+                          </b-link>
+                          <template #footer>
+                            <span class="small truncate">
+                              #{{ cryptoCatData.id }}
+                            </span>
+                          </template>
+                        </b-card>
+                      </div>
+                      <div v-for="cryptoCatData in wrappedCryptoCatsDataList">
+                        <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
+                          <b-link @click="addImage('CryptoCat', cryptoCatData.id, cryptoCatData.imageUrl)">
+                            <b-avatar rounded="sm" variant="light" size="5.0rem" :src="cryptoCatData.imageUrl" class="pixelated"></b-avatar>
+                          </b-link>
+                          <template #footer>
+                            <span class="small truncate">
+                              #{{ cryptoCatData.id }}
+                            </span>
+                          </template>
+                        </b-card>
+                      </div>
+                    </b-card-group>
+                    <div v-if="!powerOn" class="mt-4">
+                      Click the power button <b-button size="sm" variant="link" class="m-0 p-0" v-b-popover.hover="'Power up this app'" @click="setPowerOn();" v-if="!powerOn"><b-icon-power shift-v="-1" font-scale="1.5"></b-icon-power></b-button> on the top right to connect via web3 to load your NFTs.
+                    </div>
+                    <div v-else>
+                      <b-button size="sm" @click="loadNFTs('CryptoCats')" variant="link" class="mt-2"><b-icon-arrow-repeat v-b-popover.hover="'(Re)load your NFTs'" shift-v="+3" font-scale="1.5"></b-icon-arrow-repeat></b-button> CryptoCats
+                    </div>
 
-                <!--
-                <template #tabs-end>
-                  <b-nav-item role="presentation" @click.prevent="newTab" href="#" class="pull-right"><b>Load NFTs</b></b-nav-item>
-                </template>
-                -->
+                  </b-tab>
 
-              </b-tabs>
-            </b-card>
-          </div>
+                  <b-tab title="Upload Image" class="p-1">
+                    <b-card-text>
+                      <b-row  align-h="start">
+                        <b-col cols="2">Scale</b-col>
+                        <b-col cols="3">
+                          <b-form-group description="Scale width. e.g., 0.5">
+                            <b-form-input type="text" v-model.trim="settings['ImageUpload'].scaleWidth"></b-form-input>
+                          </b-form-group>
+                        </b-col>
+                        <b-col cols="3">
+                          <b-form-group description="Scale height. e.g., 0.5">
+                            <b-form-input type="text" v-model.trim="settings['ImageUpload'].scaleHeight"></b-form-input>
+                          </b-form-group>
+                        </b-col>
+                        <b-col cols="2">
+                          <b-form-group>
+                            <b-form-checkbox v-model.trim="settings['ImageUpload'].flipX">
+                              Flip X
+                            </b-form-checkbox>
+                          </b-form-group>
+                        </b-col>
+                        <b-col cols="2">
+                          <b-form-group>
+                            <b-form-checkbox v-model.trim="settings['ImageUpload'].flipY">
+                              Flip Y
+                            </b-form-checkbox>
+                          </b-form-group>
+                        </b-col>
+                      </b-row>
+                      <b-form-group label-cols="2" label-size="sm" label="Select image" description="From local filesystem">
+                        <b-form-file v-model="file" @input="onFileChange" accept="image/jpeg, image/png, image/gif"  class="w-50" placeholder="Choose a JPEG, PNG or GIF file or drop it here..." drop-placeholder="Drop file here..."></b-form-file>
+                      </b-form-group>
+                    </b-card-text>
+                  </b-tab>
 
-          <!-- <b-button size="sm" @click="loadNFTs()" variant="info" class="mt-2">Load Other NFTs</b-button><br /> -->
-
-          <!-- <b-card-img :src="punkData.imageUrl" alt="Punk image" width="100px" class="pixelated"></b-card-img> -->
-
-
-          <!-- <b-img src="media/ZombieBaby_000.png" height="1024px" alt="image slot"></b-img> -->
-          <!-- <b-img src="https://www.larvalabs.com/public/images/cryptopunks/punk3636.png" height="256px" style="image-rendering: -moz-crisp-edges; image-rendering: crisp-edges; image-rendering: pixelated;" alt="image slot"></b-img> -->
-
+                </b-tabs>
+              </b-card>
+            </div>
 
           </b-card-body>
         </b-card>
@@ -314,6 +329,9 @@ const Bodyshop = {
     }
   },
   computed: {
+    powerOn() {
+      return store.getters['connection/powerOn'];
+    },
     explorer () {
       return store.getters['connection/explorer'];
     },
