@@ -23,7 +23,7 @@ const Bodyshop = {
                     </b-form-group>
                   </b-card-text>
                 </b-tab>
-                <b-tab active title="Sample NFTs" class="p-1">
+                <b-tab title="Sample NFTs" class="p-1">
                   <b-card-group deck class="m-0">
                     <div>
                       <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
@@ -348,9 +348,12 @@ const Bodyshop = {
   methods: {
     setCanvasSize() {
       logInfo("Bodyshop", "setCanvasSize() canvasSetting: " + JSON.stringify(this.canvasSetting));
-      var canvas = document.getElementById("thecanvas");
-      canvas.width = this.canvasSetting.width;
-      canvas.height = this.canvasSetting.height;
+      // var canvas = document.getElementById("thecanvas");
+      logInfo("Bodyshop", "setCanvasSize() canvas: " + JSON.stringify(this.canvas));
+      // canvas.width = this.canvasSetting.width;
+      // canvas.height = this.canvasSetting.height;
+      this.canvas.setWidth(this.canvasSetting.width);
+      this.canvas.setHeight(this.canvasSetting.height);
     },
     onFileChange(file) {
       const t = this;
