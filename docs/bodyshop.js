@@ -411,34 +411,14 @@ const Bodyshop = {
       logInfo("Bodyshop", "onFileChange() imgObj: " + JSON.stringify(imgObj));
       imgObj.onload = function () {
         const image = new fabric.Image(imgObj);
-
-        // canvas.width = img.width;
-        // canvas.height = img.height;
-        // ctx.drawImage(img,0,0);
-
-        image.set({
-          // width: t.canvas.width,
-          // height: t.canvas.height,
-          left: 0,
-          top: 0,
-          angle: 0,
-          padding: 0,
-          cornersize: 0
-        });
+        image.set({ left: 0, top: 0, angle: 0, padding: 0, cornersize: 0 });
         logInfo("Bodyshop", "onFileChange() image width: " + image.width + ", height: " + image.height);
         logInfo("Bodyshop", "onFileChange() t.canvas width: " + t.canvas.width + ", height: " + t.canvas.height);
-        // image.scale(image.width / t.canvas.width / 5, image.width / t.canvas.width / 5).setCoords();
         image.scale(t.settings['ImageUpload'].scaleWidth, t.settings['ImageUpload'].scaleHeight).set('flipX', t.settings['ImageUpload'].flipX).set('flipY', t.settings['ImageUpload'].flipY);
         t.canvas.add(image);
         // t.canvas.setBackgroundImage(image);
         // t.canvas.renderAll();
       };
-
-      // var files = e.target.files || e.dataTransfer.files;
-      // logInfo("Bodyshop", "onFileChange() files: " + JSON.stringify(files));
-      // if (!files.length)
-      //   return;
-      // this.createImage(item, files[0]);
     },
     async addImage(nftType, id, image) {
       logInfo("Bodyshop", "addImage() type: " + nftType + ", id: " + id + ", image: " + image);
@@ -656,82 +636,6 @@ const Bodyshop = {
     },
     async timeoutCallback() {
       logInfo("Bodyshop", "timeoutCallback() count: " + this.count);
-      // var tokenToolz = web3.eth.contract(TOKENTOOLZABI).at(TOKENTOOLZADDRESS);
-      // var fakeTokenContract = web3.eth.contract(FAKETOKENFACTORYABI).at(FAKETOKENFACTORYADDRESS);
-      //
-      // if (this.count == 0) {
-      //   var _fakeTokensLength = promisify(cb => fakeTokenContract.fakeTokensLength.call(cb));
-      //   var fakeTokensLength = await _fakeTokensLength;
-      //   this.tokenPickerTotalRows = parseInt(COMMONTOKENLIST.length) + parseInt(fakeTokensLength);
-      //   // logInfo("Bodyshop", "timeoutCallback() - tokenPickerTotalRows: " + this.tokenPickerTotalRows);
-      //   this.tokenPickerLoadingRow = 0;
-      //
-      //   for (var i = 0; i < COMMONTOKENLIST.length; i++) {
-      //     var address = COMMONTOKENLIST[i];
-      //     var _tokenInfo = promisify(cb => tokenToolz.getTokenInfo(address, store.getters['connection/coinbase'], store.getters['optinoFactory/address'], cb));
-      //     var tokenInfo = await _tokenInfo;
-      //     var symbol = tokenInfo[4];
-      //     var name = tokenInfo[5];
-      //     var decimals = parseInt(tokenInfo[0]);
-      //     var totalSupply = tokenInfo[1].shift(-decimals).toString();
-      //     var balance = tokenInfo[2].shift(-decimals).toString();
-      //     var allowance = tokenInfo[3].shift(-decimals).toString();
-      //     var token = { address: address, symbol: symbol, name: name, decimals: decimals, totalSupply: totalSupply, balance: balance, allowance: allowance, source: "common" };
-      //     Vue.set(this.tokenPickerMap, address.toLowerCase(), token);
-      //     this.tokenPickerList.push(token);
-      //     this.tokenPickerLoadingRow++;
-      //     // logInfo("Bodyshop", "timeoutCallback() - loading " + this.tokenPickerLoadingRow + " of " + this.tokenPickerTotalRows + " " + symbol);
-      //   }
-      //
-      //   for (var fakeTokensIndex = 0; fakeTokensIndex < fakeTokensLength; fakeTokensIndex++) {
-      //     var _fakeTokenAddress = promisify(cb => fakeTokenContract.fakeTokens.call(fakeTokensIndex, cb));
-      //     var fakeTokenAddress = await _fakeTokenAddress;
-      //     var _tokenInfo = promisify(cb => tokenToolz.getTokenInfo(fakeTokenAddress, store.getters['connection/coinbase'], store.getters['optinoFactory/address'], cb));
-      //     var tokenInfo = await _tokenInfo;
-      //     var symbol = tokenInfo[4];
-      //     var name = tokenInfo[5];
-      //     var decimals = parseInt(tokenInfo[0]);
-      //     var totalSupply = tokenInfo[1].shift(-decimals).toString();
-      //     var balance = tokenInfo[2].shift(-decimals).toString();
-      //     var allowance = tokenInfo[3].shift(-decimals).toString();
-      //     if (symbol.startsWith("f")) {
-      //       var token = { address: fakeTokenAddress, symbol: symbol, name: name, decimals: decimals, totalSupply: totalSupply, balance: balance, allowance: allowance, source: "fake" };
-      //       Vue.set(this.tokenPickerMap, fakeTokenAddress.toLowerCase(), token);
-      //       this.tokenPickerList.push(token);
-      //       this.tokenPickerLoadingRow++;
-      //       // logInfo("Bodyshop", "timeoutCallback() - loading " + this.tokenPickerLoadingRow + " of " + this.tokenPickerTotalRows + " " + symbol);
-      //     }
-      //   }
-      //
-      //   this.tokenPickerTotalRows = this.tokenPickerLoadingRow;
-      //   this.tokenPickerLoadingRow = null;
-      //   logDebug("Bodyshop", "timeoutCallback() - loaded " + this.tokenPickerTotalRows);
-      //
-      //   // this.tokenPickerList.sort(function(a, b) {
-      //   //   return ('' + a.symbol + a.name).localeCompare(b.symbol + b.name);
-      //   // });
-      //   // logInfo("tokensModule", "timeoutCallback() tokenPickerList: " + JSON.stringify(this.tokenPickerList));
-      //
-      // } else {
-      //   var addresses = Object.keys(this.tokenPickerMap);
-      //   var addressesLength = addresses.length;
-      //   var chunks = chunkArray(addresses, 10);
-      //   for (var chunkIndex in chunks) {
-      //     var chunk = chunks[chunkIndex];
-      //     var _tokensInfo = promisify(cb => tokenToolz.getTokensInfo(chunk, store.getters['connection/coinbase'], store.getters['optinoFactory/address'], cb));
-      //     var tokensInfo = await _tokensInfo;
-      //     for (var tokenIndex = 0; tokenIndex < chunk.length; tokenIndex++) {
-      //       var address = chunk[tokenIndex].toLowerCase();
-      //       var token = this.tokenPickerMap[address];
-      //       token.totalSupply = tokensInfo[0][tokenIndex].shift(-token.decimals).toString();
-      //       token.balance = tokensInfo[1][tokenIndex].shift(-token.decimals).toString();
-      //       token.allowance = tokensInfo[2][tokenIndex].shift(-token.decimals).toString();
-      //       Vue.set(this.tokenPickerMap, address, token);
-      //     }
-      //   }
-      //   logDebug("Bodyshop", "timeoutCallback() - refreshed " + addressesLength);
-      //   // logInfo("tokensModule", "timeoutCallback() tokenPickerList: " + JSON.stringify(this.tokenPickerList));
-      // }
 
       this.count++;
       var t = this;
@@ -757,7 +661,7 @@ const Bodyshop = {
     var rect = new fabric.Rect({
       left: 50,
       top: 50,
-      fill: 'yellow',
+      fill: 'cyan',
       width: 380,
       height: 380
     });
@@ -774,19 +678,20 @@ const Bodyshop = {
       }
     }
 
-    var deleteImg = document.createElement('img');
+    const deleteImg = document.createElement('img');
     deleteImg.src = deleteIcon;
-    // this.canvas.add(deleteImg);
-    //
-    var cloneImg = document.createElement('img');
+    const cloneImg = document.createElement('img');
     cloneImg.src = cloneIcon;
-    // this.canvas.add(cloneImg);
+    const layerUpImg = document.createElement('img');
+    layerUpImg.src = "images/arrow-up-circle-fill.svg";
+    const layerDownImg = document.createElement('img');
+    layerDownImg.src = "images/arrow-down-circle-fill.svg";
 
     function deleteObject(eventData, transform) {
-                  var target = transform.target;
+      var target = transform.target;
   		var canvas = target.canvas;
-  		    canvas.remove(target);
-          canvas.requestRenderAll();
+  		canvas.remove(target);
+      canvas.requestRenderAll();
   	}
 
     function cloneObject(eventData, transform) {
@@ -797,6 +702,14 @@ const Bodyshop = {
         cloned.top += 10;
         canvas.add(cloned);
       });
+    }
+
+    function layerUpObject(eventData, transform) {
+      transform.target.bringForward();
+    }
+
+    function layerDownObject(eventData, transform) {
+      transform.target.sendBackwards();
     }
 
     fabric.Object.prototype.controls.deleteControl = new fabric.Control({
@@ -818,6 +731,28 @@ const Bodyshop = {
       cursorStyle: 'pointer',
       mouseUpHandler: cloneObject,
       render: renderIcon(cloneImg),
+      cornerSize: 24
+    });
+
+    fabric.Object.prototype.controls.layerUpControl = new fabric.Control({
+      x: 0.5,
+      y: 0.5,
+      offsetY: 16,
+      offsetX: 16,
+      cursorStyle: 'pointer',
+      mouseUpHandler: layerUpObject,
+      render: renderIcon(layerUpImg),
+      cornerSize: 24
+    });
+
+    fabric.Object.prototype.controls.layerDownControl = new fabric.Control({
+      x: -0.5,
+      y: 0.5,
+      offsetY: 16,
+      offsetX: -16,
+      cursorStyle: 'pointer',
+      mouseUpHandler: layerDownObject,
+      render: renderIcon(layerDownImg),
       cornerSize: 24
     });
 
@@ -868,19 +803,6 @@ const Bodyshop = {
         }
       }
     });
-
-    // const t = this;
-    // fabric.Image.fromURL('https://zombiebabies.eth.link/media/ZombieBaby_000_transparentbg.png', function(oImg) {
-    //   oImg.set('imageSmoothing', false).scale(5.0/40).set('flipX', true);
-    //   // oImg.filters.push(new fabric.Image.filters.Grayscale());
-    //   // oImg.applyFilters();
-    //   t.canvas.add(oImg);
-    // });
-    //
-    // fabric.Image.fromURL('https://api.punkbodies.com/get-images/9031.png', function(oImg) {
-    //   oImg.set('imageSmoothing', false).scale(5.0).set('flipX', true);
-    //   t.canvas.add(oImg);
-    // });
   },
   destroyed() {
     this.reschedule = false;
