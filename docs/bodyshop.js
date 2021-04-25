@@ -15,6 +15,7 @@ const Bodyshop = {
                 <b-col md="8" class="p-3">
                   <canvas id="thecanvas" width="1024" height="480" style="border:1px solid; margin: 0 auto; position: absolute;"></canvas>
                 </b-col>
+                <!--
                 <b-col md="4" class="ml-auto p-3">
                   <pre>
                     <code class="json">
@@ -22,6 +23,7 @@ const Bodyshop = {
                     </code>
                   </pre>
                 </b-col>
+                -->
               </b-row>
 
 
@@ -683,9 +685,13 @@ const Bodyshop = {
     const cloneImg = document.createElement('img');
     cloneImg.src = cloneIcon;
     const layerUpImg = document.createElement('img');
-    layerUpImg.src = "images/arrow-up-circle-fill.svg";
+    layerUpImg.src = "images/arrow-up-square.svg";
     const layerDownImg = document.createElement('img');
-    layerDownImg.src = "images/arrow-down-circle-fill.svg";
+    layerDownImg.src = "images/arrow-down-square.svg";
+    const symmetryHorizontalImg = document.createElement('img');
+    symmetryHorizontalImg.src = "images/symmetry-horizontal.svg";
+    const symmetryVerticalImg = document.createElement('img');
+    symmetryVerticalImg.src = "images/symmetry-vertical.svg";
 
     function deleteObject(eventData, transform) {
       var target = transform.target;
@@ -710,6 +716,14 @@ const Bodyshop = {
 
     function layerDownObject(eventData, transform) {
       transform.target.sendBackwards();
+    }
+
+    function flipXObject(eventData, transform) {
+      transform.target.flipX = !transform.target.flipX;
+    }
+
+    function flipYObject(eventData, transform) {
+      transform.target.flipY = !transform.target.flipY;
     }
 
     fabric.Object.prototype.controls.deleteControl = new fabric.Control({
@@ -753,6 +767,28 @@ const Bodyshop = {
       cursorStyle: 'pointer',
       mouseUpHandler: layerDownObject,
       render: renderIcon(layerDownImg),
+      cornerSize: 24
+    });
+
+    fabric.Object.prototype.controls.symmetryVerticalControl = new fabric.Control({
+      x: -0.5,
+      y: 0,
+      offsetY: -16,
+      offsetX: -16,
+      cursorStyle: 'pointer',
+      mouseUpHandler: flipXObject,
+      render: renderIcon(symmetryVerticalImg),
+      cornerSize: 24
+    });
+
+    fabric.Object.prototype.controls.symmetryHorizontalControl = new fabric.Control({
+      x: 0,
+      y: -0.5,
+      offsetY: -16,
+      offsetX: -16,
+      cursorStyle: 'pointer',
+      mouseUpHandler: flipYObject,
+      render: renderIcon(symmetryHorizontalImg),
       cornerSize: 24
     });
 
