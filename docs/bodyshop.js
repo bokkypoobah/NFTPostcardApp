@@ -720,10 +720,12 @@ const Bodyshop = {
 
     function flipXObject(eventData, transform) {
       transform.target.flipX = !transform.target.flipX;
+      t.canvas.renderAll();
     }
 
     function flipYObject(eventData, transform) {
       transform.target.flipY = !transform.target.flipY;
+      t.canvas.renderAll();
     }
 
     fabric.Object.prototype.controls.deleteControl = new fabric.Control({
