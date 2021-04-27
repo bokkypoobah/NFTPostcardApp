@@ -1,12 +1,12 @@
 // const JSONDATA = require("data.json");
 
 Vue.use(Vuex);
-Vue.use(VueApexCharts);
+// Vue.use(VueApexCharts);
 
-Vue.component('apexchart', VueApexCharts);
+// Vue.component('apexchart', VueApexCharts);
 Vue.component('connection', Connection);
 Vue.component('tokens', Tokens);
-Vue.component('flat-pickr', VueFlatpickr);
+// Vue.component('flat-pickr', VueFlatpickr);
 
 // hljs.registerLanguage('solidity', window.hljsDefineSolidity);
 // hljs.initHighlightingOnLoad();
