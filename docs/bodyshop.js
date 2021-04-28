@@ -41,7 +41,7 @@ const Bodyshop = {
               <b-card no-body class="mt-2">
                 <b-tabs vertical pills card end nav-class="p-2" active-tab-class="p-2">
 
-                  <b-tab title="Canvas" active class="p-1">
+                  <b-tab title="Canvas" class="p-1">
                     <b-card-text>
                       <b-form-group label-cols="2" label-size="sm" label="Width" description="e.g., 480">
                         <b-form-input type="text" v-model.trim="canvasSetting.width" class="w-25"></b-form-input>
@@ -158,7 +158,7 @@ const Bodyshop = {
                     </div>
                   </b-tab>
 
-                  <b-tab title="PunkBodies" class="p-1">
+                  <b-tab active title="PunkBodies" class="p-1">
                     <b-card-group deck class="m-0">
                       <div v-for="punkBodyData in punkBodiesDataList">
                         <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
@@ -574,13 +574,13 @@ const Bodyshop = {
       if (nftType == 'ZombieBaby') {
         scale = 5.0 / 40;
       } else if (nftType == 'CryptoPunk') {
-        scale = 5.0;
+        scale = 5.0 / 14;
       } else if (nftType == 'PixelPortrait') {
         scale = 5.0 / 20;
       } else if (nftType == 'BGANPUNKV2') {
         scale = 5.0 / 40;
       } else if (nftType == 'PunkBody') {
-        scale = 5.0;
+        scale = 1.0;
       } else if (nftType == 'MoonCat') {
         scale = 5.0 / 12;
       } else if (nftType == 'CryptoCat') {
@@ -599,7 +599,9 @@ const Bodyshop = {
         // oImg.set({width: 300, height: 300, left: 10, top: 10, originX: 'left', originY: 'top'});
         // oImg.filters.push(new fabric.Image.filters.Grayscale());
         // oImg.applyFilters();
+        logInfo("Bodyshop", "addImage() adding: " + JSON.stringify(oImg));
         t.canvas.add(oImg);
+        logInfo("Bodyshop", "addImage() added: " + JSON.stringify(oImg));
       } , {crossOrigin: 'anonymous'});
     },
     async loadNFTs(collection) {
@@ -619,9 +621,10 @@ const Bodyshop = {
             const openSeaPunkData = JSON.parse(cryptoPunksReq.responseText);
             for (let assetIndex in Object.keys(openSeaPunkData.assets)) {
               const asset = openSeaPunkData.assets[assetIndex];
-              var id = asset.token_id;
-              var imageUrl = "https://www.larvalabs.com/public/images/cryptopunks/punk" + id + ".png"
-              punkDataTemp.push({ id: id, imageUrl: imageUrl });
+              // var id = asset.token_id;
+              // var imageUrl = "https://www.larvalabs.com/public/images/cryptopunks/punk" + id + ".png"
+              // punkDataTemp.push({ id: id, imageUrl: imageUrl });
+              punkDataTemp.push({ id: asset.token_id, imageUrl: asset.image_url });
             }
             t.punksDataList = punkDataTemp;
             t.punksDataList.sort(function(a, b) { return a.id - b.id; });
@@ -668,9 +671,7 @@ const Bodyshop = {
             const openSeaBganpunkv2Data = JSON.parse(bganpunkv2Req.responseText);
             for (let assetIndex in Object.keys(openSeaBganpunkv2Data.assets)) {
               const asset = openSeaBganpunkv2Data.assets[assetIndex];
-              var id = asset.token_id;
-              var imageUrl = asset.image_original_url;
-              bganpunkv2DataListTemp.push({ id: id, imageUrl: imageUrl });
+              bganpunkv2DataListTemp.push({ id: asset.token_id, imageUrl: asset.image_original_url });
             }
             t.bganpunkv2DataList = bganpunkv2DataListTemp;
             t.bganpunkv2DataList.sort(function(a, b) { return a.id - b.id; });
@@ -692,9 +693,10 @@ const Bodyshop = {
             const openSeaPunkBodyData = JSON.parse(punkBodiesReq.responseText);
             for (let assetIndex in Object.keys(openSeaPunkBodyData.assets)) {
               const asset = openSeaPunkBodyData.assets[assetIndex];
-              var id = asset.token_id;
-              var imageUrl = "https://api.punkbodies.com/get-images/" + id + ".png"
-              punkBodiesDataListTemp.push({ id: id, imageUrl: imageUrl });
+              // var id = asset.token_id;
+              // var imageUrl = "https://api.punkbodies.com/get-images/" + id + ".png"
+              // punkBodiesDataListTemp.push({ id: id, imageUrl: imageUrl });
+              punkBodiesDataListTemp.push({ id: asset.token_id, imageUrl: asset.image_url });
             }
             t.punkBodiesDataList = punkBodiesDataListTemp;
             t.punkBodiesDataList.sort(function(a, b) { return a.id - b.id; });
@@ -889,8 +891,16 @@ const Bodyshop = {
       // 72a462 zombie colour
       logInfo("Bodyshop", "Calling removeObjectBackground eventData: " + JSON.stringify(eventData));
       logInfo("Bodyshop", "Calling removeObjectBackground transform: " + JSON.stringify(transform));
-      transform.target.flipY = !transform.target.flipY;
-      t.canvas.renderAll();
+
+      if (transform.target.type == "image") {
+        var filter = new fabric.Image.filters.RemoveColor({
+          threshold: 0.2,
+          color: '#72a462'
+        });
+        transform.target.filters.push(filter);
+        transform.target.applyFilters();
+        t.canvas.renderAll();
+      }
     }
 
     fabric.Object.prototype.controls.deleteControl = new fabric.Control({
