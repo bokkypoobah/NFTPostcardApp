@@ -18,6 +18,7 @@ const Bodyshop = {
                   </div>
                 </b-col>
 
+                <!--
                 <b-col md="4" class="ml-auto p-3">
                   <pre>
                     <code class="json">
@@ -25,6 +26,7 @@ const Bodyshop = {
                     </code>
                   </pre>
                 </b-col>
+                -->
 
               </b-row>
 
@@ -62,7 +64,7 @@ const Bodyshop = {
                       <div>
                         <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
                           <b-link @click="addImage('ZombieBaby', freeTokenId, 'media/' + nftData.tokens[freeTokenId].imageTBName)">
-                            <b-avatar rounded="sm" variant="light" size="5.0rem" :src="(nftData == null || nftData.tokens == null) ? null : ('https://zombiebabies.eth.link/media/' + nftData.tokens[freeTokenId].imageTBName)" class="pixelated"></b-avatar>
+                            <b-avatar rounded="sm" variant="light" size="5.0rem" :src="(nftData == null || nftData.tokens == null) ? null : ('media/' + nftData.tokens[freeTokenId].imageTBName)" class="pixelated"></b-avatar>
                           </b-link>
                           <template #footer>
                             <span class="small truncate">
@@ -78,7 +80,7 @@ const Bodyshop = {
                       <div v-for="(tokenId, tokenIdIndex) in allTokenIds">
                         <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
                           <b-link @click="addImage('ZombieBaby', tokenId, 'media/' + nftData.tokens[tokenId].imageTBName)">
-                            <b-avatar rounded="sm" variant="light" size="5.0rem" :src="'https://zombiebabies.eth.link/media/' + nftData.tokens[tokenId].imageTBName" class="pixelated"></b-avatar>
+                            <b-avatar rounded="sm" variant="light" size="5.0rem" :src="'media/' + nftData.tokens[tokenId].imageTBName" class="pixelated"></b-avatar>
                           </b-link>
                           <template #footer>
                             <span class="small truncate">
@@ -491,8 +493,10 @@ const Bodyshop = {
       const posY = 0;
       const width = 480;
       const height = 480;
-      html2canvas(document.body).then(async (canvas) => {
-      // html2canvas(document.querySelector("#thecanvas")).then(async (canvas) => {
+      // html2canvas(document.body).then(async (canvas) => {
+      var theCanvas = document.querySelector("#thecanvas");
+      console.table(theCanvas);
+      html2canvas(theCanvas).then(async (canvas) => {
       // html2canvas(element).then(async (canvas) => {
         // document.body.appendChild(canvas);
         var context = canvas.getContext('2d');
