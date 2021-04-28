@@ -889,8 +889,9 @@ const Bodyshop = {
 
     function removeObjectBackground(eventData, transform) {
       if (transform.target.type == "image") {
+        logInfo("Bodyshop", "Calling removeObjectBackground()  target: " + JSON.stringify(transform.target));
         let ctx = transform.target.canvas.getContext('2d');
-        let data = ctx.getImageData(1, 1, 1, 1);
+        let data = ctx.getImageData(parseInt(transform.target.left) * window.devicePixelRatio + 1, parseInt(transform.target.top) * window.devicePixelRatio + 1, 1, 1);
         logInfo("Bodyshop", "Calling removeObjectBackground() data: " + JSON.stringify(data));
         if (data.data[3] != 0) {
           var backgroundColor = '#' + data.data[0].toString(16) + data.data[1].toString(16) + data.data[2].toString(16);
