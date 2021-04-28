@@ -18,7 +18,6 @@ const Bodyshop = {
                   </div>
                 </b-col>
 
-                <!--
                 <b-col md="4" class="ml-auto p-3">
                   <pre>
                     <code class="json">
@@ -26,7 +25,6 @@ const Bodyshop = {
                     </code>
                   </pre>
                 </b-col>
-                -->
 
               </b-row>
 
@@ -892,15 +890,18 @@ const Bodyshop = {
     function removeObjectBackground(eventData, transform) {
       if (transform.target.type == "image") {
         let ctx = transform.target.canvas.getContext('2d');
-        let data = ctx.getImageData(1, 1, 20, 20);
-        var backgroundColor = '#' + data.data[0].toString(16) + data.data[1].toString(16) + data.data[2].toString(16);
-        var filter = new fabric.Image.filters.RemoveColor({
-          threshold: 0.2,
-          color: backgroundColor
-        });
-        transform.target.filters.push(filter);
-        transform.target.applyFilters();
-        t.canvas.renderAll();
+        let data = ctx.getImageData(1, 1, 1, 1);
+        logInfo("Bodyshop", "Calling removeObjectBackground() data: " + JSON.stringify(data));
+        if (data.data[3] != 0) {
+          var backgroundColor = '#' + data.data[0].toString(16) + data.data[1].toString(16) + data.data[2].toString(16);
+          var filter = new fabric.Image.filters.RemoveColor({
+            threshold: 0.2,
+            color: backgroundColor
+          });
+          transform.target.filters.push(filter);
+          transform.target.applyFilters();
+          t.canvas.renderAll();
+        }
       }
     }
 
