@@ -9,15 +9,16 @@ const Bodyshop = {
         <b-card no-body class="border-0 m-0 mt-2">
           <b-card-body class="p-0">
 
-            <b-container class="p-0" style="border:1px solid;" fluid>
+            <b-container class="p-0" fluid>
 
               <b-row class="mb-3">
                 <b-col md="8" class="p-3">
                   <div id="toBeCaptured">
-                    <canvas id="thecanvas" width="480" height="480" style="border:1px solid; margin: 0 auto; position: absolute;"></canvas>
+                    <canvas id="thecanvas" width="1024" height="480" style="border:1px solid; margin: 0 auto; position: absolute;"></canvas>
                   </div>
                 </b-col>
 
+                <!--
                 <b-col md="4" class="ml-auto p-3">
                   <pre>
                     <code class="json">
@@ -25,6 +26,7 @@ const Bodyshop = {
                     </code>
                   </pre>
                 </b-col>
+                -->
 
               </b-row>
 
@@ -41,12 +43,12 @@ const Bodyshop = {
               <b-card no-body class="mt-2">
                 <b-tabs vertical pills card end nav-class="p-2" active-tab-class="p-2">
 
-                  <b-tab title="Canvas" class="p-1">
+                  <b-tab active title="Canvas" class="p-1">
                     <b-card-text>
-                      <b-form-group label-cols="2" label-size="sm" label="Width" description="e.g., 480">
+                      <b-form-group label-cols="2" label-size="sm" label="Width" description="e.g., 1024. Max 2048">
                         <b-form-input type="text" v-model.trim="canvasSetting.width" class="w-25"></b-form-input>
                       </b-form-group>
-                      <b-form-group label-cols="2" label-size="sm" label="Height" description="e.g., 480">
+                      <b-form-group label-cols="2" label-size="sm" label="Height" description="e.g., 480. Max 2048">
                         <b-form-input type="text" v-model.trim="canvasSetting.height" class="w-25"></b-form-input>
                       </b-form-group>
                       <b-form-group label-cols="2" label-size="sm">
@@ -158,7 +160,7 @@ const Bodyshop = {
                     </div>
                   </b-tab>
 
-                  <b-tab active title="PunkBodies" class="p-1">
+                  <b-tab title="PunkBodies" class="p-1">
                     <b-card-group deck class="m-0">
                       <div v-for="punkBodyData in punkBodiesDataList">
                         <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
@@ -300,7 +302,7 @@ const Bodyshop = {
 
       selectedObject: null,
       canvasSetting: {
-        width: 480,
+        width: 1024,
         height: 480
       },
       imageSetting: {
@@ -888,14 +890,13 @@ const Bodyshop = {
     }
 
     function removeObjectBackground(eventData, transform) {
-      // 72a462 zombie colour
-      logInfo("Bodyshop", "Calling removeObjectBackground eventData: " + JSON.stringify(eventData));
-      logInfo("Bodyshop", "Calling removeObjectBackground transform: " + JSON.stringify(transform));
-
       if (transform.target.type == "image") {
+        let ctx = transform.target.canvas.getContext('2d');
+        let data = ctx.getImageData(1, 1, 20, 20);
+        var backgroundColor = '#' + data.data[0].toString(16) + data.data[1].toString(16) + data.data[2].toString(16);
         var filter = new fabric.Image.filters.RemoveColor({
           threshold: 0.2,
-          color: '#72a462'
+          color: backgroundColor
         });
         transform.target.filters.push(filter);
         transform.target.applyFilters();
