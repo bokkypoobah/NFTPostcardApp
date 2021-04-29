@@ -63,8 +63,8 @@ const Bodyshop = {
                     <b-card-group deck class="m-0">
                       <div>
                         <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                          <b-link @click="addImage('ZombieBaby', freeTokenId, 'media/' + nftData.tokens[freeTokenId].imageTBName)">
-                            <b-avatar rounded="sm" variant="light" size="5.0rem" :src="(nftData == null || nftData.tokens == null) ? null : ('media/' + nftData.tokens[freeTokenId].imageTBName)" class="pixelated"></b-avatar>
+                          <b-link @click="addImage('ZombieBaby', freeTokenId, 'media/' + nftData.tokens[freeTokenId].imageName)">
+                            <b-avatar rounded="sm" variant="light" size="5.0rem" :src="(nftData == null || nftData.tokens == null) ? null : ('media/' + nftData.tokens[freeTokenId].imageName)" class="pixelated"></b-avatar>
                           </b-link>
                           <template #footer>
                             <span class="small truncate">
@@ -79,8 +79,8 @@ const Bodyshop = {
                     <b-card-group deck class="m-0">
                       <div v-for="(tokenId, tokenIdIndex) in allTokenIds">
                         <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                          <b-link @click="addImage('ZombieBaby', tokenId, 'media/' + nftData.tokens[tokenId].imageTBName)">
-                            <b-avatar rounded="sm" variant="light" size="5.0rem" :src="'media/' + nftData.tokens[tokenId].imageTBName" class="pixelated"></b-avatar>
+                          <b-link @click="addImage('ZombieBaby', tokenId, 'media/' + nftData.tokens[tokenId].imageName)">
+                            <b-avatar rounded="sm" variant="light" size="5.0rem" :src="'media/' + nftData.tokens[tokenId].imageName" class="pixelated"></b-avatar>
                           </b-link>
                           <template #footer>
                             <span class="small truncate">
