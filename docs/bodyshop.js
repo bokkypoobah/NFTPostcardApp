@@ -26,9 +26,11 @@ const Bodyshop = {
 
               </b-row>
             </b-container>
+            <!--
             <b-form-group label-cols="2" label-size="sm">
               <b-button size="sm" @click="saveImage()" variant="info">Save Image</b-button>
             </b-form-group>
+            -->
 
             <div>
               <b-card no-body class="mt-2">
@@ -51,16 +53,16 @@ const Bodyshop = {
                     </b-card-text>
                   </b-tab>
 
-                  <b-tab active title="All NFTs" class="p-1">
+                  <b-tab active title="Assets" class="p-1">
                     <b-card-group deck class="m-0">
-                      <div v-for="punkData in punksDataList">
+                      <div v-for="asset in assets">
                         <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                          <b-link @click="addImage('CryptoPunk', punkData.id, punkData.imageUrl, punkData.asset)">
-                            <b-avatar rounded="sm" variant="light" size="5.0rem" :src="punkData.imageUrl" class="pixelated"></b-avatar>
+                          <b-link @click="addAsset(asset)">
+                            <b-avatar rounded="sm" variant="light" size="5.0rem" :src="asset.image_url" class="pixelated"></b-avatar>
                           </b-link>
                           <template #footer>
                             <span class="small truncate">
-                              #{{ punkData.id }}
+                              #{{ asset.name }}
                             </span>
                           </template>
                         </b-card>
@@ -70,7 +72,7 @@ const Bodyshop = {
                       Click the power button <b-button size="sm" variant="link" class="m-0 p-0" v-b-popover.hover="'Power up this app'" @click="setPowerOn();" v-if="!powerOn"><b-icon-power shift-v="-1" font-scale="1.5"></b-icon-power></b-button> on the top right to connect via web3 to load your NFTs.
                     </div>
                     <div v-else>
-                      <b-button size="sm" @click="loadAllNFTs()" variant="link" class="mt-2"><b-icon-arrow-repeat v-b-popover.hover="'(Re)load your NFTs'" shift-v="+3" font-scale="1.5"></b-icon-arrow-repeat></b-button>Load NFTs
+                      <b-button size="sm" @click="loadAssets()" variant="link" class="mt-2"><b-icon-arrow-repeat v-b-popover.hover="'(Re)load Assets using the OpenSea API'" shift-v="+3" font-scale="1.5"></b-icon-arrow-repeat></b-button>Load Assets
                     </div>
                   </b-tab>
 
@@ -307,6 +309,8 @@ const Bodyshop = {
       count: 0,
       reschedule: true,
 
+      assets: [],
+
       punksDataList: [],
       pixelPortraitsDataList: [],
       bganpunkv2DataList: [],
@@ -394,7 +398,9 @@ const Bodyshop = {
     networkName() {
       return store.getters['connection/networkName'];
     },
-
+    accounts() {
+      return [ store.getters['connection/coinbase'] ];
+    },
     nftData() {
       return store.getters['tokens/nftData'];
     },
@@ -627,8 +633,8 @@ const Bodyshop = {
         logInfo("Bodyshop", "addImage() added: " + JSON.stringify(oImg));
       } , {crossOrigin: 'anonymous'});
     },
-    async loadAllNFTs(collection) {
-      logInfo("Bodyshop", "loadAllNFTs()");
+    async loadAssets(collection) {
+      logInfo("Bodyshop", "loadAssets()");
       const t = this;
 
       const PAGESIZE = 20; // Default 20, max 50
@@ -636,36 +642,26 @@ const Bodyshop = {
       let completed = false;
       const punkDataTemp = [];
 
-
       var request = new XMLHttpRequest();
       (function loop(page, length) {
           if (page >= length) {
               return;
           }
           const offset = PAGESIZE * page;
-          // const url = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&order_direction=desc&offset=" + offset + "&limit=" + PAGESIZE;
-          const url = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&asset_contract_address=" + CRYPTOPUNKMARKETADDRESS + "&order_direction=desc&offset=" + offset + "&limit=" + PAGESIZE;
-          // const url = "https://api.opensea.io/api/v1/assets?owner=0x000003e1e88a1110e961f135df8cdea4b1ffa81a&order_direction=desc&offset=" + offset + "&limit=" + PAGESIZE;
+          const url = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&order_direction=desc&offset=" + offset + "&limit=" + PAGESIZE;
+          // const url = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&asset_contract_address=" + CRYPTOPUNKMARKETADDRESS + "&order_direction=desc&offset=" + offset + "&limit=" + PAGESIZE;
           const request = new XMLHttpRequest();
           request.overrideMimeType("application/json");
           request.open("GET", url, true);
           request.onreadystatechange = function() {
               if(request.readyState === XMLHttpRequest.DONE && request.status === 200) {
                   const assets = JSON.parse(request.responseText);
-                  // logInfo("Bodyshop", "loadAllNFTs() openSeaPunkData offet: " + offset + " - "+ JSON.stringify(assets.assets));
                   if (assets.assets.length > 0) {
-
-                    // logInfo("Bodyshop", "loadAllNFTs() openSeaPunkData offet: " + offset + " - "+ JSON.stringify(assets.assets));
                     for (let assetIndex = 0; assetIndex < assets.assets.length; assetIndex++) {
                       const asset = assets.assets[assetIndex];
-                      logInfo("Bodyshop", "loadAllNFTs() openSeaPunkData asset(" + (parseInt(offset) + assetIndex) + "): " + JSON.stringify(asset, null, 2));
-                      // var id = asset.token_id;
-                      // var imageUrl = "https://www.larvalabs.com/public/images/cryptopunks/punk" + id + ".png"
-                      // punkDataTemp.push({ id: id, imageUrl: imageUrl });
-                      punkDataTemp.push({ id: asset.token_id, imageUrl: asset.image_url, asset: asset });
+                      logInfo("Bodyshop", "loadAssets() openSeaPunkData asset(" + (parseInt(offset) + assetIndex) + "): " + JSON.stringify(asset, null, 2));
+                      t.assets.push(asset);
                     }
-
-
                     loop(page + 1, length);
                   }
               }
@@ -679,18 +675,18 @@ const Bodyshop = {
         const getAssetsUrl = "https://api.opensea.io/api/v1/assets?owner=0x000003e1e88a1110e961f135df8cdea4b1ffa81a&order_direction=desc&offset=" + offset + "&limit=" + PAGESIZE;
         const getAssetsReq = new XMLHttpRequest();
         getAssetsReq.overrideMimeType("application/json");
-        logInfo("Bodyshop", "loadAllNFTs() openSeaPunkData getAssetsUrl: " + getAssetsUrl);
+        logInfo("Bodyshop", "loadAssets() openSeaPunkData getAssetsUrl: " + getAssetsUrl);
         getAssetsReq.open('GET', getAssetsUrl, true);
         getAssetsReq.onload  = function() {
           completed = true;
         };
         getAssetsReq.onload  = function() {
-          logInfo("Bodyshop", "loadAllNFTs() openSeaPunkData getAssetsReq.readyState: " + getAssetsReq.readyState);
+          logInfo("Bodyshop", "loadAssets() openSeaPunkData getAssetsReq.readyState: " + getAssetsReq.readyState);
           if (getAssetsReq.readyState == 4) {
             const openSeaPunkData = JSON.parse(getAssetsReq.responseText);
             for (let assetIndex in Object.keys(openSeaPunkData.assets)) {
               const asset = openSeaPunkData.assets[assetIndex];
-              logInfo("Bodyshop", "loadAllNFTs() openSeaPunkData asset(" + assetIndex + "): " + JSON.stringify(asset));
+              logInfo("Bodyshop", "loadAssets() openSeaPunkData asset(" + assetIndex + "): " + JSON.stringify(asset));
               // var id = asset.token_id;
               // var imageUrl = "https://www.larvalabs.com/public/images/cryptopunks/punk" + id + ".png"
               // punkDataTemp.push({ id: id, imageUrl: imageUrl });
@@ -705,8 +701,8 @@ const Bodyshop = {
         }
       }
       */
-      t.punksDataList = punkDataTemp;
-      t.punksDataList.sort(function(a, b) { return a.id - b.id; });
+      // t.punksDataList = punkDataTemp;
+      // t.punksDataList.sort(function(a, b) { return a.id - b.id; });
     },
     async loadNFTs(collection) {
       logInfo("Bodyshop", "loadNFTs() collection: " + collection);
