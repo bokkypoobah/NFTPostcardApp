@@ -54,6 +54,7 @@
     <script src="tokensModule.js"></script>
     <script src="homeModule.js"></script>
     <script src="bodyshop.js"></script>
+    <script src="genemixer.js"></script>
     <script src="docs.js"></script>
     <script src="routes.js"></script>
 
@@ -86,6 +87,7 @@
             </b-navbar-brand>
             <b-navbar-nav class="ml-auto">
               <b-nav-item size="sm" to="/bodyshop/all" active-class="active" v-b-popover.hover="'Bodyshop'">Bodyshop</b-nav-item>
+              <b-nav-item size="sm" to="/genemixer/all" active-class="active" v-b-popover.hover="'GeneMixer'">GeneMixer</b-nav-item>
               <b-nav-item size="sm" to="/docs/info/top" active-class="active" v-b-popover.hover="'Info'">Info</b-nav-item>
               <b-nav-form>
                 <b-button size="sm" variant="link" class="ml-4" v-b-popover.hover="'Power up this app'" @click="setPowerOn();" v-if="!powerOn"><b-icon-power shift-v="-1" font-scale="1.5"></b-icon-power></b-button>

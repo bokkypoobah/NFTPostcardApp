@@ -1,7 +1,11 @@
-const Bodyshop = {
+// const deleteIcon = "data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'%3E%3Csvg version='1.1' id='Ebene_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='595.275px' height='595.275px' viewBox='200 215 230 470' xml:space='preserve'%3E%3Ccircle style='fill:%23F44336;' cx='299.76' cy='439.067' r='218.516'/%3E%3Cg%3E%3Crect x='267.162' y='307.978' transform='matrix(0.7071 -0.7071 0.7071 0.7071 -222.6202 340.6915)' style='fill:white;' width='65.545' height='262.18'/%3E%3Crect x='266.988' y='308.153' transform='matrix(0.7071 0.7071 -0.7071 0.7071 398.3889 -83.3116)' style='fill:white;' width='65.544' height='262.179'/%3E%3C/g%3E%3C/svg%3E";
+//
+// var cloneIcon = "data:image/svg+xml,%3C%3Fxml version='1.0' encoding='iso-8859-1'%3F%3E%3Csvg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 55.699 55.699' width='100px' height='100px' xml:space='preserve'%3E%3Cpath style='fill:%23010002;' d='M51.51,18.001c-0.006-0.085-0.022-0.167-0.05-0.248c-0.012-0.034-0.02-0.067-0.035-0.1 c-0.049-0.106-0.109-0.206-0.194-0.291v-0.001l0,0c0,0-0.001-0.001-0.001-0.002L34.161,0.293c-0.086-0.087-0.188-0.148-0.295-0.197 c-0.027-0.013-0.057-0.02-0.086-0.03c-0.086-0.029-0.174-0.048-0.265-0.053C33.494,0.011,33.475,0,33.453,0H22.177 c-3.678,0-6.669,2.992-6.669,6.67v1.674h-4.663c-3.678,0-6.67,2.992-6.67,6.67V49.03c0,3.678,2.992,6.669,6.67,6.669h22.677 c3.677,0,6.669-2.991,6.669-6.669v-1.675h4.664c3.678,0,6.669-2.991,6.669-6.669V18.069C51.524,18.045,51.512,18.025,51.51,18.001z M34.454,3.414l13.655,13.655h-8.985c-2.575,0-4.67-2.095-4.67-4.67V3.414z M38.191,49.029c0,2.574-2.095,4.669-4.669,4.669H10.845 c-2.575,0-4.67-2.095-4.67-4.669V15.014c0-2.575,2.095-4.67,4.67-4.67h5.663h4.614v10.399c0,3.678,2.991,6.669,6.668,6.669h10.4 v18.942L38.191,49.029L38.191,49.029z M36.777,25.412h-8.986c-2.574,0-4.668-2.094-4.668-4.669v-8.985L36.777,25.412z M44.855,45.355h-4.664V26.412c0-0.023-0.012-0.044-0.014-0.067c-0.006-0.085-0.021-0.167-0.049-0.249 c-0.012-0.033-0.021-0.066-0.036-0.1c-0.048-0.105-0.109-0.205-0.194-0.29l0,0l0,0c0-0.001-0.001-0.002-0.001-0.002L22.829,8.637 c-0.087-0.086-0.188-0.147-0.295-0.196c-0.029-0.013-0.058-0.021-0.088-0.031c-0.086-0.03-0.172-0.048-0.263-0.053 c-0.021-0.002-0.04-0.013-0.062-0.013h-4.614V6.67c0-2.575,2.095-4.67,4.669-4.67h10.277v10.4c0,3.678,2.992,6.67,6.67,6.67h10.399 v21.616C49.524,43.26,47.429,45.355,44.855,45.355z'/%3E%3C/svg%3E%0A";
+
+const GeneMixer = {
   template: `
     <div class="mt-5 pt-3">
-      <b-card no-body header="Bodyshop" class="border-0" header-class="p-1">
+      <b-card no-body header="GeneMixer" class="border-0" header-class="p-1">
         <b-card no-body class="border-0 m-0 mt-2">
           <b-card-body class="p-0">
 
@@ -25,10 +29,15 @@ const Bodyshop = {
                 -->
 
               </b-row>
+
+
+              <b-row class="text-center" style="border:1px solid;">
+                <b-col cols="8">
+                  <!-- <canvas id="thecanvas" width="480" height="480" style="border:1px solid; margin: 0 auto; position: absolute;"></canvas> -->
+                </b-col>
+                <b-col cols="4">3 of 3</b-col>
+              </b-row>
             </b-container>
-            <b-form-group label-cols="2" label-size="sm">
-              <b-button size="sm" @click="saveImage()" variant="info">Save Image</b-button>
-            </b-form-group>
 
             <div>
               <b-card no-body class="mt-2">
@@ -394,10 +403,10 @@ const Bodyshop = {
   },
   methods: {
     async saveImage() {
-      logInfo("Bodyshop", "saveImage()");
+      logInfo("GeneMixer", "saveImage()");
 
       // const div = document.getElementById("toBeCaptured");
-      // logInfo("Bodyshop", "saveImage() div: " + JSON.stringify(div));
+      // logInfo("GeneMixer", "saveImage() div: " + JSON.stringify(div));
       // console.table(div);
 
       // getScreenshotOfElement($("div#toBeCaptured").get(0), 0, 0, 100, 100, function(data) {
@@ -431,7 +440,7 @@ const Bodyshop = {
 
       /*
       function getScreenshotOfElement(element, posX, posY, width, height, callback) {
-        // logInfo("Bodyshop", "getScreenshotOfElement() element: " + JSON.stringify(element));
+        // logInfo("GeneMixer", "getScreenshotOfElement() element: " + JSON.stringify(element));
         // console.table(element);
         html2canvas(element, {
           width: width,
@@ -441,7 +450,7 @@ const Bodyshop = {
           allowTaint: false
         }).then(canvas => {
           // onrendered: function (canvas) {
-          // logInfo("Bodyshop", "getScreenshotOfElement() element: " + JSON.stringify(element));
+          // logInfo("GeneMixer", "getScreenshotOfElement() element: " + JSON.stringify(element));
           var context = canvas.getContext('2d');
           var imageData = context.getImageData(posX, posY, width, height).data;
           var outputCanvas = document.createElement('canvas');
@@ -452,7 +461,7 @@ const Bodyshop = {
           var idata = outputContext.createImageData(width, height);
           idata.data.set(imageData);
           outputContext.putImageData(idata, 0, 0);
-          logInfo("Bodyshop", "getScreenshotOfElement() idata: " + JSON.stringify(idata));
+          logInfo("GeneMixer", "getScreenshotOfElement() idata: " + JSON.stringify(idata));
           callback(outputCanvas.toDataURL());
           // },
         });
@@ -462,11 +471,11 @@ const Bodyshop = {
         // in the data variable there is the base64 image
         // exmaple for displaying the image in an <img>
         // $("img#captured").attr("src", "data:image/png;base64,"+data);
-        logInfo("Bodyshop", "saveImage() data: " + JSON.stringify(data));
+        logInfo("GeneMixer", "saveImage() data: " + JSON.stringify(data));
         const blob = await fetch(data).then(r => r.blob());
-        logInfo("Bodyshop", "saveImage() blob: " + JSON.stringify(blob));
+        logInfo("GeneMixer", "saveImage() blob: " + JSON.stringify(blob));
         const url = URL.createObjectURL(blob);
-        logInfo("Bodyshop", "saveImage() url: " + JSON.stringify(url));
+        logInfo("GeneMixer", "saveImage() url: " + JSON.stringify(url));
         const a = document.createElement('a');
         a.download = "my_image.png"
         a.href = url;
@@ -492,7 +501,7 @@ const Bodyshop = {
         // document.body.appendChild(canvas);
         var context = canvas.getContext('2d');
         var imageData = context.getImageData(posX, posY, width, height).data;
-        logInfo("Bodyshop", "saveImage() imageData: " + JSON.stringify(imageData));
+        logInfo("GeneMixer", "saveImage() imageData: " + JSON.stringify(imageData));
         var outputCanvas = document.createElement('canvas');
         var outputContext = outputCanvas.getContext('2d');
         outputCanvas.width = width;
@@ -502,12 +511,12 @@ const Bodyshop = {
         idata.data.set(imageData);
         outputContext.putImageData(idata, 0, 0);
         var dataURL = outputCanvas.toDataURL();
-        logInfo("Bodyshop", "saveImage() dataURL: " + JSON.stringify(dataURL));
+        logInfo("GeneMixer", "saveImage() dataURL: " + JSON.stringify(dataURL));
 
         const blob = await fetch(dataURL).then(r => r.blob());
-        logInfo("Bodyshop", "saveImage() blob: " + JSON.stringify(blob));
+        logInfo("GeneMixer", "saveImage() blob: " + JSON.stringify(blob));
         const url = URL.createObjectURL(blob);
-        logInfo("Bodyshop", "saveImage() url: " + JSON.stringify(url));
+        logInfo("GeneMixer", "saveImage() url: " + JSON.stringify(url));
         const a = document.createElement('a');
         a.download = "my_image.png"
         a.href = url;
@@ -523,12 +532,12 @@ const Bodyshop = {
 
 
       // let dataURL = this.canvas.toDataURL({ format: 'png', multiplier: 2, });
-      // logInfo("Bodyshop", "saveImage() dataURL: " + JSON.stringify(dataURL));
+      // logInfo("GeneMixer", "saveImage() dataURL: " + JSON.stringify(dataURL));
       //
       // const blob = await fetch(dataURL).then(r => r.blob());
-      // logInfo("Bodyshop", "saveImage() blob: " + JSON.stringify(blob));
+      // logInfo("GeneMixer", "saveImage() blob: " + JSON.stringify(blob));
       // const url = URL.createObjectURL(blob);
-      // logInfo("Bodyshop", "saveImage() url: " + JSON.stringify(url));
+      // logInfo("GeneMixer", "saveImage() url: " + JSON.stringify(url));
       // const a = document.createElement('a');
       // a.download = "my_image.png"
       // a.href = url;
@@ -540,22 +549,22 @@ const Bodyshop = {
 
     },
     setCanvasSize() {
-      // logInfo("Bodyshop", "setCanvasSize() canvasSetting: " + JSON.stringify(this.canvasSetting));
+      // logInfo("GeneMixer", "setCanvasSize() canvasSetting: " + JSON.stringify(this.canvasSetting));
       this.canvas.setWidth(this.canvasSetting.width);
       this.canvas.setHeight(this.canvasSetting.height);
     },
     onFileChange(file) {
       const t = this;
       const url = URL.createObjectURL(file);
-      // logInfo("Bodyshop", "onFileChange() url: " + JSON.stringify(url));
+      // logInfo("GeneMixer", "onFileChange() url: " + JSON.stringify(url));
       var imgObj = new Image();
       imgObj.src = url;
-      // logInfo("Bodyshop", "onFileChange() imgObj: " + JSON.stringify(imgObj));
+      // logInfo("GeneMixer", "onFileChange() imgObj: " + JSON.stringify(imgObj));
       imgObj.onload = function () {
         const image = new fabric.Image(imgObj);
         image.set({ left: 0, top: 0, angle: 0, padding: 0, cornersize: 0 });
-        // logInfo("Bodyshop", "onFileChange() image width: " + image.width + ", height: " + image.height);
-        // logInfo("Bodyshop", "onFileChange() t.canvas width: " + t.canvas.width + ", height: " + t.canvas.height);
+        // logInfo("GeneMixer", "onFileChange() image width: " + image.width + ", height: " + image.height);
+        // logInfo("GeneMixer", "onFileChange() t.canvas width: " + t.canvas.width + ", height: " + t.canvas.height);
         image.scale(t.settings['ImageUpload'].scaleWidth, t.settings['ImageUpload'].scaleHeight).set('flipX', t.settings['ImageUpload'].flipX).set('flipY', t.settings['ImageUpload'].flipY);
         t.canvas.add(image);
         // t.canvas.setBackgroundImage(image);
@@ -563,7 +572,7 @@ const Bodyshop = {
       };
     },
     async addImage(nftType, id, image) {
-      logInfo("Bodyshop", "addImage() type: " + nftType + ", id: " + id + ", image: " + image);
+      logInfo("GeneMixer", "addImage() type: " + nftType + ", id: " + id + ", image: " + image);
       const t = this;
       let scale = 5.0;
       if (nftType == 'ZombieBaby') {
@@ -594,13 +603,13 @@ const Bodyshop = {
         // oImg.set({width: 300, height: 300, left: 10, top: 10, originX: 'left', originY: 'top'});
         // oImg.filters.push(new fabric.Image.filters.Grayscale());
         // oImg.applyFilters();
-        logInfo("Bodyshop", "addImage() adding: " + JSON.stringify(oImg));
+        logInfo("GeneMixer", "addImage() adding: " + JSON.stringify(oImg));
         t.canvas.add(oImg);
-        logInfo("Bodyshop", "addImage() added: " + JSON.stringify(oImg));
+        logInfo("GeneMixer", "addImage() added: " + JSON.stringify(oImg));
       } , {crossOrigin: 'anonymous'});
     },
     async loadNFTs(collection) {
-      logInfo("Bodyshop", "loadNFTs() collection: " + collection);
+      logInfo("GeneMixer", "loadNFTs() collection: " + collection);
       const t = this;
 
       // CryptoPunks - OpenSea
@@ -608,7 +617,7 @@ const Bodyshop = {
         let cryptoPunksUrl = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&asset_contract_address=" + CRYPTOPUNKMARKETADDRESS + "&order_direction=desc&offset=0&limit=50";
         cryptoPunksReq = new XMLHttpRequest();
         cryptoPunksReq.overrideMimeType("application/json");
-        logInfo("Bodyshop", "loadNFTs() openSeaPunkData cryptoPunksUrl: " + cryptoPunksUrl);
+        logInfo("GeneMixer", "loadNFTs() openSeaPunkData cryptoPunksUrl: " + cryptoPunksUrl);
         cryptoPunksReq.open('GET', cryptoPunksUrl, true);
         cryptoPunksReq.onload  = function() {
           if (cryptoPunksReq.readyState == 4) {
@@ -633,7 +642,7 @@ const Bodyshop = {
         let pixelPortraitsUrl = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&order_direction=desc&offset=0&limit=50&collection=the-pixel-portraits";
         pixelPortraitsReq = new XMLHttpRequest();
         pixelPortraitsReq.overrideMimeType("application/json");
-        logInfo("Bodyshop", "loadNFTs() openSeaPixelPortraitsData pixelPortraitsUrl: " + pixelPortraitsUrl);
+        logInfo("GeneMixer", "loadNFTs() openSeaPixelPortraitsData pixelPortraitsUrl: " + pixelPortraitsUrl);
         pixelPortraitsReq.open('GET', pixelPortraitsUrl, true);
         pixelPortraitsReq.onload  = function() {
           if (pixelPortraitsReq.readyState == 4) {
@@ -643,7 +652,7 @@ const Bodyshop = {
               const asset = openSeaPixelPortraitData.assets[assetIndex];
               var id = asset.name;
               var imageUrl = asset.image_url;
-              logInfo("Bodyshop", "loadNFTs() openSeaPixelPortraitsData id: " + id + " => " + imageUrl);
+              logInfo("GeneMixer", "loadNFTs() openSeaPixelPortraitsData id: " + id + " => " + imageUrl);
               pixelPortraitsDataListTemp.push({ id: id, imageUrl: imageUrl });
             }
             t.pixelPortraitsDataList = pixelPortraitsDataListTemp;
@@ -658,7 +667,7 @@ const Bodyshop = {
         let bganpunkv2Url = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&asset_contract_address=" + BGANPUNKV2ADDRESS + "&order_direction=desc&offset=0&limit=50";
         bganpunkv2Req = new XMLHttpRequest();
         bganpunkv2Req.overrideMimeType("application/json");
-        logInfo("Bodyshop", "loadNFTs() openSeaBganpunkv2Data bganpunkv2Url: " + bganpunkv2Url);
+        logInfo("GeneMixer", "loadNFTs() openSeaBganpunkv2Data bganpunkv2Url: " + bganpunkv2Url);
         bganpunkv2Req.open('GET', bganpunkv2Url, true);
         bganpunkv2Req.onload  = function() {
           if (bganpunkv2Req.readyState == 4) {
@@ -680,7 +689,7 @@ const Bodyshop = {
         let punkBodiesUrl = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&asset_contract_address=" + PUNKBODIESADDRESS + "&order_direction=desc&offset=0&limit=50";
         punkBodiesReq = new XMLHttpRequest();
         punkBodiesReq.overrideMimeType("application/json");
-        logInfo("Bodyshop", "loadNFTs() openSeaPunkBodyData punkBodiesUrl: " + punkBodiesUrl);
+        logInfo("GeneMixer", "loadNFTs() openSeaPunkBodyData punkBodiesUrl: " + punkBodiesUrl);
         punkBodiesReq.open('GET', punkBodiesUrl, true);
         punkBodiesReq.onload  = function() {
           if (punkBodiesReq.readyState == 4) {
@@ -732,20 +741,20 @@ const Bodyshop = {
         let cryptoCatsUrl = "https://us-central1-cryptocats-ws-prod.cloudfunctions.net/listing/ccat/" + store.getters['connection/coinbase'].toLowerCase();
         cryptoCatsReq = new XMLHttpRequest();
         cryptoCatsReq.overrideMimeType("application/json");
-        logInfo("Bodyshop", "loadNFTs() cryptoCatsUrl: " + cryptoCatsUrl);
+        logInfo("GeneMixer", "loadNFTs() cryptoCatsUrl: " + cryptoCatsUrl);
         cryptoCatsReq.open('GET', cryptoCatsUrl, true);
         cryptoCatsReq.onload  = function() {
           if (cryptoCatsReq.readyState == 4) {
             const cryptoCatsDataListTemp = [];
             const cryptoCatsData = JSON.parse(cryptoCatsReq.responseText);
-            logInfo("Bodyshop", "loadNFTs() cryptoCatsData: " + JSON.stringify(cryptoCatsData));
+            logInfo("GeneMixer", "loadNFTs() cryptoCatsData: " + JSON.stringify(cryptoCatsData));
             if (cryptoCatsData.ccat != null) {
-              logInfo("Bodyshop", "loadNFTs() cryptoCatsData.ccat: " + JSON.stringify(cryptoCatsData.ccat));
+              logInfo("GeneMixer", "loadNFTs() cryptoCatsData.ccat: " + JSON.stringify(cryptoCatsData.ccat));
               for (const [id, value] of Object.entries(cryptoCatsData.ccat)) {
                 // const ccat = cryptoCatsData.ccat[ccatIndex];
-                logInfo("Bodyshop", "loadNFTs() id: " + id + " => " + JSON.stringify(value));
+                logInfo("GeneMixer", "loadNFTs() id: " + id + " => " + JSON.stringify(value));
                 var imageUrl = "https://cryptocats.thetwentysix.io/contents/images/cats/" + id + ".png"
-                logInfo("Bodyshop", "loadNFTs() id: " + id + " => " + imageUrl);
+                logInfo("GeneMixer", "loadNFTs() id: " + id + " => " + imageUrl);
                 cryptoCatsDataListTemp.push({ id: id, imageUrl: imageUrl });
               }
               t.cryptoCatsDataList = cryptoCatsDataListTemp;
@@ -760,21 +769,21 @@ const Bodyshop = {
         let wrappedCryptoCatsUrl = "https://us-central1-cryptocats-ws-prod.cloudfunctions.net/listing/wccat/" + store.getters['connection/coinbase'].toLowerCase();
         wrappedCryptoCatsReq = new XMLHttpRequest();
         wrappedCryptoCatsReq.overrideMimeType("application/json");
-        logInfo("Bodyshop", "loadNFTs() wrappedCryptoCatsUrl: " + wrappedCryptoCatsUrl);
+        logInfo("GeneMixer", "loadNFTs() wrappedCryptoCatsUrl: " + wrappedCryptoCatsUrl);
         wrappedCryptoCatsReq.open('GET', wrappedCryptoCatsUrl, true);
         wrappedCryptoCatsReq.onload  = function() {
           if (wrappedCryptoCatsReq.readyState == 4) {
             const wrappedCryptoCatsDataListTemp = [];
             const wrappedCryptoCatsData = JSON.parse(wrappedCryptoCatsReq.responseText);
-            logInfo("Bodyshop", "loadNFTs() wrappedCryptoCatsData: " + JSON.stringify(wrappedCryptoCatsData));
-            // 00:47:36 INFO Bodyshop:loadNFTs() wrappedCryptoCatsData: {"ccat":{"207":"wrapped"}}
+            logInfo("GeneMixer", "loadNFTs() wrappedCryptoCatsData: " + JSON.stringify(wrappedCryptoCatsData));
+            // 00:47:36 INFO GeneMixer:loadNFTs() wrappedCryptoCatsData: {"ccat":{"207":"wrapped"}}
             if (wrappedCryptoCatsData.ccat != null) {
-              logInfo("Bodyshop", "loadNFTs() wrappedCryptoCatsData.ccat: " + JSON.stringify(wrappedCryptoCatsData.ccat));
+              logInfo("GeneMixer", "loadNFTs() wrappedCryptoCatsData.ccat: " + JSON.stringify(wrappedCryptoCatsData.ccat));
               for (const [id, value] of Object.entries(wrappedCryptoCatsData.ccat)) {
                 // const ccat = cryptoCatsData.ccat[ccatIndex];
-                logInfo("Bodyshop", "loadNFTs() id: " + id + " => " + JSON.stringify(value));
+                logInfo("GeneMixer", "loadNFTs() id: " + id + " => " + JSON.stringify(value));
                 var imageUrl = "https://cryptocats.thetwentysix.io/contents/images/cats/" + id + ".png"
-                logInfo("Bodyshop", "loadNFTs() id: " + id + " => " + imageUrl);
+                logInfo("GeneMixer", "loadNFTs() id: " + id + " => " + imageUrl);
                 wrappedCryptoCatsDataListTemp.push({ id: id, imageUrl: imageUrl });
               }
               t.wrappedCryptoCatsDataList = wrappedCryptoCatsDataListTemp;
@@ -787,7 +796,7 @@ const Bodyshop = {
 
     },
     async timeoutCallback() {
-      logInfo("Bodyshop", "timeoutCallback() count: " + this.count);
+      logInfo("GeneMixer", "timeoutCallback() count: " + this.count);
 
       this.count++;
       var t = this;
@@ -799,12 +808,12 @@ const Bodyshop = {
     },
   },
   mounted() {
-    logInfo("Bodyshop", "mounted()");
+    logInfo("GeneMixer", "mounted()");
     this.reschedule = true;
-    logInfo("Bodyshop", "Calling timeoutCallback()");
+    logInfo("GeneMixer", "Calling timeoutCallback()");
     this.timeoutCallback();
 
-    logInfo("Bodyshop", "Canvas");
+    logInfo("GeneMixer", "Canvas");
     this.canvas = new fabric.Canvas('thecanvas', {
       hoverCursor: 'pointer',
       selection: false,
@@ -884,10 +893,10 @@ const Bodyshop = {
 
     function removeObjectBackground(eventData, transform) {
       if (transform.target.type == "image") {
-        logInfo("Bodyshop", "Calling removeObjectBackground()  target: " + JSON.stringify(transform.target));
+        logInfo("GeneMixer", "Calling removeObjectBackground()  target: " + JSON.stringify(transform.target));
         let ctx = transform.target.canvas.getContext('2d');
         let data = ctx.getImageData(parseInt(transform.target.left) * window.devicePixelRatio + 1, parseInt(transform.target.top) * window.devicePixelRatio + 1, 1, 1);
-        logInfo("Bodyshop", "Calling removeObjectBackground() data: " + JSON.stringify(data));
+        logInfo("GeneMixer", "Calling removeObjectBackground() data: " + JSON.stringify(data));
         if (data.data[3] != 0) {
           var backgroundColor = '#' + data.data[0].toString(16) + data.data[1].toString(16) + data.data[2].toString(16);
           var filter = new fabric.Image.filters.RemoveColor({
@@ -978,7 +987,7 @@ const Bodyshop = {
       cornerSize: 24
     });
 
-    // logInfo("Bodyshop", "Calling fabric.Object.prototype.controls: " + JSON.stringify(fabric.Object.prototype.controls));
+    // logInfo("GeneMixer", "Calling fabric.Object.prototype.controls: " + JSON.stringify(fabric.Object.prototype.controls));
 
     const t = this;
     this.canvas.on({
@@ -990,36 +999,36 @@ const Bodyshop = {
         // var objects = canvas.getObjects('line');
         // var objects = t.canvas.getObjects();
         // for (let i in objects) {
-        //     logInfo("Bodyshop", "Canvas object:modified(): " + JSON.stringify(objects[i]));
+        //     logInfo("GeneMixer", "Canvas object:modified(): " + JSON.stringify(objects[i]));
         // }
       },
       'selection:cleared': function(e) {
         // var objects = t.canvas.getObjects();
         // for (let i in objects) {
-        //     logInfo("Bodyshop", "Canvas selection:cleared(): " + JSON.stringify(objects[i]));
+        //     logInfo("GeneMixer", "Canvas selection:cleared(): " + JSON.stringify(objects[i]));
         // }
       },
       'selection:updated': function(e) {
         // var objects = t.canvas.getObjects();
         // for (let i in objects) {
-        //     logInfo("Bodyshop", "Canvas selection:updated(): " + JSON.stringify(objects[i]));
+        //     logInfo("GeneMixer", "Canvas selection:updated(): " + JSON.stringify(objects[i]));
         // }
       },
       'selection:created': function(e) {
-        // logInfo("Bodyshop", "Canvas selection:created() e: " + JSON.stringify(e));
+        // logInfo("GeneMixer", "Canvas selection:created() e: " + JSON.stringify(e));
         // // t.selectedObject = e;
         // var objects = t.canvas.getObjects();
         // for (let i in objects) {
-        //     logInfo("Bodyshop", "Canvas selection:created(): " + JSON.stringify(objects[i]));
+        //     logInfo("GeneMixer", "Canvas selection:created(): " + JSON.stringify(objects[i]));
         // }
       },
       'mouse:down': function(options) {
         if (options.target) {
-          // logInfo("Bodyshop", "Canvas mouse:down(): " + JSON.stringify(options.target));
+          // logInfo("GeneMixer", "Canvas mouse:down(): " + JSON.stringify(options.target));
           t.selectedObject = options.target;
           // var objects = t.canvas.getObjects();
           // for (let i in objects) {
-          //     logInfo("Bodyshop", "Canvas mouse:down(): " + JSON.stringify(objects[i]));
+          //     logInfo("GeneMixer", "Canvas mouse:down(): " + JSON.stringify(objects[i]));
           // }
         }
       }
@@ -1030,7 +1039,7 @@ const Bodyshop = {
   },
 };
 
-const bodyshopModule = {
+const geneMixerModule = {
   namespaced: true,
   state: {
     params: null,
@@ -1043,16 +1052,16 @@ const bodyshopModule = {
   },
   mutations: {
     deQueue (state) {
-      logDebug("bodyshopModule", "deQueue(" + JSON.stringify(state.executionQueue) + ")");
+      logDebug("geneMixerModule", "deQueue(" + JSON.stringify(state.executionQueue) + ")");
       state.executionQueue.shift();
     },
     updateParams (state, params) {
       state.params = params;
-      logDebug("bodyshopModule", "updateParams('" + params + "')")
+      logDebug("geneMixerModule", "updateParams('" + params + "')")
     },
     updateExecuting (state, executing) {
       state.executing = executing;
-      logDebug("bodyshopModule", "updateExecuting(" + executing + ")")
+      logDebug("geneMixerModule", "updateExecuting(" + executing + ")")
     },
   },
   actions: {
