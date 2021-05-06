@@ -592,6 +592,37 @@ const Bodyshop = {
         // t.canvas.renderAll();
       };
     },
+    async addAsset(asset) {
+      logInfo("Bodyshop", "addAsset() asset: " + JSON.stringify(asset, null, 2));
+      const t = this;
+      let scale = 5.0;
+      // ZombieBabies
+      if (asset.asset_contract.address == '0xfe9231f0e6753a8412a00ec1f0028a24d5220ba9') {
+        scale = 5.0 / 16;
+      } else if (asset.asset_contract.name == 'CryptoPunks') {
+        scale = 5.0 / 14;
+      } else if (asset.asset_contract.name == 'PunkBodies') {
+        scale = 1.0;
+      } else if (asset.asset_contract.name == 'Meebits') {
+        scale = 1.0 / 1.2;
+      } else if (asset.collection.name == 'The Pixel Portraits') {
+        scale = 5.0 / 20;
+      } else if (asset.collection.name == 'BASTARD GAN PUNKS V2') {
+        scale = 5.0 / 40;
+      } else if (asset.collection.name == '3DVoxelPunks') {
+        scale = 5.0 / 16;        
+      // } else if (asset.asset_contract.name == 'MoonCat') {
+      //   scale = 5.0 / 12;
+      // } else if (asset.asset_contract.name == 'CryptoCat') {
+      //   scale = 5.0 / 80;
+      }
+      fabric.Image.fromURL(asset.image_url, function(oImg) {
+        oImg.set('imageSmoothing', false).scale(scale);
+        // logInfo("Bodyshop", "addAsset() adding: " + JSON.stringify(oImg));
+        t.canvas.add(oImg);
+        logInfo("Bodyshop", "addAsset() added: " + JSON.stringify(oImg));
+      } , {crossOrigin: 'anonymous'});
+    },
     async addImage(nftType, id, image, asset) {
       logInfo("Bodyshop", "addImage() type: " + nftType + ", id: " + id + ", image: " + image);
       if (asset != null) {
@@ -635,39 +666,90 @@ const Bodyshop = {
     },
     async loadAssets(collection) {
       logInfo("Bodyshop", "loadAssets()");
-      const t = this;
+      // const t = this;
 
       const PAGESIZE = 20; // Default 20, max 50
       let page = 0;
-      let completed = false;
-      const punkDataTemp = [];
+      this.assets = [];
+      // const punkDataTemp = [];
 
-      var request = new XMLHttpRequest();
-      (function loop(page, length) {
-          if (page >= length) {
-              return;
-          }
-          const offset = PAGESIZE * page;
-          const url = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&order_direction=desc&offset=" + offset + "&limit=" + PAGESIZE;
-          // const url = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&asset_contract_address=" + CRYPTOPUNKMARKETADDRESS + "&order_direction=desc&offset=" + offset + "&limit=" + PAGESIZE;
-          const request = new XMLHttpRequest();
-          request.overrideMimeType("application/json");
-          request.open("GET", url, true);
-          request.onreadystatechange = function() {
-              if(request.readyState === XMLHttpRequest.DONE && request.status === 200) {
-                  const assets = JSON.parse(request.responseText);
-                  if (assets.assets.length > 0) {
-                    for (let assetIndex = 0; assetIndex < assets.assets.length; assetIndex++) {
-                      const asset = assets.assets[assetIndex];
-                      logInfo("Bodyshop", "loadAssets() openSeaPunkData asset(" + (parseInt(offset) + assetIndex) + "): " + JSON.stringify(asset, null, 2));
-                      t.assets.push(asset);
-                    }
-                    loop(page + 1, length);
-                  }
+      // async getFishAndChips() {
+      //     const fish = await fetch(this.fishApiUrl).then(response => response.json());
+      //     this.fish = fish;
+      //
+      //     const fishIds = fish.map(fish => fish.id),
+      //       chipReqOpts = { method: 'POST', body: JSON.stringify({ fishIds }) };
+      //
+      //     const chips = await fetch(this.chipsApiUrl, chipReqOpts).then(response => response.json());
+      //     this.chips = chips;
+      // }
+
+      for (let accountIndex in this.accounts) {
+        const account = this.accounts[accountIndex];
+        // logInfo("Bodyshop", "loadAssets() account: " + account);
+        for (let queryIndex = 1; queryIndex < 2; queryIndex++) {
+          logInfo("Bodyshop", "loadAssets() account: " + account + ", queryIndex: " + queryIndex);
+
+          let completed = false;
+          let page = 0;
+          while (!completed) {
+            const offset = PAGESIZE * page;
+
+            let url;
+            if (queryIndex == 0) {
+              url = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&asset_contract_address=" + CRYPTOPUNKMARKETADDRESS + "&order_direction=desc&limit=" + PAGESIZE;
+            } else {
+              url = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&order_direction=desc&limit=" + PAGESIZE;
+            }
+            url = url + "&offset=" + offset;
+            logInfo("Bodyshop", "loadAssets() account: " + account + ", queryIndex: " + queryIndex + ", url: " + url);
+
+            const data = await fetch(url).then(response => response.json());
+            // console.log(JSON.stringify(data, null, 2));
+            if (data.assets && data.assets.length > 0) {
+              for (let assetIndex = 0; assetIndex < data.assets.length; assetIndex++) {
+                const asset = data.assets[assetIndex];
+                // if (asset == null) {
+                  logInfo("Bodyshop", "loadAssets() asset(" + (parseInt(offset) + assetIndex) + "): " + JSON.stringify(asset));
+                // }
+                this.assets.push(asset);
               }
+            } else {
+              completed = true;
+            }
+
+            page++;
           }
-          request.send();
-      })(0, 5);
+        }
+      }
+
+
+      // var request = new XMLHttpRequest();
+      // (function loop(page, length) {
+      //     if (page >= length) {
+      //         return;
+      //     }
+      //     const offset = PAGESIZE * page;
+      //     const url = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&order_direction=desc&offset=" + offset + "&limit=" + PAGESIZE;
+      //     // const url = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&asset_contract_address=" + CRYPTOPUNKMARKETADDRESS + "&order_direction=desc&offset=" + offset + "&limit=" + PAGESIZE;
+      //     const request = new XMLHttpRequest();
+      //     request.overrideMimeType("application/json");
+      //     request.open("GET", url, true);
+      //     request.onreadystatechange = function() {
+      //         if(request.readyState === XMLHttpRequest.DONE && request.status === 200) {
+      //             const assets = JSON.parse(request.responseText);
+      //             if (assets.assets.length > 0) {
+      //               for (let assetIndex = 0; assetIndex < assets.assets.length; assetIndex++) {
+      //                 const asset = assets.assets[assetIndex];
+      //                 // logInfo("Bodyshop", "loadAssets() openSeaPunkData asset(" + (parseInt(offset) + assetIndex) + "): " + JSON.stringify(asset, null, 2));
+      //                 t.assets.push(asset);
+      //               }
+      //               loop(page + 1, length);
+      //             }
+      //         }
+      //     }
+      //     request.send();
+      // })(0, 5);
 
       /*
       while (!completed) {
