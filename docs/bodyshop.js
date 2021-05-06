@@ -610,7 +610,7 @@ const Bodyshop = {
       } else if (asset.collection.name == 'BASTARD GAN PUNKS V2') {
         scale = 5.0 / 40;
       } else if (asset.collection.name == '3DVoxelPunks') {
-        scale = 5.0 / 16;        
+        scale = 5.0 / 16;
       // } else if (asset.asset_contract.name == 'MoonCat') {
       //   scale = 5.0 / 12;
       // } else if (asset.asset_contract.name == 'CryptoCat') {
@@ -1082,6 +1082,38 @@ const Bodyshop = {
             color: backgroundColor
           });
           transform.target.filters.push(filter);
+          // Meebit 0 - #5f7c8f, 1 - #536e83
+
+          const meeBitBackgroundColours = ['#5f7c8f', '#536e83', '#68889d', '#648196', '#58758a', '#455f75', '#4c687d', '#3e576d', '597384', '#506676', '#536d7c', '#4a606e'];
+
+          for (let i = 0; i < meeBitBackgroundColours.length; i++) {
+            const filter = new fabric.Image.filters.RemoveColor({
+              threshold: 0.2,
+              color: meeBitBackgroundColours[i]
+            });
+            transform.target.filters.push(filter);
+          }
+
+          // var filter1 = new fabric.Image.filters.RemoveColor({
+          //   threshold: 0.2,
+          //   color: '#5f7c8f'
+          // });
+          // transform.target.filters.push(filter1);
+          //
+          // var filter2 = new fabric.Image.filters.RemoveColor({
+          //   threshold: 0.2,
+          //   color: '#536e83'
+          // });
+          // transform.target.filters.push(filter2);
+          //
+          // var filter3 = new fabric.Image.filters.RemoveColor({
+          //   threshold: 0.2,
+          //   color: '#68889d'
+          // });
+          // transform.target.filters.push(filter3);
+          //
+// 648196
+
           transform.target.applyFilters();
           t.canvas.renderAll();
         }
