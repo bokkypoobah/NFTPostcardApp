@@ -54,15 +54,23 @@ const Bodyshop = {
                   </b-tab>
 
                   <b-tab active title="Assets" class="p-1">
+
                     <b-card-group deck class="m-0">
-                      <div v-for="asset in assets">
+                      <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
+                        <b-form-select v-model="collectionsSelected" :options="collectionOptions" multiple :select-size="4"></b-form-select>
+                      </b-card>
+                    </b-card-group>
+
+                    <b-card-group deck class="m-0">
+                      <div v-for="asset in assetsToDisplay">
                         <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
                           <b-link @click="addAsset(asset)">
-                            <b-avatar rounded="sm" variant="light" size="5.0rem" :src="asset.image_url" class="pixelated"></b-avatar>
+                            <!-- <b-avatar rounded="sm" variant="light" size="10.0rem" :src="asset.image_url" class="pixelated"></b-avatar> -->
+                            <b-img rounded="sm" variant="light" size="10.0rem" :src="asset.image_url" style="width: 15rem; height: 15rem; object-fit: contain; object-position: 50% top; background-color: #f5f5f5;" class="pixelated m-1 p-2"></b-img>
                           </b-link>
                           <template #footer>
-                            <span class="small truncate">
-                              #{{ asset.name }}
+                            <span class="small truncate" v-b-popover.hover="asset.name">
+                              #{{ asset.name == null ? '' : asset.name.substring(0, 20) }}
                             </span>
                           </template>
                         </b-card>
@@ -311,6 +319,8 @@ const Bodyshop = {
 
       assets: [],
 
+      collectionsSelected: [],
+
       punksDataList: [],
       pixelPortraitsDataList: [],
       bganpunkv2DataList: [],
@@ -420,7 +430,42 @@ const Bodyshop = {
       const tokenIds = store.getters['tokens/allTokenIds'];
       return tokenIds == null ? null : tokenIds[Math.floor(Math.random() * tokenIds.length)];
     },
-
+    collectionOptions() {
+      var results = [];
+      var map = {};
+      for (let assetIndex in this.assets) {
+        const asset = this.assets[assetIndex];
+        if (asset.collection.slug != null) {
+          map[asset.collection.slug] = asset.collection.name;
+        }
+      }
+      for (const [slug, name] of Object.entries(map)) {
+        results.push({ value: slug, text: name});
+      }
+      results.push({ value: '--- (all) ---', text: '--- (all) ---'});
+      results.sort(function(a, b) {
+        return ('' + a.value + a.text).localeCompare(b.value + a.text);
+      });
+      return results;
+    },
+    assetsToDisplay() {
+      var results = [];
+      if (this.collectionsSelected == null || this.collectionsSelected.length == 0 || (this.collectionsSelected.length == 1 && this.collectionsSelected[0] == "--- (all) ---")) {
+        results = this.assets;
+      } else {
+        var lookupMap = {};
+        for (let selectionIndex in this.collectionsSelected) {
+          lookupMap[this.collectionsSelected[selectionIndex]] = true;
+        }
+        for (let assetIndex in this.assets) {
+          const asset = this.assets[assetIndex];
+          if ((asset.collection.slug in lookupMap)) {
+            results.push(asset);
+          }
+        }
+      }
+      return results;
+    },
   },
   methods: {
     async saveImage() {
@@ -595,7 +640,7 @@ const Bodyshop = {
     async addAsset(asset) {
       logInfo("Bodyshop", "addAsset() asset: " + JSON.stringify(asset, null, 2));
       const t = this;
-      let scale = 5.0;
+      let scale = 1.0;
       // ZombieBabies
       if (asset.asset_contract.address == '0xfe9231f0e6753a8412a00ec1f0028a24d5220ba9') {
         scale = 5.0 / 16;
@@ -664,127 +709,31 @@ const Bodyshop = {
         logInfo("Bodyshop", "addImage() added: " + JSON.stringify(oImg));
       } , {crossOrigin: 'anonymous'});
     },
-    async loadAssets(collection) {
+    async loadAssets() {
       logInfo("Bodyshop", "loadAssets()");
-      // const t = this;
-
       const PAGESIZE = 20; // Default 20, max 50
       let page = 0;
       this.assets = [];
-      // const punkDataTemp = [];
-
-      // async getFishAndChips() {
-      //     const fish = await fetch(this.fishApiUrl).then(response => response.json());
-      //     this.fish = fish;
-      //
-      //     const fishIds = fish.map(fish => fish.id),
-      //       chipReqOpts = { method: 'POST', body: JSON.stringify({ fishIds }) };
-      //
-      //     const chips = await fetch(this.chipsApiUrl, chipReqOpts).then(response => response.json());
-      //     this.chips = chips;
-      // }
-
       for (let accountIndex in this.accounts) {
         const account = this.accounts[accountIndex];
-        // logInfo("Bodyshop", "loadAssets() account: " + account);
-        for (let queryIndex = 1; queryIndex < 2; queryIndex++) {
-          logInfo("Bodyshop", "loadAssets() account: " + account + ", queryIndex: " + queryIndex);
-
-          let completed = false;
-          let page = 0;
-          while (!completed) {
-            const offset = PAGESIZE * page;
-
-            let url;
-            if (queryIndex == 0) {
-              url = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&asset_contract_address=" + CRYPTOPUNKMARKETADDRESS + "&order_direction=desc&limit=" + PAGESIZE;
-            } else {
-              url = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&order_direction=desc&limit=" + PAGESIZE;
+        let completed = false;
+        let page = 0;
+        while (!completed) {
+          const offset = PAGESIZE * page;
+          let url = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&order_direction=desc&limit=" + PAGESIZE + "&offset=" + offset;
+          const data = await fetch(url).then(response => response.json());
+          if (data.assets && data.assets.length > 0) {
+            for (let assetIndex = 0; assetIndex < data.assets.length; assetIndex++) {
+              const asset = data.assets[assetIndex];
+              // logInfo("Bodyshop", "loadAssets() asset(" + (parseInt(offset) + assetIndex) + ") name: " + asset.collection.name + ", slug: " + asset.collection.slug);
+              this.assets.push(asset);
             }
-            url = url + "&offset=" + offset;
-            logInfo("Bodyshop", "loadAssets() account: " + account + ", queryIndex: " + queryIndex + ", url: " + url);
-
-            const data = await fetch(url).then(response => response.json());
-            // console.log(JSON.stringify(data, null, 2));
-            if (data.assets && data.assets.length > 0) {
-              for (let assetIndex = 0; assetIndex < data.assets.length; assetIndex++) {
-                const asset = data.assets[assetIndex];
-                // if (asset == null) {
-                  logInfo("Bodyshop", "loadAssets() asset(" + (parseInt(offset) + assetIndex) + "): " + JSON.stringify(asset));
-                // }
-                this.assets.push(asset);
-              }
-            } else {
-              completed = true;
-            }
-
-            page++;
+          } else {
+            completed = true;
           }
+          page++;
         }
       }
-
-
-      // var request = new XMLHttpRequest();
-      // (function loop(page, length) {
-      //     if (page >= length) {
-      //         return;
-      //     }
-      //     const offset = PAGESIZE * page;
-      //     const url = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&order_direction=desc&offset=" + offset + "&limit=" + PAGESIZE;
-      //     // const url = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&asset_contract_address=" + CRYPTOPUNKMARKETADDRESS + "&order_direction=desc&offset=" + offset + "&limit=" + PAGESIZE;
-      //     const request = new XMLHttpRequest();
-      //     request.overrideMimeType("application/json");
-      //     request.open("GET", url, true);
-      //     request.onreadystatechange = function() {
-      //         if(request.readyState === XMLHttpRequest.DONE && request.status === 200) {
-      //             const assets = JSON.parse(request.responseText);
-      //             if (assets.assets.length > 0) {
-      //               for (let assetIndex = 0; assetIndex < assets.assets.length; assetIndex++) {
-      //                 const asset = assets.assets[assetIndex];
-      //                 // logInfo("Bodyshop", "loadAssets() openSeaPunkData asset(" + (parseInt(offset) + assetIndex) + "): " + JSON.stringify(asset, null, 2));
-      //                 t.assets.push(asset);
-      //               }
-      //               loop(page + 1, length);
-      //             }
-      //         }
-      //     }
-      //     request.send();
-      // })(0, 5);
-
-      /*
-      while (!completed) {
-        const offset = PAGESIZE * page;
-        const getAssetsUrl = "https://api.opensea.io/api/v1/assets?owner=0x000003e1e88a1110e961f135df8cdea4b1ffa81a&order_direction=desc&offset=" + offset + "&limit=" + PAGESIZE;
-        const getAssetsReq = new XMLHttpRequest();
-        getAssetsReq.overrideMimeType("application/json");
-        logInfo("Bodyshop", "loadAssets() openSeaPunkData getAssetsUrl: " + getAssetsUrl);
-        getAssetsReq.open('GET', getAssetsUrl, true);
-        getAssetsReq.onload  = function() {
-          completed = true;
-        };
-        getAssetsReq.onload  = function() {
-          logInfo("Bodyshop", "loadAssets() openSeaPunkData getAssetsReq.readyState: " + getAssetsReq.readyState);
-          if (getAssetsReq.readyState == 4) {
-            const openSeaPunkData = JSON.parse(getAssetsReq.responseText);
-            for (let assetIndex in Object.keys(openSeaPunkData.assets)) {
-              const asset = openSeaPunkData.assets[assetIndex];
-              logInfo("Bodyshop", "loadAssets() openSeaPunkData asset(" + assetIndex + "): " + JSON.stringify(asset));
-              // var id = asset.token_id;
-              // var imageUrl = "https://www.larvalabs.com/public/images/cryptopunks/punk" + id + ".png"
-              // punkDataTemp.push({ id: id, imageUrl: imageUrl });
-              punkDataTemp.push({ id: asset.token_id, imageUrl: asset.image_url });
-            }
-          }
-        };
-        await getAssetsReq.send(null);
-        page = page + 1;
-        if (page > 4) {
-          completed = true;
-        }
-      }
-      */
-      // t.punksDataList = punkDataTemp;
-      // t.punksDataList.sort(function(a, b) { return a.id - b.id; });
     },
     async loadNFTs(collection) {
       logInfo("Bodyshop", "loadNFTs() collection: " + collection);
@@ -1006,6 +955,13 @@ const Bodyshop = {
     });
     this.canvas.add(rect);
 
+    var text = new fabric.IText('Tap and Type', {
+        left: 100,
+        top: 100,
+    });
+
+    this.canvas.add(text);
+
     function renderIcon(icon) {
       return function renderIcon(ctx, left, top, styleOverride, fabricObject) {
         var size = this.cornerSize;
@@ -1088,7 +1044,7 @@ const Bodyshop = {
 
           for (let i = 0; i < meeBitBackgroundColours.length; i++) {
             const filter = new fabric.Image.filters.RemoveColor({
-              threshold: 0.2,
+              distance: 0.05,
               color: meeBitBackgroundColours[i]
             });
             transform.target.filters.push(filter);
