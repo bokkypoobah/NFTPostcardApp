@@ -55,22 +55,38 @@ const Bodyshop = {
 
                   <b-tab active title="Assets" class="p-1">
 
-                    <b-card-group deck class="m-0">
-                      <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                        <b-form-select v-model="collectionsSelected" :options="collectionOptions" multiple :select-size="4"></b-form-select>
-                      </b-card>
-                    </b-card-group>
+                    <b-row class="mb-3">
+                      <b-col md="6" class="p-3">
+                        <b-card-group deck class="m-0">
+                          <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
+                            <b-form-select v-model="collectionsSelected" :options="collectionsOptions" multiple :select-size="4"></b-form-select>
+                          </b-card>
+                        </b-card-group>
+                      </b-col>
+                      <b-col md="6" class="p-3">
+                        <b-form-select v-model="accountsSelected" :options="accountsOptions" multiple :select-size="4"></b-form-select>
+                      </b-col>
+                    </b-row>
 
                     <b-card-group deck class="m-0">
                       <div v-for="asset in assetsToDisplay">
-                        <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
+                        <b-card body-class="p-1" header-class="p-2" footer-class="p-2" img-top class="m-1 p-0">
                           <b-link @click="addAsset(asset)">
                             <!-- <b-avatar rounded="sm" variant="light" size="10.0rem" :src="asset.image_url" class="pixelated"></b-avatar> -->
-                            <b-img rounded="sm" variant="light" size="10.0rem" :src="asset.image_url" style="width: 15rem; height: 15rem; object-fit: contain; object-position: 50% top; background-color: #f5f5f5;" class="pixelated m-1 p-2"></b-img>
+                            <b-img rounded="sm" variant="light" size="10.0rem" :src="asset.image_url" style="width: 15rem; height: 15rem; object-fit: contain; object-position: 50% top; background-color: #fafafa;" class="pixelated m-1 p-2"></b-img>
                           </b-link>
+                          <template #header>
+                            <span class="small truncate" v-b-popover.hover="getAssetName(asset)">
+                              {{ getAssetName(asset).substring(0, 32) }}
+                            </span>
+                          </template>
                           <template #footer>
-                            <span class="small truncate" v-b-popover.hover="asset.name">
-                              #{{ asset.name == null ? '' : asset.name.substring(0, 20) }}
+                            <span class="small truncate" v-b-popover.hover="getAssetName(asset)">
+                              {{ getAssetName(asset).substring(0, 32) }}
+                            </span>
+                            <span class="float-right">
+                              <b-link :href="asset.permalink + '?ref=0x000001f568875F378Bf6d170B790967FE429C81A'" v-b-popover.hover="'View on OpenSea.io'" target="_blank"><img src="images/381114e-opensea-logomark-flat-colored-blue.png" width="20px" /></b-link>
+                              <!-- <b-link :href="'https://rarible.com/token/'+ asset.permalink + ':' + tokenId" v-b-popover.hover="'View on Rarible.com'" target="_blank"><img src="images/rarible_feb7c08ba34c310f059947d23916f76c12314e85.png" height="20px" /></b-link> -->
                             </span>
                           </template>
                         </b-card>
@@ -320,6 +336,7 @@ const Bodyshop = {
       assets: [],
 
       collectionsSelected: [],
+      accountsSelected: [],
 
       punksDataList: [],
       pixelPortraitsDataList: [],
@@ -409,7 +426,8 @@ const Bodyshop = {
       return store.getters['connection/networkName'];
     },
     accounts() {
-      return [ store.getters['connection/coinbase'] ];
+      // return [ store.getters['connection/coinbase'] ];
+      return [ "0x000001f568875F378Bf6d170B790967FE429C81A", "0x00000217d2795F1Da57e392D2a5bC87125BAA38D", "0x000003e1E88A1110E961f135dF8cdEa4b1FFA81a" ];
     },
     nftData() {
       return store.getters['tokens/nftData'];
@@ -430,16 +448,34 @@ const Bodyshop = {
       const tokenIds = store.getters['tokens/allTokenIds'];
       return tokenIds == null ? null : tokenIds[Math.floor(Math.random() * tokenIds.length)];
     },
-    collectionOptions() {
-      var results = [];
-      var map = {};
+    accountsOptions() {
+      const results = [];
+      const map = {};
+      for (let accountIndex in this.accounts) {
+        const account = this.accounts[accountIndex];
+        if (account != null) {
+          map[account] = true;
+        }
+      }
+      for (let [account, value] of Object.entries(map)) {
+        results.push({ value: account, text: account});
+      }
+      results.push({ value: '--- (all) ---', text: '--- (all) ---'});
+      results.sort(function(a, b) {
+        return ('' + a.value).localeCompare(b.value);
+      });
+      return results;
+    },
+    collectionsOptions() {
+      const results = [];
+      const map = {};
       for (let assetIndex in this.assets) {
         const asset = this.assets[assetIndex];
         if (asset.collection.slug != null) {
           map[asset.collection.slug] = asset.collection.name;
         }
       }
-      for (const [slug, name] of Object.entries(map)) {
+      for (let [slug, name] of Object.entries(map)) {
         results.push({ value: slug, text: name});
       }
       results.push({ value: '--- (all) ---', text: '--- (all) ---'});
@@ -449,7 +485,7 @@ const Bodyshop = {
       return results;
     },
     assetsToDisplay() {
-      var results = [];
+      let results = [];
       if (this.collectionsSelected == null || this.collectionsSelected.length == 0 || (this.collectionsSelected.length == 1 && this.collectionsSelected[0] == "--- (all) ---")) {
         results = this.assets;
       } else {
@@ -468,6 +504,13 @@ const Bodyshop = {
     },
   },
   methods: {
+    getAssetName(asset) {
+      if (asset.name != null) {
+        return asset.name;
+      } else {
+        return '#' + asset.asset_contract.name + ' #' + asset.token_id;
+      }
+    },
     async saveImage() {
       logInfo("Bodyshop", "saveImage()");
 
@@ -720,7 +763,7 @@ const Bodyshop = {
         let page = 0;
         while (!completed) {
           const offset = PAGESIZE * page;
-          let url = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&order_direction=desc&limit=" + PAGESIZE + "&offset=" + offset;
+          let url = "https://api.opensea.io/api/v1/assets?owner=" + account + "&order_direction=desc&limit=" + PAGESIZE + "&offset=" + offset;
           const data = await fetch(url).then(response => response.json());
           if (data.assets && data.assets.length > 0) {
             for (let assetIndex = 0; assetIndex < data.assets.length; assetIndex++) {
