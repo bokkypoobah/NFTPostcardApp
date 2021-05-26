@@ -426,8 +426,8 @@ const Bodyshop = {
       return store.getters['connection/networkName'];
     },
     accounts() {
-      // return [ store.getters['connection/coinbase'] ];
-      return [ "0x000001f568875F378Bf6d170B790967FE429C81A", "0x00000217d2795F1Da57e392D2a5bC87125BAA38D", "0x000003e1E88A1110E961f135dF8cdEa4b1FFA81a" ];
+      return [ store.getters['connection/coinbase'] ];
+      // return [ "0x000001f568875F378Bf6d170B790967FE429C81A", "0x00000217d2795F1Da57e392D2a5bC87125BAA38D", "0x000003e1E88A1110E961f135dF8cdEa4b1FFA81a", "0x07fb31ff47Dc15f78C5261EEb3D711fb6eA985D1" ];
     },
     nftData() {
       return store.getters['tokens/nftData'];
@@ -754,9 +754,11 @@ const Bodyshop = {
     },
     async loadAssets() {
       logInfo("Bodyshop", "loadAssets()");
-      const PAGESIZE = 20; // Default 20, max 50
+      const PAGESIZE = 50; // Default 20, max 50
+      const DELAY = 1000; // Millis
       let page = 0;
       this.assets = [];
+      const delay = ms => new Promise(res => setTimeout(res, ms));
       for (let accountIndex in this.accounts) {
         const account = this.accounts[accountIndex];
         let completed = false;
@@ -775,6 +777,7 @@ const Bodyshop = {
             completed = true;
           }
           page++;
+          await delay(1000);
         }
       }
     },
