@@ -1,7 +1,7 @@
-const Bodyshop = {
+const NFTPostcard = {
   template: `
     <div class="mt-5 pt-3">
-      <b-card no-body header="Bodyshop" class="border-0" header-class="p-1">
+      <b-card no-body header="NFTPostcard" class="border-0" header-class="p-1">
         <b-card no-body class="border-0 m-0 mt-2">
           <b-card-body class="p-0">
 
@@ -504,6 +504,14 @@ const Bodyshop = {
     },
   },
   methods: {
+    setPowerOn() {
+      store.dispatch('connection/setPowerOn', true);
+      localStorage.setItem('powerOn', true);
+      var t = this;
+      setTimeout(function() {
+        t.statusSidebar = true;
+      }, 1500);
+    },
     getAssetName(asset) {
       if (asset.name != null) {
         return asset.name;
@@ -512,10 +520,10 @@ const Bodyshop = {
       }
     },
     async saveImage() {
-      logInfo("Bodyshop", "saveImage()");
+      logInfo("NFTPostcard", "saveImage()");
 
       // const div = document.getElementById("toBeCaptured");
-      // logInfo("Bodyshop", "saveImage() div: " + JSON.stringify(div));
+      // logInfo("NFTPostcard", "saveImage() div: " + JSON.stringify(div));
       // console.table(div);
 
       // getScreenshotOfElement($("div#toBeCaptured").get(0), 0, 0, 100, 100, function(data) {
@@ -549,7 +557,7 @@ const Bodyshop = {
 
       /*
       function getScreenshotOfElement(element, posX, posY, width, height, callback) {
-        // logInfo("Bodyshop", "getScreenshotOfElement() element: " + JSON.stringify(element));
+        // logInfo("NFTPostcard", "getScreenshotOfElement() element: " + JSON.stringify(element));
         // console.table(element);
         html2canvas(element, {
           width: width,
@@ -559,7 +567,7 @@ const Bodyshop = {
           allowTaint: false
         }).then(canvas => {
           // onrendered: function (canvas) {
-          // logInfo("Bodyshop", "getScreenshotOfElement() element: " + JSON.stringify(element));
+          // logInfo("NFTPostcard", "getScreenshotOfElement() element: " + JSON.stringify(element));
           var context = canvas.getContext('2d');
           var imageData = context.getImageData(posX, posY, width, height).data;
           var outputCanvas = document.createElement('canvas');
@@ -570,7 +578,7 @@ const Bodyshop = {
           var idata = outputContext.createImageData(width, height);
           idata.data.set(imageData);
           outputContext.putImageData(idata, 0, 0);
-          logInfo("Bodyshop", "getScreenshotOfElement() idata: " + JSON.stringify(idata));
+          logInfo("NFTPostcard", "getScreenshotOfElement() idata: " + JSON.stringify(idata));
           callback(outputCanvas.toDataURL());
           // },
         });
@@ -580,11 +588,11 @@ const Bodyshop = {
         // in the data variable there is the base64 image
         // exmaple for displaying the image in an <img>
         // $("img#captured").attr("src", "data:image/png;base64,"+data);
-        logInfo("Bodyshop", "saveImage() data: " + JSON.stringify(data));
+        logInfo("NFTPostcard", "saveImage() data: " + JSON.stringify(data));
         const blob = await fetch(data).then(r => r.blob());
-        logInfo("Bodyshop", "saveImage() blob: " + JSON.stringify(blob));
+        logInfo("NFTPostcard", "saveImage() blob: " + JSON.stringify(blob));
         const url = URL.createObjectURL(blob);
-        logInfo("Bodyshop", "saveImage() url: " + JSON.stringify(url));
+        logInfo("NFTPostcard", "saveImage() url: " + JSON.stringify(url));
         const a = document.createElement('a');
         a.download = "my_image.png"
         a.href = url;
@@ -610,7 +618,7 @@ const Bodyshop = {
         // document.body.appendChild(canvas);
         var context = canvas.getContext('2d');
         var imageData = context.getImageData(posX, posY, width, height).data;
-        logInfo("Bodyshop", "saveImage() imageData: " + JSON.stringify(imageData));
+        logInfo("NFTPostcard", "saveImage() imageData: " + JSON.stringify(imageData));
         var outputCanvas = document.createElement('canvas');
         var outputContext = outputCanvas.getContext('2d');
         outputCanvas.width = width;
@@ -620,12 +628,12 @@ const Bodyshop = {
         idata.data.set(imageData);
         outputContext.putImageData(idata, 0, 0);
         var dataURL = outputCanvas.toDataURL();
-        logInfo("Bodyshop", "saveImage() dataURL: " + JSON.stringify(dataURL));
+        logInfo("NFTPostcard", "saveImage() dataURL: " + JSON.stringify(dataURL));
 
         const blob = await fetch(dataURL).then(r => r.blob());
-        logInfo("Bodyshop", "saveImage() blob: " + JSON.stringify(blob));
+        logInfo("NFTPostcard", "saveImage() blob: " + JSON.stringify(blob));
         const url = URL.createObjectURL(blob);
-        logInfo("Bodyshop", "saveImage() url: " + JSON.stringify(url));
+        logInfo("NFTPostcard", "saveImage() url: " + JSON.stringify(url));
         const a = document.createElement('a');
         a.download = "my_image.png"
         a.href = url;
@@ -641,12 +649,12 @@ const Bodyshop = {
 
 
       // let dataURL = this.canvas.toDataURL({ format: 'png', multiplier: 2, });
-      // logInfo("Bodyshop", "saveImage() dataURL: " + JSON.stringify(dataURL));
+      // logInfo("NFTPostcard", "saveImage() dataURL: " + JSON.stringify(dataURL));
       //
       // const blob = await fetch(dataURL).then(r => r.blob());
-      // logInfo("Bodyshop", "saveImage() blob: " + JSON.stringify(blob));
+      // logInfo("NFTPostcard", "saveImage() blob: " + JSON.stringify(blob));
       // const url = URL.createObjectURL(blob);
-      // logInfo("Bodyshop", "saveImage() url: " + JSON.stringify(url));
+      // logInfo("NFTPostcard", "saveImage() url: " + JSON.stringify(url));
       // const a = document.createElement('a');
       // a.download = "my_image.png"
       // a.href = url;
@@ -658,22 +666,22 @@ const Bodyshop = {
 
     },
     setCanvasSize() {
-      // logInfo("Bodyshop", "setCanvasSize() canvasSetting: " + JSON.stringify(this.canvasSetting));
+      // logInfo("NFTPostcard", "setCanvasSize() canvasSetting: " + JSON.stringify(this.canvasSetting));
       this.canvas.setWidth(this.canvasSetting.width);
       this.canvas.setHeight(this.canvasSetting.height);
     },
     onFileChange(file) {
       const t = this;
       const url = URL.createObjectURL(file);
-      // logInfo("Bodyshop", "onFileChange() url: " + JSON.stringify(url));
+      // logInfo("NFTPostcard", "onFileChange() url: " + JSON.stringify(url));
       var imgObj = new Image();
       imgObj.src = url;
-      // logInfo("Bodyshop", "onFileChange() imgObj: " + JSON.stringify(imgObj));
+      // logInfo("NFTPostcard", "onFileChange() imgObj: " + JSON.stringify(imgObj));
       imgObj.onload = function () {
         const image = new fabric.Image(imgObj);
         image.set({ left: 0, top: 0, angle: 0, padding: 0, cornersize: 0 });
-        // logInfo("Bodyshop", "onFileChange() image width: " + image.width + ", height: " + image.height);
-        // logInfo("Bodyshop", "onFileChange() t.canvas width: " + t.canvas.width + ", height: " + t.canvas.height);
+        // logInfo("NFTPostcard", "onFileChange() image width: " + image.width + ", height: " + image.height);
+        // logInfo("NFTPostcard", "onFileChange() t.canvas width: " + t.canvas.width + ", height: " + t.canvas.height);
         image.scale(t.settings['ImageUpload'].scaleWidth, t.settings['ImageUpload'].scaleHeight).set('flipX', t.settings['ImageUpload'].flipX).set('flipY', t.settings['ImageUpload'].flipY);
         t.canvas.add(image);
         // t.canvas.setBackgroundImage(image);
@@ -681,7 +689,7 @@ const Bodyshop = {
       };
     },
     async addAsset(asset) {
-      logInfo("Bodyshop", "addAsset() asset: " + JSON.stringify(asset, null, 2));
+      logInfo("NFTPostcard", "addAsset() asset: " + JSON.stringify(asset, null, 2));
       const t = this;
       let scale = 1.0;
       // ZombieBabies
@@ -706,13 +714,13 @@ const Bodyshop = {
       }
       fabric.Image.fromURL(asset.image_url, function(oImg) {
         oImg.set('imageSmoothing', false).scale(scale);
-        // logInfo("Bodyshop", "addAsset() adding: " + JSON.stringify(oImg));
+        // logInfo("NFTPostcard", "addAsset() adding: " + JSON.stringify(oImg));
         t.canvas.add(oImg);
-        logInfo("Bodyshop", "addAsset() added: " + JSON.stringify(oImg));
+        logInfo("NFTPostcard", "addAsset() added: " + JSON.stringify(oImg));
       } , {crossOrigin: 'anonymous'});
     },
     async addImage(nftType, id, image, asset) {
-      logInfo("Bodyshop", "addImage() type: " + nftType + ", id: " + id + ", image: " + image);
+      logInfo("NFTPostcard", "addImage() type: " + nftType + ", id: " + id + ", image: " + image);
       if (asset != null) {
         // console.table(asset);
         console.log(JSON.stringify(asset, null, 2));
@@ -747,13 +755,13 @@ const Bodyshop = {
         // oImg.set({width: 300, height: 300, left: 10, top: 10, originX: 'left', originY: 'top'});
         // oImg.filters.push(new fabric.Image.filters.Grayscale());
         // oImg.applyFilters();
-        logInfo("Bodyshop", "addImage() adding: " + JSON.stringify(oImg));
+        logInfo("NFTPostcard", "addImage() adding: " + JSON.stringify(oImg));
         t.canvas.add(oImg);
-        logInfo("Bodyshop", "addImage() added: " + JSON.stringify(oImg));
+        logInfo("NFTPostcard", "addImage() added: " + JSON.stringify(oImg));
       } , {crossOrigin: 'anonymous'});
     },
     async loadAssets() {
-      logInfo("Bodyshop", "loadAssets()");
+      logInfo("NFTPostcard", "loadAssets()");
       const PAGESIZE = 50; // Default 20, max 50
       const DELAY = 1000; // Millis
       let page = 0;
@@ -770,7 +778,7 @@ const Bodyshop = {
           if (data.assets && data.assets.length > 0) {
             for (let assetIndex = 0; assetIndex < data.assets.length; assetIndex++) {
               const asset = data.assets[assetIndex];
-              // logInfo("Bodyshop", "loadAssets() asset(" + (parseInt(offset) + assetIndex) + ") name: " + asset.collection.name + ", slug: " + asset.collection.slug);
+              // logInfo("NFTPostcard", "loadAssets() asset(" + (parseInt(offset) + assetIndex) + ") name: " + asset.collection.name + ", slug: " + asset.collection.slug);
               this.assets.push(asset);
             }
           } else {
@@ -782,7 +790,7 @@ const Bodyshop = {
       }
     },
     async loadNFTs(collection) {
-      logInfo("Bodyshop", "loadNFTs() collection: " + collection);
+      logInfo("NFTPostcard", "loadNFTs() collection: " + collection);
       const t = this;
 
       // CryptoPunks - OpenSea
@@ -790,7 +798,7 @@ const Bodyshop = {
         let cryptoPunksUrl = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&asset_contract_address=" + CRYPTOPUNKMARKETADDRESS + "&order_direction=desc&offset=0&limit=50";
         cryptoPunksReq = new XMLHttpRequest();
         cryptoPunksReq.overrideMimeType("application/json");
-        logInfo("Bodyshop", "loadNFTs() openSeaPunkData cryptoPunksUrl: " + cryptoPunksUrl);
+        logInfo("NFTPostcard", "loadNFTs() openSeaPunkData cryptoPunksUrl: " + cryptoPunksUrl);
         cryptoPunksReq.open('GET', cryptoPunksUrl, true);
         cryptoPunksReq.onload  = function() {
           if (cryptoPunksReq.readyState == 4) {
@@ -815,7 +823,7 @@ const Bodyshop = {
         let pixelPortraitsUrl = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&order_direction=desc&offset=0&limit=50&collection=the-pixel-portraits";
         pixelPortraitsReq = new XMLHttpRequest();
         pixelPortraitsReq.overrideMimeType("application/json");
-        logInfo("Bodyshop", "loadNFTs() openSeaPixelPortraitsData pixelPortraitsUrl: " + pixelPortraitsUrl);
+        logInfo("NFTPostcard", "loadNFTs() openSeaPixelPortraitsData pixelPortraitsUrl: " + pixelPortraitsUrl);
         pixelPortraitsReq.open('GET', pixelPortraitsUrl, true);
         pixelPortraitsReq.onload  = function() {
           if (pixelPortraitsReq.readyState == 4) {
@@ -825,7 +833,7 @@ const Bodyshop = {
               const asset = openSeaPixelPortraitData.assets[assetIndex];
               var id = asset.name;
               var imageUrl = asset.image_url;
-              logInfo("Bodyshop", "loadNFTs() openSeaPixelPortraitsData id: " + id + " => " + imageUrl);
+              logInfo("NFTPostcard", "loadNFTs() openSeaPixelPortraitsData id: " + id + " => " + imageUrl);
               pixelPortraitsDataListTemp.push({ id: id, imageUrl: imageUrl });
             }
             t.pixelPortraitsDataList = pixelPortraitsDataListTemp;
@@ -840,7 +848,7 @@ const Bodyshop = {
         let bganpunkv2Url = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&asset_contract_address=" + BGANPUNKV2ADDRESS + "&order_direction=desc&offset=0&limit=50";
         bganpunkv2Req = new XMLHttpRequest();
         bganpunkv2Req.overrideMimeType("application/json");
-        logInfo("Bodyshop", "loadNFTs() openSeaBganpunkv2Data bganpunkv2Url: " + bganpunkv2Url);
+        logInfo("NFTPostcard", "loadNFTs() openSeaBganpunkv2Data bganpunkv2Url: " + bganpunkv2Url);
         bganpunkv2Req.open('GET', bganpunkv2Url, true);
         bganpunkv2Req.onload  = function() {
           if (bganpunkv2Req.readyState == 4) {
@@ -862,7 +870,7 @@ const Bodyshop = {
         let punkBodiesUrl = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&asset_contract_address=" + PUNKBODIESADDRESS + "&order_direction=desc&offset=0&limit=50";
         punkBodiesReq = new XMLHttpRequest();
         punkBodiesReq.overrideMimeType("application/json");
-        logInfo("Bodyshop", "loadNFTs() openSeaPunkBodyData punkBodiesUrl: " + punkBodiesUrl);
+        logInfo("NFTPostcard", "loadNFTs() openSeaPunkBodyData punkBodiesUrl: " + punkBodiesUrl);
         punkBodiesReq.open('GET', punkBodiesUrl, true);
         punkBodiesReq.onload  = function() {
           if (punkBodiesReq.readyState == 4) {
@@ -914,20 +922,20 @@ const Bodyshop = {
         let cryptoCatsUrl = "https://us-central1-cryptocats-ws-prod.cloudfunctions.net/listing/ccat/" + store.getters['connection/coinbase'].toLowerCase();
         cryptoCatsReq = new XMLHttpRequest();
         cryptoCatsReq.overrideMimeType("application/json");
-        logInfo("Bodyshop", "loadNFTs() cryptoCatsUrl: " + cryptoCatsUrl);
+        logInfo("NFTPostcard", "loadNFTs() cryptoCatsUrl: " + cryptoCatsUrl);
         cryptoCatsReq.open('GET', cryptoCatsUrl, true);
         cryptoCatsReq.onload  = function() {
           if (cryptoCatsReq.readyState == 4) {
             const cryptoCatsDataListTemp = [];
             const cryptoCatsData = JSON.parse(cryptoCatsReq.responseText);
-            logInfo("Bodyshop", "loadNFTs() cryptoCatsData: " + JSON.stringify(cryptoCatsData));
+            logInfo("NFTPostcard", "loadNFTs() cryptoCatsData: " + JSON.stringify(cryptoCatsData));
             if (cryptoCatsData.ccat != null) {
-              logInfo("Bodyshop", "loadNFTs() cryptoCatsData.ccat: " + JSON.stringify(cryptoCatsData.ccat));
+              logInfo("NFTPostcard", "loadNFTs() cryptoCatsData.ccat: " + JSON.stringify(cryptoCatsData.ccat));
               for (const [id, value] of Object.entries(cryptoCatsData.ccat)) {
                 // const ccat = cryptoCatsData.ccat[ccatIndex];
-                logInfo("Bodyshop", "loadNFTs() id: " + id + " => " + JSON.stringify(value));
+                logInfo("NFTPostcard", "loadNFTs() id: " + id + " => " + JSON.stringify(value));
                 var imageUrl = "https://cryptocats.thetwentysix.io/contents/images/cats/" + id + ".png"
-                logInfo("Bodyshop", "loadNFTs() id: " + id + " => " + imageUrl);
+                logInfo("NFTPostcard", "loadNFTs() id: " + id + " => " + imageUrl);
                 cryptoCatsDataListTemp.push({ id: id, imageUrl: imageUrl });
               }
               t.cryptoCatsDataList = cryptoCatsDataListTemp;
@@ -942,21 +950,21 @@ const Bodyshop = {
         let wrappedCryptoCatsUrl = "https://us-central1-cryptocats-ws-prod.cloudfunctions.net/listing/wccat/" + store.getters['connection/coinbase'].toLowerCase();
         wrappedCryptoCatsReq = new XMLHttpRequest();
         wrappedCryptoCatsReq.overrideMimeType("application/json");
-        logInfo("Bodyshop", "loadNFTs() wrappedCryptoCatsUrl: " + wrappedCryptoCatsUrl);
+        logInfo("NFTPostcard", "loadNFTs() wrappedCryptoCatsUrl: " + wrappedCryptoCatsUrl);
         wrappedCryptoCatsReq.open('GET', wrappedCryptoCatsUrl, true);
         wrappedCryptoCatsReq.onload  = function() {
           if (wrappedCryptoCatsReq.readyState == 4) {
             const wrappedCryptoCatsDataListTemp = [];
             const wrappedCryptoCatsData = JSON.parse(wrappedCryptoCatsReq.responseText);
-            logInfo("Bodyshop", "loadNFTs() wrappedCryptoCatsData: " + JSON.stringify(wrappedCryptoCatsData));
-            // 00:47:36 INFO Bodyshop:loadNFTs() wrappedCryptoCatsData: {"ccat":{"207":"wrapped"}}
+            logInfo("NFTPostcard", "loadNFTs() wrappedCryptoCatsData: " + JSON.stringify(wrappedCryptoCatsData));
+            // 00:47:36 INFO NFTPostcard:loadNFTs() wrappedCryptoCatsData: {"ccat":{"207":"wrapped"}}
             if (wrappedCryptoCatsData.ccat != null) {
-              logInfo("Bodyshop", "loadNFTs() wrappedCryptoCatsData.ccat: " + JSON.stringify(wrappedCryptoCatsData.ccat));
+              logInfo("NFTPostcard", "loadNFTs() wrappedCryptoCatsData.ccat: " + JSON.stringify(wrappedCryptoCatsData.ccat));
               for (const [id, value] of Object.entries(wrappedCryptoCatsData.ccat)) {
                 // const ccat = cryptoCatsData.ccat[ccatIndex];
-                logInfo("Bodyshop", "loadNFTs() id: " + id + " => " + JSON.stringify(value));
+                logInfo("NFTPostcard", "loadNFTs() id: " + id + " => " + JSON.stringify(value));
                 var imageUrl = "https://cryptocats.thetwentysix.io/contents/images/cats/" + id + ".png"
-                logInfo("Bodyshop", "loadNFTs() id: " + id + " => " + imageUrl);
+                logInfo("NFTPostcard", "loadNFTs() id: " + id + " => " + imageUrl);
                 wrappedCryptoCatsDataListTemp.push({ id: id, imageUrl: imageUrl });
               }
               t.wrappedCryptoCatsDataList = wrappedCryptoCatsDataListTemp;
@@ -969,7 +977,7 @@ const Bodyshop = {
 
     },
     async timeoutCallback() {
-      logInfo("Bodyshop", "timeoutCallback() count: " + this.count);
+      logInfo("NFTPostcard", "timeoutCallback() count: " + this.count);
 
       this.count++;
       var t = this;
@@ -981,12 +989,12 @@ const Bodyshop = {
     },
   },
   mounted() {
-    logInfo("Bodyshop", "mounted()");
+    logInfo("NFTPostcard", "mounted()");
     this.reschedule = true;
-    logInfo("Bodyshop", "Calling timeoutCallback()");
+    logInfo("NFTPostcard", "Calling timeoutCallback()");
     this.timeoutCallback();
 
-    logInfo("Bodyshop", "Canvas");
+    logInfo("NFTPostcard", "Canvas");
     this.canvas = new fabric.Canvas('thecanvas', {
       hoverCursor: 'pointer',
       selection: false,
@@ -1073,10 +1081,10 @@ const Bodyshop = {
 
     function removeObjectBackground(eventData, transform) {
       if (transform.target.type == "image") {
-        logInfo("Bodyshop", "Calling removeObjectBackground()  target: " + JSON.stringify(transform.target));
+        logInfo("NFTPostcard", "Calling removeObjectBackground()  target: " + JSON.stringify(transform.target));
         let ctx = transform.target.canvas.getContext('2d');
         let data = ctx.getImageData(parseInt(transform.target.left) * window.devicePixelRatio + 1, parseInt(transform.target.top) * window.devicePixelRatio + 1, 1, 1);
-        logInfo("Bodyshop", "Calling removeObjectBackground() data: " + JSON.stringify(data));
+        logInfo("NFTPostcard", "Calling removeObjectBackground() data: " + JSON.stringify(data));
         if (data.data[3] != 0) {
           var backgroundColor = '#' + data.data[0].toString(16) + data.data[1].toString(16) + data.data[2].toString(16);
           var filter = new fabric.Image.filters.RemoveColor({
@@ -1199,7 +1207,7 @@ const Bodyshop = {
       cornerSize: 24
     });
 
-    // logInfo("Bodyshop", "Calling fabric.Object.prototype.controls: " + JSON.stringify(fabric.Object.prototype.controls));
+    // logInfo("NFTPostcard", "Calling fabric.Object.prototype.controls: " + JSON.stringify(fabric.Object.prototype.controls));
 
     const t = this;
     this.canvas.on({
@@ -1211,36 +1219,36 @@ const Bodyshop = {
         // var objects = canvas.getObjects('line');
         // var objects = t.canvas.getObjects();
         // for (let i in objects) {
-        //     logInfo("Bodyshop", "Canvas object:modified(): " + JSON.stringify(objects[i]));
+        //     logInfo("NFTPostcard", "Canvas object:modified(): " + JSON.stringify(objects[i]));
         // }
       },
       'selection:cleared': function(e) {
         // var objects = t.canvas.getObjects();
         // for (let i in objects) {
-        //     logInfo("Bodyshop", "Canvas selection:cleared(): " + JSON.stringify(objects[i]));
+        //     logInfo("NFTPostcard", "Canvas selection:cleared(): " + JSON.stringify(objects[i]));
         // }
       },
       'selection:updated': function(e) {
         // var objects = t.canvas.getObjects();
         // for (let i in objects) {
-        //     logInfo("Bodyshop", "Canvas selection:updated(): " + JSON.stringify(objects[i]));
+        //     logInfo("NFTPostcard", "Canvas selection:updated(): " + JSON.stringify(objects[i]));
         // }
       },
       'selection:created': function(e) {
-        // logInfo("Bodyshop", "Canvas selection:created() e: " + JSON.stringify(e));
+        // logInfo("NFTPostcard", "Canvas selection:created() e: " + JSON.stringify(e));
         // // t.selectedObject = e;
         // var objects = t.canvas.getObjects();
         // for (let i in objects) {
-        //     logInfo("Bodyshop", "Canvas selection:created(): " + JSON.stringify(objects[i]));
+        //     logInfo("NFTPostcard", "Canvas selection:created(): " + JSON.stringify(objects[i]));
         // }
       },
       'mouse:down': function(options) {
         if (options.target) {
-          // logInfo("Bodyshop", "Canvas mouse:down(): " + JSON.stringify(options.target));
+          // logInfo("NFTPostcard", "Canvas mouse:down(): " + JSON.stringify(options.target));
           t.selectedObject = options.target;
           // var objects = t.canvas.getObjects();
           // for (let i in objects) {
-          //     logInfo("Bodyshop", "Canvas mouse:down(): " + JSON.stringify(objects[i]));
+          //     logInfo("NFTPostcard", "Canvas mouse:down(): " + JSON.stringify(objects[i]));
           // }
         }
       }
@@ -1251,7 +1259,7 @@ const Bodyshop = {
   },
 };
 
-const bodyshopModule = {
+const nftPostcardModule = {
   namespaced: true,
   state: {
     params: null,
@@ -1264,16 +1272,16 @@ const bodyshopModule = {
   },
   mutations: {
     deQueue (state) {
-      logDebug("bodyshopModule", "deQueue(" + JSON.stringify(state.executionQueue) + ")");
+      logDebug("nftPostcardModule", "deQueue(" + JSON.stringify(state.executionQueue) + ")");
       state.executionQueue.shift();
     },
     updateParams (state, params) {
       state.params = params;
-      logDebug("bodyshopModule", "updateParams('" + params + "')")
+      logDebug("nftPostcardModule", "updateParams('" + params + "')")
     },
     updateExecuting (state, executing) {
       state.executing = executing;
-      logDebug("bodyshopModule", "updateExecuting(" + executing + ")")
+      logDebug("nftPostcardModule", "updateExecuting(" + executing + ")")
     },
   },
   actions: {

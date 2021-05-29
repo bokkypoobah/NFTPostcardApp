@@ -1,22 +1,26 @@
 const routes = [{
-    path: '/bodyshop/:param',
-    component: Bodyshop,
-    name: 'Bodyshop',
+    path: '/zombieBabiesAdoption',
+    component: ZombieBabiesAdoption,
+    name: 'ZombieBabiesAdoption',
   }, {
-    path: '/genemixer/:param',
-    component: GeneMixer,
-    name: 'GeneMixer',
-  }, {
+  //   path: '/bodyshop/:param',
+  //   component: Bodyshop,
+  //   name: 'Bodyshop',
+  // }, {
+  //   path: '/genemixer/:param',
+  //   component: GeneMixer,
+  //   name: 'GeneMixer',
+  // }, {
     path: '/docs/:section/:topic',
     component: Docs,
     name: 'Docs',
   }, {
     path: '/:id',
-    component: Home,
+    component: NFTPostcard,
     name: '',
   }, {
     path: '*',
-    component: Home,
+    component: NFTPostcard,
     name: ''
   }
 ];

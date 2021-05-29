@@ -1,4 +1,4 @@
-const Home = {
+const ZombieBabiesAdoption = {
   template: `
     <div class="mt-5 pt-3">
 
@@ -241,6 +241,6 @@ const Home = {
     },
   },
   mounted() {
-    logInfo("homeModule", "mounted() Called");
+    logInfo("ZombieBabiesAdoption", "mounted() Called");
   },
 };
