@@ -321,6 +321,48 @@ const NFTPostcard = {
                     </b-card-text>
                   </b-tab>
 
+                  <b-tab title="Text" class="p-1">
+                    <b-card-text>
+                      <!--
+                      <b-row  align-h="start">
+                        <b-col cols="2">Scale</b-col>
+                        <b-col cols="3">
+                          <b-form-group description="Scale width. e.g., 0.5">
+                            <b-form-input type="text" v-model.trim="settings['ImageUpload'].scaleWidth"></b-form-input>
+                          </b-form-group>
+                        </b-col>
+                        <b-col cols="3">
+                          <b-form-group description="Scale height. e.g., 0.5">
+                            <b-form-input type="text" v-model.trim="settings['ImageUpload'].scaleHeight"></b-form-input>
+                          </b-form-group>
+                        </b-col>
+                        <b-col cols="2">
+                          <b-form-group>
+                            <b-form-checkbox v-model.trim="settings['ImageUpload'].flipX">
+                              Flip X
+                            </b-form-checkbox>
+                          </b-form-group>
+                        </b-col>
+                        <b-col cols="2">
+                          <b-form-group>
+                            <b-form-checkbox v-model.trim="settings['ImageUpload'].flipY">
+                              Flip Y
+                            </b-form-checkbox>
+                          </b-form-group>
+                        </b-col>
+                      </b-row>
+                      -->
+                      <b-form-group label-cols="2" label-size="sm" label="Enter text" description="Text">
+                        <b-form-input type="text" v-model.trim="text"></b-form-input>
+                      </b-form-group>
+
+                      <b-form-group label-cols="2" label-size="sm">
+                        <b-button size="sm" @click="addText(text)" variant="info">Add Text</b-button>
+                      </b-form-group>
+
+                    </b-card-text>
+                  </b-tab>
+
                 </b-tabs>
               </b-card>
             </div>
@@ -410,6 +452,8 @@ const NFTPostcard = {
         },
       },
       file: null,
+
+      text: "",
 
       canvas: null,
     }
@@ -768,6 +812,19 @@ const NFTPostcard = {
         logInfo("NFTPostcard", "addImage() added: " + JSON.stringify(oImg));
       } , {crossOrigin: 'anonymous'});
     },
+
+    async addText(text) {
+      logInfo("NFTPostcard", "addText() text: " + JSON.stringify(text, null, 2));
+      const iText = new fabric.IText(text, {
+        fontFamily: 'Comic Sans MS',
+        left: 100,
+        top: 100,
+      });
+      this.canvas.add(iText);
+      localStorage.setItem('canvas', JSON.stringify(this.canvas));
+      logInfo("NFTPostcard", "LocalStorage Canvas: " + JSON.stringify(this.canvas));
+    },
+
     async loadAssets() {
       logInfo("NFTPostcard", "loadAssets()");
       const PAGESIZE = 50; // Default 20, max 50
