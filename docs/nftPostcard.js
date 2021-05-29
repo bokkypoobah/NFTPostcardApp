@@ -100,6 +100,7 @@ const NFTPostcard = {
                     </div>
                   </b-tab>
 
+                  <!--
                   <b-tab title="Sample NFTs" class="p-1">
                     <b-card-group deck class="m-0">
                       <div>
@@ -283,6 +284,7 @@ const NFTPostcard = {
                     </div>
 
                   </b-tab>
+                  -->
 
                   <b-tab title="Upload Image" class="p-1">
                     <b-card-text>
@@ -1002,6 +1004,7 @@ const NFTPostcard = {
     this.reschedule = true;
     logInfo("NFTPostcard", "Calling timeoutCallback()");
     this.timeoutCallback();
+    this.loadAssets();
 
     const storedCanvas = JSON.parse(localStorage.getItem('canvas'));
     logInfo("NFTPostcard", "LocalStorage storedCanvas: " + JSON.stringify(storedCanvas));
