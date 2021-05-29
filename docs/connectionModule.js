@@ -211,18 +211,18 @@ const Connection = {
   },
   methods: {
     removeTx(tx) {
-      logInfo("Connection", "removeTx");
+      logDebug("Connection", "removeTx");
       store.dispatch('connection/removeTx', tx);
     },
     clearTxError(tx) {
-      logInfo("Connection", "clearTxError");
+      logDebug("Connection", "clearTxError");
       store.dispatch('connection/setTxError', "");
     },
     async execWeb3() {
-      logInfo("Connection", "execWeb3() start[" + this.count + "]");
+      logDebug("Connection", "execWeb3() start[" + this.count + "]");
 
       if (!store.getters['connection/connection'] || !store.getters['connection/connection'].connected) {
-        logInfo("Connection", "execWeb3() Attempting connection");
+        logDebug("Connection", "execWeb3() Attempting connection");
 
         // logInfo("Connection", "execWeb3() window.ethereum: " + JSON.stringify(window.ethereum));
         if (window.ethereum) {
@@ -254,10 +254,10 @@ const Connection = {
       if (store.getters['connection/connection'] && store.getters['connection/connection'].connected) {
         try {
           let network = await this.provider.getNetwork();
-          logInfo("Connection", "execWeb3() network: " + JSON.stringify(network));
+          logDebug("Connection", "execWeb3() network: " + JSON.stringify(network));
           if (network.chainId != this.lastNetworkChainId) {
             store.dispatch('connection/setNetwork', network);
-            logInfo("Connection", "execWeb3() Network updated from " + this.lastNetworkChainId + " to " + network.chainId + ": " + getNetworkDetails(network.chainId).name);
+            logDebug("Connection", "execWeb3() Network updated from " + this.lastNetworkChainId + " to " + network.chainId + ": " + getNetworkDetails(network.chainId).name);
             this.lastNetworkChainId = network.chainId;
             networkChanged = true;
           }
@@ -274,7 +274,7 @@ const Connection = {
           // logInfo("Connection", "execWeb3() coinbase: " + JSON.stringify(coinbase));
           if (coinbase != this.lastCoinbase) {
             store.dispatch('connection/setCoinbase', coinbase);
-            logInfo("Connection", "execWeb3() Coinbase updated from " + this.lastCoinbase + " to " + coinbase);
+            logDebug("Connection", "execWeb3() Coinbase updated from " + this.lastCoinbase + " to " + coinbase);
             this.lastCoinbase = coinbase;
             coinbaseChanged = true;
           }
@@ -291,7 +291,7 @@ const Connection = {
             // logDebug("Connection", "execWeb3() balance: " + ethers.utils.formatUnits(balance, 18));
             if (this.lastBalance == null || balance == null || !balance.eq(this.lastBalance)) {
               store.dispatch('connection/setBalance', balance);
-              logInfo("Connection", "execWeb3() Coinbase balance updated from " + (this.lastBalance == null ? "null" : ethers.utils.formatUnits(this.lastBalance)) + " to " + (balance == null ? "null" : ethers.utils.formatUnits(balance)));
+              logDebug("Connection", "execWeb3() Coinbase balance updated from " + (this.lastBalance == null ? "null" : ethers.utils.formatUnits(this.lastBalance)) + " to " + (balance == null ? "null" : ethers.utils.formatUnits(balance)));
               this.lastBalance = balance;
             }
           } catch (error) {
@@ -305,7 +305,7 @@ const Connection = {
       if (store.getters['connection/connection'] && store.getters['connection/connection'].connected) {
         try {
           block = await this.provider.getBlock();
-          // logInfo("Connection", "execWeb3() block: " + JSON.stringify(block.number));
+          // logDebug("Connection", "execWeb3() block: " + JSON.stringify(block.number));
         } catch (error) {
           store.dispatch('connection/setDisconnected', JSON.stringify(error.message));
         }
@@ -314,14 +314,14 @@ const Connection = {
       if (block == null) {
         if (this.lastBlockHash != null) {
           store.dispatch('connection/setBlock', null);
-          logInfo("Connection", "execWeb3() Block hash updated from " + this.lastBlockHash + " to " + null);
+          logDebug("Connection", "execWeb3() Block hash updated from " + this.lastBlockHash + " to " + null);
           this.lastBlockHash = null;
           blockChanged = true;
         }
       } else {
         if (block.hash !== this.lastBlockHash) {
           store.dispatch('connection/setBlock', block);
-          logInfo("Connection", "execWeb3() Block updated from " + (this.lastBlockHash ? this.lastBlockHash.substring(0, 10) : null) + " to " + (block.hash ? block.hash.substring(0, 10) : null) + " @ " + block.number + " " + new Date(block.timestamp * 1000).toLocaleString() + " " + getTimeDiff(block.timestamp));
+          logDebug("Connection", "execWeb3() Block updated from " + (this.lastBlockHash ? this.lastBlockHash.substring(0, 10) : null) + " to " + (block.hash ? block.hash.substring(0, 10) : null) + " @ " + block.number + " " + new Date(block.timestamp * 1000).toLocaleString() + " " + getTimeDiff(block.timestamp));
           this.lastBlockHash = block.hash;
           blockChanged = true;
         }
@@ -336,7 +336,7 @@ const Connection = {
       //   //   await store.dispatch('tokenContractExplorer/execWeb3', { count: this.count, networkChanged, blockChanged, coinbaseChanged });
       //   // }
       }
-      logInfo("Connection", "execWeb3() end[" + this.count + "]");
+      logDebug("Connection", "execWeb3() end[" + this.count + "]");
     },
     timeoutCallback() {
       var t = this;
@@ -416,7 +416,7 @@ const connectionModule = {
       state.powerOn = c;
     },
     setConnected(state, data) {
-      logInfo("connectionModule", "mutations.setConnected()");
+      logDebug("connectionModule", "mutations.setConnected()");
       state.connection.connected = true;
       state.connection.provider = data.provider;
       state.connection.signer = data.signer;
@@ -424,7 +424,7 @@ const connectionModule = {
       state.connection.error = null;
     },
     setDisconnected(state, error) {
-      logInfo("connectionModule", "mutations.setDisconnected() - error: " + error);
+      logDebug("connectionModule", "mutations.setDisconnected() - error: " + error);
       state.connection.connected = false;
       state.connection.provider = null;
       state.connection.signer = null;
@@ -435,7 +435,7 @@ const connectionModule = {
       state.network = n;
       var networkDetails = getNetworkDetails(n.chainId);
       state.networkName = networkDetails.name;
-      logInfo("connectionModule", "mutations.setNetwork() - networkName: " + state.networkName);
+      logDebug("connectionModule", "mutations.setNetwork() - networkName: " + state.networkName);
       state.explorer = networkDetails.explorer;
       state.faucets = networkDetails.faucets;
     },
@@ -463,15 +463,15 @@ const connectionModule = {
   },
   actions: {
     setPowerOn(context, c) {
-      logInfo("connectionModule", "actions.setPowerOn(" + c + ")");
+      logDebug("connectionModule", "actions.setPowerOn(" + c + ")");
       context.commit('setPowerOn', c);
     },
     setConnected(context, data) {
-      logInfo("connectionModule", "actions.setConnected()");
+      logDebug("connectionModule", "actions.setConnected()");
       context.commit('setConnected', data);
     },
     setDisconnected(context, data) {
-      logInfo("connectionModule", "actions.setDisconnected()");
+      logDebug("connectionModule", "actions.setDisconnected()");
       context.commit('setDisconnected', data);
     },
     setNetwork(context, n) {
@@ -487,15 +487,15 @@ const connectionModule = {
       context.commit('setBlock', b);
     },
     addTx(context, tx) {
-      logInfo("connectionModule", "actions.addTx(): " + tx);
+      logDebug("connectionModule", "actions.addTx(): " + tx);
       context.commit('addTx', tx);
     },
     removeTx(context, tx) {
-      logInfo("connectionModule", "actions.removeTx(): " + tx);
+      logDebug("connectionModule", "actions.removeTx(): " + tx);
       context.commit('removeTx', tx);
     },
     setTxError(context, txError) {
-      logInfo("connectionModule", "actions.setTxError(): " + txError);
+      logDebug("connectionModule", "actions.setTxError(): " + txError);
       context.commit('setTxError', txError);
     },
   },

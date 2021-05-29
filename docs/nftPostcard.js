@@ -429,6 +429,9 @@ const NFTPostcard = {
       return [ store.getters['connection/coinbase'], "0xBeeef66749B64Afe43Bbc9475635Eb510cFE4922" ];
       // return [ "0x000001f568875F378Bf6d170B790967FE429C81A", "0x00000217d2795F1Da57e392D2a5bC87125BAA38D", "0x000003e1E88A1110E961f135dF8cdEa4b1FFA81a", "0x07fb31ff47Dc15f78C5261EEb3D711fb6eA985D1" ];
     },
+    // canvas() {
+    //   return store.getters['nftPostcard/canvas'];
+    // },
     nftData() {
       return store.getters['tokens/nftData'];
     },
@@ -692,6 +695,7 @@ const NFTPostcard = {
       logInfo("NFTPostcard", "addAsset() asset: " + JSON.stringify(asset, null, 2));
       const t = this;
       let scale = 1.0;
+      // const canvas = store.getters['nftPostcard/canvas'];
       // ZombieBabies
       if (asset.asset_contract.address == '0xfe9231f0e6753a8412a00ec1f0028a24d5220ba9') {
         scale = 5.0 / 16;
@@ -717,6 +721,8 @@ const NFTPostcard = {
         // logInfo("NFTPostcard", "addAsset() adding: " + JSON.stringify(oImg));
         t.canvas.add(oImg);
         logInfo("NFTPostcard", "addAsset() added: " + JSON.stringify(oImg));
+        logInfo("NFTPostcard", "addAsset() LocalStorage.setItem: " + JSON.stringify(oImg));
+        localStorage.setItem('canvas', JSON.stringify(t.canvas));
       } , {crossOrigin: 'anonymous'});
     },
     async addImage(nftType, id, image, asset) {
@@ -988,33 +994,56 @@ const NFTPostcard = {
       }
     },
   },
+  beforeDestroy() {
+    logInfo("NFTPostcard", "beforeDestroy()");
+  },
   mounted() {
     logInfo("NFTPostcard", "mounted()");
     this.reschedule = true;
     logInfo("NFTPostcard", "Calling timeoutCallback()");
     this.timeoutCallback();
 
-    logInfo("NFTPostcard", "Canvas");
-    this.canvas = new fabric.Canvas('thecanvas', {
-      hoverCursor: 'pointer',
-      selection: false,
-      targetFindTolerance: 2
-    });
-    var rect = new fabric.Rect({
-      left: 50,
-      top: 50,
-      fill: 'cyan',
-      width: 380,
-      height: 380
-    });
-    this.canvas.add(rect);
+    const storedCanvas = JSON.parse(localStorage.getItem('canvas'));
+    logInfo("NFTPostcard", "LocalStorage storedCanvas: " + JSON.stringify(storedCanvas));
 
-    var text = new fabric.IText('Tap and Type', {
-        left: 100,
-        top: 100,
-    });
+    logInfo("NFTPostcard", "Canvas: " + JSON.stringify(this.canvas));
+    if (storedCanvas == null) {
+      logInfo("NFTPostcard", "Canvas");
+      this.canvas = new fabric.Canvas('thecanvas', {
+        hoverCursor: 'pointer',
+        selection: false,
+        targetFindTolerance: 2
+      });
+      const rect = new fabric.Rect({
+        left: 50,
+        top: 50,
+        fill: 'cyan',
+        width: 380,
+        height: 380
+      });
+      this.canvas.add(rect);
+      const text = new fabric.IText('Tap and Type', {
+          left: 100,
+          top: 100,
+      });
+      this.canvas.add(text);
+      localStorage.setItem('canvas', JSON.stringify(this.canvas));
+      logInfo("NFTPostcard", "LocalStorage Canvas: " + JSON.stringify(this.canvas));
+    } else {
+      this.canvas = new fabric.Canvas('thecanvas', {
+        hoverCursor: 'pointer',
+        selection: false,
+        targetFindTolerance: 2
+      });
+      const t = this;
+      this.canvas.loadFromJSON(storedCanvas, function() {
+        logInfo("NFTPostcard", "LocalStorage loadFromJSON: " + JSON.stringify(storedCanvas));
+         t.canvas.renderAll();
+      },function(o,object){
+         console.log(o,object)
+      })
+    }
 
-    this.canvas.add(text);
 
     function renderIcon(icon) {
       return function renderIcon(ctx, left, top, styleOverride, fabricObject) {
@@ -1221,6 +1250,8 @@ const NFTPostcard = {
         // for (let i in objects) {
         //     logInfo("NFTPostcard", "Canvas object:modified(): " + JSON.stringify(objects[i]));
         // }
+        logInfo("NFTPostcard", "canvas object:modified: " + JSON.stringify(t.canvas));
+        localStorage.setItem('canvas', JSON.stringify(t.canvas));
       },
       'selection:cleared': function(e) {
         // var objects = t.canvas.getObjects();
@@ -1262,28 +1293,38 @@ const NFTPostcard = {
 const nftPostcardModule = {
   namespaced: true,
   state: {
+    canvas: null,
     params: null,
     executing: false,
     executionQueue: [],
   },
   getters: {
+    canvas: state => state.canvas,
     params: state => state.params,
     executionQueue: state => state.executionQueue,
   },
   mutations: {
-    deQueue (state) {
+    setCanvas(state, c) {
+      logDebug("nftPostcardModule", "mutations.setCanvas('" + c + "')")
+      state.canvas = c;
+    },
+    deQueue(state) {
       logDebug("nftPostcardModule", "deQueue(" + JSON.stringify(state.executionQueue) + ")");
       state.executionQueue.shift();
     },
-    updateParams (state, params) {
+    updateParams(state, params) {
       state.params = params;
       logDebug("nftPostcardModule", "updateParams('" + params + "')")
     },
-    updateExecuting (state, executing) {
+    updateExecuting(state, executing) {
       state.executing = executing;
       logDebug("nftPostcardModule", "updateExecuting(" + executing + ")")
     },
   },
   actions: {
+    setCanvas(context, c) {
+      logInfo("connectionModule", "actions.setCanvas(" + JSON.stringify(c) + ")");
+      // context.commit('setCanvas', c);
+    },
   },
 };
