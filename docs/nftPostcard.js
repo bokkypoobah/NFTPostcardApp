@@ -352,8 +352,26 @@ const NFTPostcard = {
                         </b-col>
                       </b-row>
                       -->
-                      <b-form-group label-cols="2" label-size="sm" label="Enter text" description="Text">
-                        <b-form-input type="text" v-model.trim="text"></b-form-input>
+                      <b-form-group label-cols="2" label-size="sm" label="Enter text">
+                        <b-form-input type="text" v-model.trim="text.text"></b-form-input>
+                      </b-form-group>
+                      <b-form-group label-cols="2" label-size="sm" label="Font family">
+                        <b-form-select v-model="text.fontFamily" class="mb-3">
+                          <b-form-select-option value="arial">Arial</b-form-select-option>
+                          <b-form-select-option value="helvetica" selected>Helvetica</b-form-select-option>
+                          <b-form-select-option value="myriad pro">Myriad Pro</b-form-select-option>
+                          <b-form-select-option value="delicious">Delicious</b-form-select-option>
+                          <b-form-select-option value="verdana">Verdana</b-form-select-option>
+                          <b-form-select-option value="georgia">Georgia</b-form-select-option>
+                          <b-form-select-option value="courier">Courier</b-form-select-option>
+                          <b-form-select-option value="comic sans ms">Comic Sans MS</b-form-select-option>
+                          <b-form-select-option value="impact">Impact</b-form-select-option>
+                          <b-form-select-option value="monaco">Monaco</b-form-select-option>
+                          <b-form-select-option value="optima">Optima</b-form-select-option>
+                          <b-form-select-option value="hoefler text">Hoefler Text</b-form-select-option>
+                          <b-form-select-option value="plaster">Plaster</b-form-select-option>
+                          <b-form-select-option value="engagement">Engagement</b-form-select-option>
+                        </b-form-select>
                       </b-form-group>
 
                       <b-form-group label-cols="2" label-size="sm">
@@ -453,7 +471,10 @@ const NFTPostcard = {
       },
       file: null,
 
-      text: "",
+      text: {
+        text: "",
+        fontFamily: "helvetica"
+      },
 
       canvas: null,
     }
@@ -815,8 +836,8 @@ const NFTPostcard = {
 
     async addText(text) {
       logInfo("NFTPostcard", "addText() text: " + JSON.stringify(text, null, 2));
-      const iText = new fabric.IText(text, {
-        fontFamily: 'Comic Sans MS',
+      const iText = new fabric.IText(text.text, {
+        fontFamily: text.fontFamily,
         left: 100,
         top: 100,
       });
