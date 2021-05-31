@@ -47,8 +47,8 @@ const NFTPostcard = {
                       <b-form-group label-cols="2" label-size="sm">
                         <b-button size="sm" @click="setCanvasSize()" variant="info">Set Canvas Size</b-button>
                       </b-form-group>
-                      <b-form-group label-cols="2" label-size="sm">
-                        <b-button size="sm" @click="saveImage()" variant="info">Save Image</b-button>
+                      <b-form-group label-cols="2" label-size="sm" description="To be implemented. Please use your OS print screen buttons">
+                        <b-button disabled size="sm" @click="saveImage()" v-b-popover.hover="'Not working yet. Please use your OS print screen buttons'" variant="info">Save Image</b-button>
                       </b-form-group>
                     </b-card-text>
                   </b-tab>
@@ -456,8 +456,8 @@ const NFTPostcard = {
           flipY: false
         },
         "BGANPUNKV2": {
-          scaleWidth: 5.0 / 40,
-          scaleHeight: 5.0 / 40,
+          scaleWidth: 5.0 / 20,
+          scaleHeight: 5.0 / 20,
           flipX: false,
           flipY: false
         },
@@ -796,7 +796,7 @@ const NFTPostcard = {
       } else if (asset.collection.name == 'The Pixel Portraits') {
         scale = 5.0 / 20;
       } else if (asset.collection.name == 'BASTARD GAN PUNKS V2') {
-        scale = 5.0 / 40;
+        scale = 5.0 / 15;
       } else if (asset.collection.name == '3DVoxelPunks') {
         scale = 5.0 / 16;
       // } else if (asset.asset_contract.name == 'MoonCat') {
