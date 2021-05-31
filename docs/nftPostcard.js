@@ -64,21 +64,36 @@ const NFTPostcard = {
                         </b-card-group>
                       </b-col>
                       <b-col md="6" class="p-3">
-                        <b-form-select v-model="accountsSelected" :options="accountsOptions" multiple :select-size="4"></b-form-select>
+                        <b-form-select disabled v-model="accountsSelected" :options="accountsOptions" multiple :select-size="4"></b-form-select>
                       </b-col>
                     </b-row>
+
+                    <div v-if="!powerOn" class="mt-4">
+                      Click the power button <b-button size="sm" variant="link" class="m-0 p-0" v-b-popover.hover="'Power up this app'" @click="setPowerOn();" v-if="!powerOn"><b-icon-power shift-v="-1" font-scale="1.5"></b-icon-power></b-button> on the top right to connect via web3 to load your NFTs.
+                    </div>
+                    <div v-else>
+                      <b-button size="sm" @click="loadAssets()" variant="link" class="mt-2"><b-icon-arrow-repeat v-b-popover.hover="'(Re)load Assets using the OpenSea API'" shift-v="+3" font-scale="1.5"></b-icon-arrow-repeat></b-button>Load Assets
+                    </div>
 
                     <b-card-group deck class="m-0">
                       <div v-for="asset in assetsToDisplay">
                         <b-card body-class="p-1" header-class="p-2" footer-class="p-2" img-top class="m-1 p-0">
-                          <b-link @click="addAsset(asset)">
+                          <b-link @click="addAsset(asset)" v-b-popover.hover="'Click to add image to the canvas'">
                             <!-- <b-avatar rounded="sm" variant="light" size="10.0rem" :src="asset.image_url" class="pixelated"></b-avatar> -->
                             <b-img rounded="sm" variant="light" size="10.0rem" :src="asset.image_url" style="width: 15rem; height: 15rem; object-fit: contain; object-position: 50% top; background-color: #fafafa;" class="pixelated m-1 p-2"></b-img>
                           </b-link>
                           <template #header>
-                            <span class="small truncate" v-b-popover.hover="getAssetName(asset)">
-                              {{ getAssetName(asset).substring(0, 32) }}
+                            <span variant="secondary" class="small truncate">
+                              <b-link :href="asset.collection.external_url" v-b-popover.hover="'View on original site, if available. Risky out there, so be careful - ' + getCollectionTitle(asset)" target="_blank">
+                                <img :src="asset.collection.image_url" width="20px" />
+                              </b-link>
+                              {{ getCollectionTitle(asset).substring(0, 32) }}
                             </span>
+                            <!--
+                            <span class="float-right">
+                              <b-link :href="asset.permalink + '?ref=0x000001f568875F378Bf6d170B790967FE429C81A'" v-b-popover.hover="'View on OpenSea.io'" target="_blank"><img src="images/381114e-opensea-logomark-flat-colored-blue.png" width="20px" /></b-link>
+                            </span>
+                            -->
                           </template>
                           <template #footer>
                             <span class="small truncate" v-b-popover.hover="getAssetName(asset)">
@@ -92,12 +107,6 @@ const NFTPostcard = {
                         </b-card>
                       </div>
                     </b-card-group>
-                    <div v-if="!powerOn" class="mt-4">
-                      Click the power button <b-button size="sm" variant="link" class="m-0 p-0" v-b-popover.hover="'Power up this app'" @click="setPowerOn();" v-if="!powerOn"><b-icon-power shift-v="-1" font-scale="1.5"></b-icon-power></b-button> on the top right to connect via web3 to load your NFTs.
-                    </div>
-                    <div v-else>
-                      <b-button size="sm" @click="loadAssets()" variant="link" class="mt-2"><b-icon-arrow-repeat v-b-popover.hover="'(Re)load Assets using the OpenSea API'" shift-v="+3" font-scale="1.5"></b-icon-arrow-repeat></b-button>Load Assets
-                    </div>
                   </b-tab>
 
                   <!--
@@ -584,6 +593,13 @@ const NFTPostcard = {
       setTimeout(function() {
         t.statusSidebar = true;
       }, 1500);
+    },
+    getCollectionTitle(asset) {
+      if (asset.collection != null && asset.collection.name) {
+        return asset.collection.name;
+      } else {
+        return '#' + asset.asset_contract.name;
+      }
     },
     getAssetName(asset) {
       if (asset.name != null) {
