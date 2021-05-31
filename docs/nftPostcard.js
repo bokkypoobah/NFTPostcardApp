@@ -81,7 +81,7 @@ const NFTPostcard = {
                           <b-link @click="addAsset(asset)" v-b-popover.hover="'Click to add image to the canvas'">
                             <!-- <b-avatar rounded="sm" variant="light" size="10.0rem" :src="asset.image_url" class="pixelated"></b-avatar> -->
                             <!-- <b-img rounded="sm" variant="light" size="10.0rem" :src="asset.image_url" style="width: 15rem; height: 15rem; object-fit: contain; object-position: 50% top; background-color: #fafafa;" class="pixelated m-1 p-2"></b-img> -->
-                            <b-img rounded="sm" variant="light" size="10.0rem" :src="asset.image_url" style="width: 15rem; height: 15rem; object-fit: contain; object-position: 50% top; background-color: #fafafa;" class="m-1 p-2"></b-img>
+                            <b-img rounded="sm" variant="light" size="10.0rem" :src="asset.image_url" style="width: 15rem; height: 15rem; object-fit: contain; object-position: 50% top; background-color: #fafafa;" class="crisp-edges m-1 p-2"></b-img>
                           </b-link>
                           <template #header>
                             <span variant="secondary" class="small truncate">
