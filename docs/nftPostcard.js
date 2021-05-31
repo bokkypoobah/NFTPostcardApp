@@ -570,6 +570,9 @@ const NFTPostcard = {
           }
         }
       }
+      results.sort(function(a, b) {
+        return ('' + a.collection.slug + '-' + a.name).localeCompare(b.collection.slug + '-' + b.name);
+      });
       return results;
     },
   },

@@ -10,6 +10,30 @@ const Docs = {
               <b-card-text>
                 <h5 ref="info_top" class="mb-3">Info</h5>
 
+                <a href="https://isotile.com/a/0xbeeef66749b64afe43bbc9475635eb510cfe4922" target="_blank">https://isotile.com/a/0xbeeef66749b64afe43bbc9475635eb510cfe4922</a>
+                <br />
+                <iframe src="https://isotile.com/a/0xbeeef66749b64afe43bbc9475635eb510cfe4922" style="width: 400px; height: 200px;"></iframe>
+
+                <br />
+                <a href="https://opensea.io/accounts/beeef.nftpostcard.eth" target="_blank">https://opensea.io/accounts/beeef.nftpostcard.eth</a>
+                <!--
+                <br />
+                <iframe src="https://opensea.io/accounts/beeef.nftpostcard.eth" style="width: 400px; height: 200px;"></iframe>
+                -->
+
+                <br />
+                <a href="https://isotile.com/a/0x000001f568875f378bf6d170b790967fe429c81a" target="_blank">https://isotile.com/a/0x000001f568875f378bf6d170b790967fe429c81a</a>
+                <br />
+                <iframe src="https://isotile.com/a/0x000001f568875f378bf6d170b790967fe429c81a" style="width: 400px; height: 200px;"></iframe>
+
+                <br />
+                <a href="https://opensea.io/accounts/bokkypoobah.eth" target="_blank">https://opensea.io/accounts/bokkypoobah.eth</a>
+                <!--
+                <br />
+                <iframe src="https://opensea.io/accounts/bokkypoobah.eth" style="width: 400px; height: 200px;"></iframe>
+                -->
+
+
                 <!-- <b-card no-body class="border-0"> -->
                   <p>We, <b-link href="https://www.larvalabs.com/cryptopunks/details/3636" target="_blank">#3636 <b-avatar variant="light" size="3.0rem" src="https://www.larvalabs.com/public/images/cryptopunks/punk3636.png"></b-avatar></b-link> and
                   <b-link href="https://www.larvalabs.com/cryptopunks/details/4472" target="_blank">#4472 <b-avatar variant="light" size="3.0rem" src="https://www.larvalabs.com/public/images/cryptopunks/punk4472.png"></b-avatar></b-link>, Zombie Xtreme High Yield cultivators have been travelling through space and time collecting digital subjects to build a menagerie.</p>
@@ -86,7 +110,7 @@ const Docs = {
 
               <b-card-text>
                 <h5 ref="links_top" class="mb-3">Links</h5>
-                <p>GitHub Zombie Babies UI: <b-link href="https://github.com/bokkypoobah/ZombieBabies" target="_blank">https://github.com/bokkypoobah/ZombieBabies</b-link></p>
+                <p>GitHub NFTPostcardApp: <b-link href="https://github.com/bokkypoobah/NFTPostcardApp" target="_blank">https://github.com/bokkypoobah/NFTPostcardApp</b-link></p>
                 <p>GitHub ERC-1155 NFT: <b-link href="https://github.com/bokkypoobah/NFT" target="_blank">https://github.com/bokkypoobah/NFT</b-link></p>
                 <p>Twitter: <b-link href="https://twitter.com/BokkyPooBah" target="_blank">https://twitter.com/BokkyPooBah</b-link></p>
               </b-card-text>
