@@ -371,8 +371,14 @@ const NFTPostcard = {
                         <b-form-input type="text" v-model.trim="text.text"></b-form-input>
                       </b-form-group>
 
-                      <b-form-group label-cols="2" label-size="sm" label="Colour">
+                      <b-form-group label-cols="2" label-size="sm" label="Text colour">
                         <input type="color" v-model.trim="text.colour" value="#00ff36">
+                      </b-form-group>
+                      <b-form-group label-cols="2" label-size="sm" label="Background colour">
+                        <b-form-checkbox v-model="text.backgroundTransparent">
+                          transparent
+                        </b-form-checkbox>
+                        <input type="color" v-model.trim="text.backgroundColour" value="#00ff36">
                       </b-form-group>
 
                       <b-form-group label-cols="2" label-size="sm" label="Font family">
@@ -494,7 +500,9 @@ const NFTPostcard = {
       text: {
         text: "",
         fontFamily: "helvetica",
-        colour: "#000000"
+        colour: "#000000",
+        backgroundTransparent: true,
+        backgroundColour: "#ffffff"
       },
 
       canvas: null,
@@ -872,6 +880,7 @@ const NFTPostcard = {
         left: 100,
         top: 100,
         fill: text.colour,
+        textBackgroundColor: text.backgroundTransparent ? null : text.backgroundColour,
       });
       this.canvas.add(iText);
       localStorage.setItem('canvas', JSON.stringify(this.canvas));
