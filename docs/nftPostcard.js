@@ -57,7 +57,7 @@ const NFTPostcard = {
                     </b-card-text>
                   </b-tab>
 
-                  <b-tab active title="Assets" class="p-1">
+                  <b-tab title="NFTs" class="p-1">
 
                     <b-row class="mb-3">
                       <b-col md="6" class="p-3">
@@ -76,7 +76,7 @@ const NFTPostcard = {
                       Click the power button <b-button size="sm" variant="link" class="m-0 p-0" v-b-popover.hover="'Power up this app'" @click="setPowerOn();" v-if="!powerOn"><b-icon-power shift-v="-1" font-scale="1.5"></b-icon-power></b-button> on the top right to connect via web3 to load your NFTs.
                     </div>
                     <div v-else>
-                      <b-button size="sm" @click="loadAssets()" variant="link" class="mt-2"><b-icon-arrow-repeat v-b-popover.hover="'(Re)load Assets using the OpenSea API'" shift-v="+3" font-scale="1.5"></b-icon-arrow-repeat></b-button>Load Assets
+                      <b-button size="sm" @click="loadNFTs()" variant="link" class="mt-2"><b-icon-arrow-repeat v-b-popover.hover="'(Re)load NFTs using the OpenSea API'" shift-v="+3" font-scale="1.5"></b-icon-arrow-repeat></b-button>Load NFTs
                     </div>
 
                     <b-card-group deck class="m-0">
@@ -336,7 +336,7 @@ const NFTPostcard = {
                     </b-card-text>
                   </b-tab>
 
-                  <b-tab title="Text" class="p-1">
+                  <b-tab active title="Text" class="p-1">
                     <b-card-text>
                       <!--
                       <b-row  align-h="start">
@@ -370,8 +370,13 @@ const NFTPostcard = {
                       <b-form-group label-cols="2" label-size="sm" label="Enter text">
                         <b-form-input type="text" v-model.trim="text.text"></b-form-input>
                       </b-form-group>
+
+                      <b-form-group label-cols="2" label-size="sm" label="Colour">
+                        <input type="color" v-model.trim="text.colour" value="#00ff36">
+                      </b-form-group>
+
                       <b-form-group label-cols="2" label-size="sm" label="Font family">
-                        <b-form-select v-model="text.fontFamily" class="mb-3">
+                        <b-form-select v-model="text.fontFamily" class="mb-3 w-25">
                           <b-form-select-option value="arial">Arial</b-form-select-option>
                           <b-form-select-option value="helvetica" selected>Helvetica</b-form-select-option>
                           <b-form-select-option value="myriad pro">Myriad Pro</b-form-select-option>
@@ -488,7 +493,8 @@ const NFTPostcard = {
 
       text: {
         text: "",
-        fontFamily: "helvetica"
+        fontFamily: "helvetica",
+        colour: "#000000"
       },
 
       canvas: null,
@@ -865,14 +871,15 @@ const NFTPostcard = {
         fontFamily: text.fontFamily,
         left: 100,
         top: 100,
+        fill: text.colour,
       });
       this.canvas.add(iText);
       localStorage.setItem('canvas', JSON.stringify(this.canvas));
       logInfo("NFTPostcard", "LocalStorage Canvas: " + JSON.stringify(this.canvas));
     },
 
-    async loadAssets() {
-      logInfo("NFTPostcard", "loadAssets()");
+    async loadNFTs() {
+      logInfo("NFTPostcard", "loadNFTs()");
       const PAGESIZE = 50; // Default 20, max 50
       const DELAY = 1000; // Millis
       let page = 0;
@@ -900,7 +907,7 @@ const NFTPostcard = {
         }
       }
     },
-    async loadNFTs(collection) {
+    async loadNFTs_old(collection) {
       logInfo("NFTPostcard", "loadNFTs() collection: " + collection);
       const t = this;
 
@@ -1107,7 +1114,7 @@ const NFTPostcard = {
     this.reschedule = true;
     logInfo("NFTPostcard", "Calling timeoutCallback()");
     this.timeoutCallback();
-    this.loadAssets();
+    this.loadNFTs();
 
     const storedCanvas = JSON.parse(localStorage.getItem('canvas'));
     logInfo("NFTPostcard", "LocalStorage storedCanvas: " + JSON.stringify(storedCanvas));
