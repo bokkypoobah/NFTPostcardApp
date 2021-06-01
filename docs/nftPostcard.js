@@ -57,7 +57,7 @@ const NFTPostcard = {
                     </b-card-text>
                   </b-tab>
 
-                  <b-tab title="NFTs" class="p-1">
+                  <b-tab active title="NFTs" class="p-1">
 
                     <b-row class="mb-3">
                       <b-col md="6" class="p-3">
@@ -336,7 +336,7 @@ const NFTPostcard = {
                     </b-card-text>
                   </b-tab>
 
-                  <b-tab active title="Text" class="p-1">
+                  <b-tab title="Text" class="p-1">
                     <b-card-text>
                       <!--
                       <b-row  align-h="start">
