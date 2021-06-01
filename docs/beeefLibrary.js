@@ -1,7 +1,7 @@
-const NFTPostcard = {
+const BeeefLibrary = {
   template: `
     <div class="mt-5 pt-3">
-      <b-card no-body header="NFTPostcard" class="border-0" header-class="p-1">
+      <b-card no-body header="Beeef Library Of Best Quality NFTs" class="border-0" header-class="p-1">
         <b-card no-body class="border-0 m-0 mt-2">
           <b-card-body class="p-0">
 
@@ -38,19 +38,15 @@ const NFTPostcard = {
 
                   <b-tab title="Canvas" class="p-1">
                     <b-card-text>
-                      <b-form-group label-cols="2" label-size="sm" label="Width" description="24 to 2048">
-                        <b-form-input type="text" @change="setCanvasSize()" v-model.trim="canvasSetting.width" class="w-25"></b-form-input>
-                        <b-form-input @change="setCanvasSize()" v-model="canvasSetting.width" type="range" min="24" max="2048" class="w-25"></b-form-input>
+                      <b-form-group label-cols="2" label-size="sm" label="Width" description="e.g., 1024. Max 2048">
+                        <b-form-input type="text" v-model.trim="canvasSetting.width" class="w-25"></b-form-input>
                       </b-form-group>
-                      <b-form-group label-cols="2" label-size="sm" label="Height" description="24 to 2048">
-                        <b-form-input type="text" @change="setCanvasSize()" v-model.trim="canvasSetting.height" class="w-25"></b-form-input>
-                        <b-form-input @change="setCanvasSize()" v-model="canvasSetting.height" type="range" min="24" max="2048" class="w-25"></b-form-input>
+                      <b-form-group label-cols="2" label-size="sm" label="Height" description="e.g., 480. Max 2048">
+                        <b-form-input type="text" v-model.trim="canvasSetting.height" class="w-25"></b-form-input>
                       </b-form-group>
-                      <!--
                       <b-form-group label-cols="2" label-size="sm">
                         <b-button size="sm" @click="setCanvasSize()" variant="info">Set Canvas Size</b-button>
                       </b-form-group>
-                      -->
                       <b-form-group label-cols="2" label-size="sm" description="To be implemented. Please use your OS print screen buttons">
                         <b-button disabled size="sm" @click="saveImage()" v-b-popover.hover="'Not working yet. Please use your OS print screen buttons'" variant="info">Save Image</b-button>
                       </b-form-group>
@@ -615,10 +611,10 @@ const NFTPostcard = {
       }
     },
     async saveImage() {
-      logInfo("NFTPostcard", "saveImage()");
+      logInfo("beeefLibraryOfBestQualityNFTs", "saveImage()");
 
       // const div = document.getElementById("toBeCaptured");
-      // logInfo("NFTPostcard", "saveImage() div: " + JSON.stringify(div));
+      // logInfo("beeefLibraryOfBestQualityNFTs", "saveImage() div: " + JSON.stringify(div));
       // console.table(div);
 
       // getScreenshotOfElement($("div#toBeCaptured").get(0), 0, 0, 100, 100, function(data) {
@@ -652,7 +648,7 @@ const NFTPostcard = {
 
       /*
       function getScreenshotOfElement(element, posX, posY, width, height, callback) {
-        // logInfo("NFTPostcard", "getScreenshotOfElement() element: " + JSON.stringify(element));
+        // logInfo("beeefLibraryOfBestQualityNFTs", "getScreenshotOfElement() element: " + JSON.stringify(element));
         // console.table(element);
         html2canvas(element, {
           width: width,
@@ -662,7 +658,7 @@ const NFTPostcard = {
           allowTaint: false
         }).then(canvas => {
           // onrendered: function (canvas) {
-          // logInfo("NFTPostcard", "getScreenshotOfElement() element: " + JSON.stringify(element));
+          // logInfo("beeefLibraryOfBestQualityNFTs", "getScreenshotOfElement() element: " + JSON.stringify(element));
           var context = canvas.getContext('2d');
           var imageData = context.getImageData(posX, posY, width, height).data;
           var outputCanvas = document.createElement('canvas');
@@ -673,7 +669,7 @@ const NFTPostcard = {
           var idata = outputContext.createImageData(width, height);
           idata.data.set(imageData);
           outputContext.putImageData(idata, 0, 0);
-          logInfo("NFTPostcard", "getScreenshotOfElement() idata: " + JSON.stringify(idata));
+          logInfo("beeefLibraryOfBestQualityNFTs", "getScreenshotOfElement() idata: " + JSON.stringify(idata));
           callback(outputCanvas.toDataURL());
           // },
         });
@@ -683,11 +679,11 @@ const NFTPostcard = {
         // in the data variable there is the base64 image
         // exmaple for displaying the image in an <img>
         // $("img#captured").attr("src", "data:image/png;base64,"+data);
-        logInfo("NFTPostcard", "saveImage() data: " + JSON.stringify(data));
+        logInfo("beeefLibraryOfBestQualityNFTs", "saveImage() data: " + JSON.stringify(data));
         const blob = await fetch(data).then(r => r.blob());
-        logInfo("NFTPostcard", "saveImage() blob: " + JSON.stringify(blob));
+        logInfo("beeefLibraryOfBestQualityNFTs", "saveImage() blob: " + JSON.stringify(blob));
         const url = URL.createObjectURL(blob);
-        logInfo("NFTPostcard", "saveImage() url: " + JSON.stringify(url));
+        logInfo("beeefLibraryOfBestQualityNFTs", "saveImage() url: " + JSON.stringify(url));
         const a = document.createElement('a');
         a.download = "my_image.png"
         a.href = url;
@@ -713,7 +709,7 @@ const NFTPostcard = {
         // document.body.appendChild(canvas);
         var context = canvas.getContext('2d');
         var imageData = context.getImageData(posX, posY, width, height).data;
-        logInfo("NFTPostcard", "saveImage() imageData: " + JSON.stringify(imageData));
+        logInfo("beeefLibraryOfBestQualityNFTs", "saveImage() imageData: " + JSON.stringify(imageData));
         var outputCanvas = document.createElement('canvas');
         var outputContext = outputCanvas.getContext('2d');
         outputCanvas.width = width;
@@ -723,12 +719,12 @@ const NFTPostcard = {
         idata.data.set(imageData);
         outputContext.putImageData(idata, 0, 0);
         var dataURL = outputCanvas.toDataURL();
-        logInfo("NFTPostcard", "saveImage() dataURL: " + JSON.stringify(dataURL));
+        logInfo("beeefLibraryOfBestQualityNFTs", "saveImage() dataURL: " + JSON.stringify(dataURL));
 
         const blob = await fetch(dataURL).then(r => r.blob());
-        logInfo("NFTPostcard", "saveImage() blob: " + JSON.stringify(blob));
+        logInfo("beeefLibraryOfBestQualityNFTs", "saveImage() blob: " + JSON.stringify(blob));
         const url = URL.createObjectURL(blob);
-        logInfo("NFTPostcard", "saveImage() url: " + JSON.stringify(url));
+        logInfo("beeefLibraryOfBestQualityNFTs", "saveImage() url: " + JSON.stringify(url));
         const a = document.createElement('a');
         a.download = "my_image.png"
         a.href = url;
@@ -744,12 +740,12 @@ const NFTPostcard = {
 
 
       // let dataURL = this.canvas.toDataURL({ format: 'png', multiplier: 2, });
-      // logInfo("NFTPostcard", "saveImage() dataURL: " + JSON.stringify(dataURL));
+      // logInfo("beeefLibraryOfBestQualityNFTs", "saveImage() dataURL: " + JSON.stringify(dataURL));
       //
       // const blob = await fetch(dataURL).then(r => r.blob());
-      // logInfo("NFTPostcard", "saveImage() blob: " + JSON.stringify(blob));
+      // logInfo("beeefLibraryOfBestQualityNFTs", "saveImage() blob: " + JSON.stringify(blob));
       // const url = URL.createObjectURL(blob);
-      // logInfo("NFTPostcard", "saveImage() url: " + JSON.stringify(url));
+      // logInfo("beeefLibraryOfBestQualityNFTs", "saveImage() url: " + JSON.stringify(url));
       // const a = document.createElement('a');
       // a.download = "my_image.png"
       // a.href = url;
@@ -761,22 +757,22 @@ const NFTPostcard = {
 
     },
     setCanvasSize() {
-      // logInfo("NFTPostcard", "setCanvasSize() canvasSetting: " + JSON.stringify(this.canvasSetting));
+      // logInfo("beeefLibraryOfBestQualityNFTs", "setCanvasSize() canvasSetting: " + JSON.stringify(this.canvasSetting));
       this.canvas.setWidth(this.canvasSetting.width);
       this.canvas.setHeight(this.canvasSetting.height);
     },
     onFileChange(file) {
       const t = this;
       const url = URL.createObjectURL(file);
-      // logInfo("NFTPostcard", "onFileChange() url: " + JSON.stringify(url));
+      // logInfo("beeefLibraryOfBestQualityNFTs", "onFileChange() url: " + JSON.stringify(url));
       var imgObj = new Image();
       imgObj.src = url;
-      // logInfo("NFTPostcard", "onFileChange() imgObj: " + JSON.stringify(imgObj));
+      // logInfo("beeefLibraryOfBestQualityNFTs", "onFileChange() imgObj: " + JSON.stringify(imgObj));
       imgObj.onload = function () {
         const image = new fabric.Image(imgObj);
         image.set({ left: 0, top: 0, angle: 0, padding: 0, cornersize: 0 });
-        // logInfo("NFTPostcard", "onFileChange() image width: " + image.width + ", height: " + image.height);
-        // logInfo("NFTPostcard", "onFileChange() t.canvas width: " + t.canvas.width + ", height: " + t.canvas.height);
+        // logInfo("beeefLibraryOfBestQualityNFTs", "onFileChange() image width: " + image.width + ", height: " + image.height);
+        // logInfo("beeefLibraryOfBestQualityNFTs", "onFileChange() t.canvas width: " + t.canvas.width + ", height: " + t.canvas.height);
         image.scale(t.settings['ImageUpload'].scaleWidth, t.settings['ImageUpload'].scaleHeight).set('flipX', t.settings['ImageUpload'].flipX).set('flipY', t.settings['ImageUpload'].flipY);
         t.canvas.add(image);
         // t.canvas.setBackgroundImage(image);
@@ -784,7 +780,7 @@ const NFTPostcard = {
       };
     },
     async addAsset(asset) {
-      logInfo("NFTPostcard", "addAsset() asset: " + JSON.stringify(asset, null, 2));
+      logInfo("beeefLibraryOfBestQualityNFTs", "addAsset() asset: " + JSON.stringify(asset, null, 2));
       const t = this;
       let scale = 1.0;
       // const canvas = store.getters['nftPostcard/canvas'];
@@ -810,15 +806,15 @@ const NFTPostcard = {
       }
       fabric.Image.fromURL(asset.image_url, function(oImg) {
         oImg.set('imageSmoothing', false).scale(scale);
-        // logInfo("NFTPostcard", "addAsset() adding: " + JSON.stringify(oImg));
+        // logInfo("beeefLibraryOfBestQualityNFTs", "addAsset() adding: " + JSON.stringify(oImg));
         t.canvas.add(oImg);
-        logInfo("NFTPostcard", "addAsset() added: " + JSON.stringify(oImg));
-        logInfo("NFTPostcard", "addAsset() LocalStorage.setItem: " + JSON.stringify(oImg));
+        logInfo("beeefLibraryOfBestQualityNFTs", "addAsset() added: " + JSON.stringify(oImg));
+        logInfo("beeefLibraryOfBestQualityNFTs", "addAsset() LocalStorage.setItem: " + JSON.stringify(oImg));
         localStorage.setItem('canvas', JSON.stringify(t.canvas));
       } , {crossOrigin: 'anonymous'});
     },
     async addImage(nftType, id, image, asset) {
-      logInfo("NFTPostcard", "addImage() type: " + nftType + ", id: " + id + ", image: " + image);
+      logInfo("beeefLibraryOfBestQualityNFTs", "addImage() type: " + nftType + ", id: " + id + ", image: " + image);
       if (asset != null) {
         // console.table(asset);
         console.log(JSON.stringify(asset, null, 2));
@@ -853,14 +849,14 @@ const NFTPostcard = {
         // oImg.set({width: 300, height: 300, left: 10, top: 10, originX: 'left', originY: 'top'});
         // oImg.filters.push(new fabric.Image.filters.Grayscale());
         // oImg.applyFilters();
-        logInfo("NFTPostcard", "addImage() adding: " + JSON.stringify(oImg));
+        logInfo("beeefLibraryOfBestQualityNFTs", "addImage() adding: " + JSON.stringify(oImg));
         t.canvas.add(oImg);
-        logInfo("NFTPostcard", "addImage() added: " + JSON.stringify(oImg));
+        logInfo("beeefLibraryOfBestQualityNFTs", "addImage() added: " + JSON.stringify(oImg));
       } , {crossOrigin: 'anonymous'});
     },
 
     async addText(text) {
-      logInfo("NFTPostcard", "addText() text: " + JSON.stringify(text, null, 2));
+      logInfo("beeefLibraryOfBestQualityNFTs", "addText() text: " + JSON.stringify(text, null, 2));
       const iText = new fabric.IText(text.text, {
         fontFamily: text.fontFamily,
         left: 100,
@@ -868,11 +864,11 @@ const NFTPostcard = {
       });
       this.canvas.add(iText);
       localStorage.setItem('canvas', JSON.stringify(this.canvas));
-      logInfo("NFTPostcard", "LocalStorage Canvas: " + JSON.stringify(this.canvas));
+      logInfo("beeefLibraryOfBestQualityNFTs", "LocalStorage Canvas: " + JSON.stringify(this.canvas));
     },
 
     async loadAssets() {
-      logInfo("NFTPostcard", "loadAssets()");
+      logInfo("beeefLibraryOfBestQualityNFTs", "loadAssets()");
       const PAGESIZE = 50; // Default 20, max 50
       const DELAY = 1000; // Millis
       let page = 0;
@@ -889,7 +885,7 @@ const NFTPostcard = {
           if (data.assets && data.assets.length > 0) {
             for (let assetIndex = 0; assetIndex < data.assets.length; assetIndex++) {
               const asset = data.assets[assetIndex];
-              // logInfo("NFTPostcard", "loadAssets() asset(" + (parseInt(offset) + assetIndex) + ") name: " + asset.collection.name + ", slug: " + asset.collection.slug);
+              // logInfo("beeefLibraryOfBestQualityNFTs", "loadAssets() asset(" + (parseInt(offset) + assetIndex) + ") name: " + asset.collection.name + ", slug: " + asset.collection.slug);
               this.assets.push(asset);
             }
           } else {
@@ -901,7 +897,7 @@ const NFTPostcard = {
       }
     },
     async loadNFTs(collection) {
-      logInfo("NFTPostcard", "loadNFTs() collection: " + collection);
+      logInfo("beeefLibraryOfBestQualityNFTs", "loadNFTs() collection: " + collection);
       const t = this;
 
       // CryptoPunks - OpenSea
@@ -909,7 +905,7 @@ const NFTPostcard = {
         let cryptoPunksUrl = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&asset_contract_address=" + CRYPTOPUNKMARKETADDRESS + "&order_direction=desc&offset=0&limit=50";
         cryptoPunksReq = new XMLHttpRequest();
         cryptoPunksReq.overrideMimeType("application/json");
-        logInfo("NFTPostcard", "loadNFTs() openSeaPunkData cryptoPunksUrl: " + cryptoPunksUrl);
+        logInfo("beeefLibraryOfBestQualityNFTs", "loadNFTs() openSeaPunkData cryptoPunksUrl: " + cryptoPunksUrl);
         cryptoPunksReq.open('GET', cryptoPunksUrl, true);
         cryptoPunksReq.onload  = function() {
           if (cryptoPunksReq.readyState == 4) {
@@ -934,7 +930,7 @@ const NFTPostcard = {
         let pixelPortraitsUrl = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&order_direction=desc&offset=0&limit=50&collection=the-pixel-portraits";
         pixelPortraitsReq = new XMLHttpRequest();
         pixelPortraitsReq.overrideMimeType("application/json");
-        logInfo("NFTPostcard", "loadNFTs() openSeaPixelPortraitsData pixelPortraitsUrl: " + pixelPortraitsUrl);
+        logInfo("beeefLibraryOfBestQualityNFTs", "loadNFTs() openSeaPixelPortraitsData pixelPortraitsUrl: " + pixelPortraitsUrl);
         pixelPortraitsReq.open('GET', pixelPortraitsUrl, true);
         pixelPortraitsReq.onload  = function() {
           if (pixelPortraitsReq.readyState == 4) {
@@ -944,7 +940,7 @@ const NFTPostcard = {
               const asset = openSeaPixelPortraitData.assets[assetIndex];
               var id = asset.name;
               var imageUrl = asset.image_url;
-              logInfo("NFTPostcard", "loadNFTs() openSeaPixelPortraitsData id: " + id + " => " + imageUrl);
+              logInfo("beeefLibraryOfBestQualityNFTs", "loadNFTs() openSeaPixelPortraitsData id: " + id + " => " + imageUrl);
               pixelPortraitsDataListTemp.push({ id: id, imageUrl: imageUrl });
             }
             t.pixelPortraitsDataList = pixelPortraitsDataListTemp;
@@ -959,7 +955,7 @@ const NFTPostcard = {
         let bganpunkv2Url = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&asset_contract_address=" + BGANPUNKV2ADDRESS + "&order_direction=desc&offset=0&limit=50";
         bganpunkv2Req = new XMLHttpRequest();
         bganpunkv2Req.overrideMimeType("application/json");
-        logInfo("NFTPostcard", "loadNFTs() openSeaBganpunkv2Data bganpunkv2Url: " + bganpunkv2Url);
+        logInfo("beeefLibraryOfBestQualityNFTs", "loadNFTs() openSeaBganpunkv2Data bganpunkv2Url: " + bganpunkv2Url);
         bganpunkv2Req.open('GET', bganpunkv2Url, true);
         bganpunkv2Req.onload  = function() {
           if (bganpunkv2Req.readyState == 4) {
@@ -981,7 +977,7 @@ const NFTPostcard = {
         let punkBodiesUrl = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&asset_contract_address=" + PUNKBODIESADDRESS + "&order_direction=desc&offset=0&limit=50";
         punkBodiesReq = new XMLHttpRequest();
         punkBodiesReq.overrideMimeType("application/json");
-        logInfo("NFTPostcard", "loadNFTs() openSeaPunkBodyData punkBodiesUrl: " + punkBodiesUrl);
+        logInfo("beeefLibraryOfBestQualityNFTs", "loadNFTs() openSeaPunkBodyData punkBodiesUrl: " + punkBodiesUrl);
         punkBodiesReq.open('GET', punkBodiesUrl, true);
         punkBodiesReq.onload  = function() {
           if (punkBodiesReq.readyState == 4) {
@@ -1033,20 +1029,20 @@ const NFTPostcard = {
         let cryptoCatsUrl = "https://us-central1-cryptocats-ws-prod.cloudfunctions.net/listing/ccat/" + store.getters['connection/coinbase'].toLowerCase();
         cryptoCatsReq = new XMLHttpRequest();
         cryptoCatsReq.overrideMimeType("application/json");
-        logInfo("NFTPostcard", "loadNFTs() cryptoCatsUrl: " + cryptoCatsUrl);
+        logInfo("beeefLibraryOfBestQualityNFTs", "loadNFTs() cryptoCatsUrl: " + cryptoCatsUrl);
         cryptoCatsReq.open('GET', cryptoCatsUrl, true);
         cryptoCatsReq.onload  = function() {
           if (cryptoCatsReq.readyState == 4) {
             const cryptoCatsDataListTemp = [];
             const cryptoCatsData = JSON.parse(cryptoCatsReq.responseText);
-            logInfo("NFTPostcard", "loadNFTs() cryptoCatsData: " + JSON.stringify(cryptoCatsData));
+            logInfo("beeefLibraryOfBestQualityNFTs", "loadNFTs() cryptoCatsData: " + JSON.stringify(cryptoCatsData));
             if (cryptoCatsData.ccat != null) {
-              logInfo("NFTPostcard", "loadNFTs() cryptoCatsData.ccat: " + JSON.stringify(cryptoCatsData.ccat));
+              logInfo("beeefLibraryOfBestQualityNFTs", "loadNFTs() cryptoCatsData.ccat: " + JSON.stringify(cryptoCatsData.ccat));
               for (const [id, value] of Object.entries(cryptoCatsData.ccat)) {
                 // const ccat = cryptoCatsData.ccat[ccatIndex];
-                logInfo("NFTPostcard", "loadNFTs() id: " + id + " => " + JSON.stringify(value));
+                logInfo("beeefLibraryOfBestQualityNFTs", "loadNFTs() id: " + id + " => " + JSON.stringify(value));
                 var imageUrl = "https://cryptocats.thetwentysix.io/contents/images/cats/" + id + ".png"
-                logInfo("NFTPostcard", "loadNFTs() id: " + id + " => " + imageUrl);
+                logInfo("beeefLibraryOfBestQualityNFTs", "loadNFTs() id: " + id + " => " + imageUrl);
                 cryptoCatsDataListTemp.push({ id: id, imageUrl: imageUrl });
               }
               t.cryptoCatsDataList = cryptoCatsDataListTemp;
@@ -1061,21 +1057,21 @@ const NFTPostcard = {
         let wrappedCryptoCatsUrl = "https://us-central1-cryptocats-ws-prod.cloudfunctions.net/listing/wccat/" + store.getters['connection/coinbase'].toLowerCase();
         wrappedCryptoCatsReq = new XMLHttpRequest();
         wrappedCryptoCatsReq.overrideMimeType("application/json");
-        logInfo("NFTPostcard", "loadNFTs() wrappedCryptoCatsUrl: " + wrappedCryptoCatsUrl);
+        logInfo("beeefLibraryOfBestQualityNFTs", "loadNFTs() wrappedCryptoCatsUrl: " + wrappedCryptoCatsUrl);
         wrappedCryptoCatsReq.open('GET', wrappedCryptoCatsUrl, true);
         wrappedCryptoCatsReq.onload  = function() {
           if (wrappedCryptoCatsReq.readyState == 4) {
             const wrappedCryptoCatsDataListTemp = [];
             const wrappedCryptoCatsData = JSON.parse(wrappedCryptoCatsReq.responseText);
-            logInfo("NFTPostcard", "loadNFTs() wrappedCryptoCatsData: " + JSON.stringify(wrappedCryptoCatsData));
-            // 00:47:36 INFO NFTPostcard:loadNFTs() wrappedCryptoCatsData: {"ccat":{"207":"wrapped"}}
+            logInfo("beeefLibraryOfBestQualityNFTs", "loadNFTs() wrappedCryptoCatsData: " + JSON.stringify(wrappedCryptoCatsData));
+            // 00:47:36 INFO beeefLibraryOfBestQualityNFTs:loadNFTs() wrappedCryptoCatsData: {"ccat":{"207":"wrapped"}}
             if (wrappedCryptoCatsData.ccat != null) {
-              logInfo("NFTPostcard", "loadNFTs() wrappedCryptoCatsData.ccat: " + JSON.stringify(wrappedCryptoCatsData.ccat));
+              logInfo("beeefLibraryOfBestQualityNFTs", "loadNFTs() wrappedCryptoCatsData.ccat: " + JSON.stringify(wrappedCryptoCatsData.ccat));
               for (const [id, value] of Object.entries(wrappedCryptoCatsData.ccat)) {
                 // const ccat = cryptoCatsData.ccat[ccatIndex];
-                logInfo("NFTPostcard", "loadNFTs() id: " + id + " => " + JSON.stringify(value));
+                logInfo("beeefLibraryOfBestQualityNFTs", "loadNFTs() id: " + id + " => " + JSON.stringify(value));
                 var imageUrl = "https://cryptocats.thetwentysix.io/contents/images/cats/" + id + ".png"
-                logInfo("NFTPostcard", "loadNFTs() id: " + id + " => " + imageUrl);
+                logInfo("beeefLibraryOfBestQualityNFTs", "loadNFTs() id: " + id + " => " + imageUrl);
                 wrappedCryptoCatsDataListTemp.push({ id: id, imageUrl: imageUrl });
               }
               t.wrappedCryptoCatsDataList = wrappedCryptoCatsDataListTemp;
@@ -1088,7 +1084,7 @@ const NFTPostcard = {
 
     },
     async timeoutCallback() {
-      logInfo("NFTPostcard", "timeoutCallback() count: " + this.count);
+      logInfo("beeefLibraryOfBestQualityNFTs", "timeoutCallback() count: " + this.count);
 
       this.count++;
       var t = this;
@@ -1100,21 +1096,21 @@ const NFTPostcard = {
     },
   },
   beforeDestroy() {
-    logInfo("NFTPostcard", "beforeDestroy()");
+    logInfo("beeefLibraryOfBestQualityNFTs", "beforeDestroy()");
   },
   mounted() {
-    logInfo("NFTPostcard", "mounted() $route: " + JSON.stringify(this.$route.params));
+    logInfo("beeefLibraryOfBestQualityNFTs", "mounted()");
     this.reschedule = true;
-    logInfo("NFTPostcard", "Calling timeoutCallback()");
+    logInfo("beeefLibraryOfBestQualityNFTs", "Calling timeoutCallback()");
     this.timeoutCallback();
     this.loadAssets();
 
     const storedCanvas = JSON.parse(localStorage.getItem('canvas'));
-    logInfo("NFTPostcard", "LocalStorage storedCanvas: " + JSON.stringify(storedCanvas));
+    logInfo("beeefLibraryOfBestQualityNFTs", "LocalStorage storedCanvas: " + JSON.stringify(storedCanvas));
 
-    logInfo("NFTPostcard", "Canvas: " + JSON.stringify(this.canvas));
+    logInfo("beeefLibraryOfBestQualityNFTs", "Canvas: " + JSON.stringify(this.canvas));
     if (storedCanvas == null) {
-      logInfo("NFTPostcard", "Canvas");
+      logInfo("beeefLibraryOfBestQualityNFTs", "Canvas");
       this.canvas = new fabric.Canvas('thecanvas', {
         hoverCursor: 'pointer',
         selection: false,
@@ -1134,7 +1130,7 @@ const NFTPostcard = {
       });
       this.canvas.add(text);
       localStorage.setItem('canvas', JSON.stringify(this.canvas));
-      logInfo("NFTPostcard", "LocalStorage Canvas: " + JSON.stringify(this.canvas));
+      logInfo("beeefLibraryOfBestQualityNFTs", "LocalStorage Canvas: " + JSON.stringify(this.canvas));
     } else {
       this.canvas = new fabric.Canvas('thecanvas', {
         hoverCursor: 'pointer',
@@ -1143,7 +1139,7 @@ const NFTPostcard = {
       });
       const t = this;
       this.canvas.loadFromJSON(storedCanvas, function() {
-        logInfo("NFTPostcard", "LocalStorage loadFromJSON: " + JSON.stringify(storedCanvas));
+        logInfo("beeefLibraryOfBestQualityNFTs", "LocalStorage loadFromJSON: " + JSON.stringify(storedCanvas));
          t.canvas.renderAll();
       },function(o,object){
          console.log(o,object)
@@ -1216,10 +1212,10 @@ const NFTPostcard = {
 
     function removeObjectBackground(eventData, transform) {
       if (transform.target.type == "image") {
-        logInfo("NFTPostcard", "Calling removeObjectBackground()  target: " + JSON.stringify(transform.target));
+        logInfo("beeefLibraryOfBestQualityNFTs", "Calling removeObjectBackground()  target: " + JSON.stringify(transform.target));
         let ctx = transform.target.canvas.getContext('2d');
         let data = ctx.getImageData(parseInt(transform.target.left) * window.devicePixelRatio + 1, parseInt(transform.target.top) * window.devicePixelRatio + 1, 1, 1);
-        logInfo("NFTPostcard", "Calling removeObjectBackground() data: " + JSON.stringify(data));
+        logInfo("beeefLibraryOfBestQualityNFTs", "Calling removeObjectBackground() data: " + JSON.stringify(data));
         if (data.data[3] != 0) {
           var backgroundColor = '#' + data.data[0].toString(16) + data.data[1].toString(16) + data.data[2].toString(16);
           var filter = new fabric.Image.filters.RemoveColor({
@@ -1342,7 +1338,7 @@ const NFTPostcard = {
       cornerSize: 24
     });
 
-    // logInfo("NFTPostcard", "Calling fabric.Object.prototype.controls: " + JSON.stringify(fabric.Object.prototype.controls));
+    // logInfo("beeefLibraryOfBestQualityNFTs", "Calling fabric.Object.prototype.controls: " + JSON.stringify(fabric.Object.prototype.controls));
 
     const t = this;
     this.canvas.on({
@@ -1354,38 +1350,38 @@ const NFTPostcard = {
         // var objects = canvas.getObjects('line');
         // var objects = t.canvas.getObjects();
         // for (let i in objects) {
-        //     logInfo("NFTPostcard", "Canvas object:modified(): " + JSON.stringify(objects[i]));
+        //     logInfo("beeefLibraryOfBestQualityNFTs", "Canvas object:modified(): " + JSON.stringify(objects[i]));
         // }
-        logInfo("NFTPostcard", "canvas object:modified: " + JSON.stringify(t.canvas));
+        logInfo("beeefLibraryOfBestQualityNFTs", "canvas object:modified: " + JSON.stringify(t.canvas));
         localStorage.setItem('canvas', JSON.stringify(t.canvas));
       },
       'selection:cleared': function(e) {
         // var objects = t.canvas.getObjects();
         // for (let i in objects) {
-        //     logInfo("NFTPostcard", "Canvas selection:cleared(): " + JSON.stringify(objects[i]));
+        //     logInfo("beeefLibraryOfBestQualityNFTs", "Canvas selection:cleared(): " + JSON.stringify(objects[i]));
         // }
       },
       'selection:updated': function(e) {
         // var objects = t.canvas.getObjects();
         // for (let i in objects) {
-        //     logInfo("NFTPostcard", "Canvas selection:updated(): " + JSON.stringify(objects[i]));
+        //     logInfo("beeefLibraryOfBestQualityNFTs", "Canvas selection:updated(): " + JSON.stringify(objects[i]));
         // }
       },
       'selection:created': function(e) {
-        // logInfo("NFTPostcard", "Canvas selection:created() e: " + JSON.stringify(e));
+        // logInfo("beeefLibraryOfBestQualityNFTs", "Canvas selection:created() e: " + JSON.stringify(e));
         // // t.selectedObject = e;
         // var objects = t.canvas.getObjects();
         // for (let i in objects) {
-        //     logInfo("NFTPostcard", "Canvas selection:created(): " + JSON.stringify(objects[i]));
+        //     logInfo("beeefLibraryOfBestQualityNFTs", "Canvas selection:created(): " + JSON.stringify(objects[i]));
         // }
       },
       'mouse:down': function(options) {
         if (options.target) {
-          // logInfo("NFTPostcard", "Canvas mouse:down(): " + JSON.stringify(options.target));
+          // logInfo("beeefLibraryOfBestQualityNFTs", "Canvas mouse:down(): " + JSON.stringify(options.target));
           t.selectedObject = options.target;
           // var objects = t.canvas.getObjects();
           // for (let i in objects) {
-          //     logInfo("NFTPostcard", "Canvas mouse:down(): " + JSON.stringify(objects[i]));
+          //     logInfo("beeefLibraryOfBestQualityNFTs", "Canvas mouse:down(): " + JSON.stringify(objects[i]));
           // }
         }
       }
@@ -1396,7 +1392,7 @@ const NFTPostcard = {
   },
 };
 
-const nftPostcardModule = {
+const beeefLibraryModule = {
   namespaced: true,
   state: {
     canvas: null,
@@ -1411,20 +1407,20 @@ const nftPostcardModule = {
   },
   mutations: {
     setCanvas(state, c) {
-      logDebug("nftPostcardModule", "mutations.setCanvas('" + c + "')")
+      logDebug("beeefLibraryModule", "mutations.setCanvas('" + c + "')")
       state.canvas = c;
     },
     deQueue(state) {
-      logDebug("nftPostcardModule", "deQueue(" + JSON.stringify(state.executionQueue) + ")");
+      logDebug("beeefLibraryModule", "deQueue(" + JSON.stringify(state.executionQueue) + ")");
       state.executionQueue.shift();
     },
     updateParams(state, params) {
       state.params = params;
-      logDebug("nftPostcardModule", "updateParams('" + params + "')")
+      logDebug("beeefLibraryModule", "updateParams('" + params + "')")
     },
     updateExecuting(state, executing) {
       state.executing = executing;
-      logDebug("nftPostcardModule", "updateExecuting(" + executing + ")")
+      logDebug("beeefLibraryModule", "updateExecuting(" + executing + ")")
     },
   },
   actions: {

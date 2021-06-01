@@ -3,6 +3,10 @@ const routes = [{
     component: ZombieBabiesAdoption,
     name: 'ZombieBabiesAdoption',
   }, {
+    path: '/beeefLibrary',
+    component: BeeefLibrary,
+    name: 'BeeefLibrary',
+  }, {
   //   path: '/bodyshop/:param',
   //   component: Bodyshop,
   //   name: 'Bodyshop',
@@ -15,7 +19,7 @@ const routes = [{
     component: Docs,
     name: 'Docs',
   }, {
-    path: '/:id',
+    path: '/:account/:collection',
     component: NFTPostcard,
     name: '',
   }, {
