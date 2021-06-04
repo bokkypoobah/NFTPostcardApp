@@ -827,6 +827,7 @@ const NFTPostcard = {
         // logInfo("NFTPostcard", "onFileChange() t.canvas width: " + t.canvas.width + ", height: " + t.canvas.height);
         image.scale(t.settings['ImageUpload'].scaleWidth, t.settings['ImageUpload'].scaleHeight).set('flipX', t.settings['ImageUpload'].flipX).set('flipY', t.settings['ImageUpload'].flipY);
         t.canvas.add(image);
+        localStorage.setItem('canvas', JSON.stringify(t.canvas));
         // t.canvas.setBackgroundImage(image);
         // t.canvas.renderAll();
       };
@@ -1188,7 +1189,12 @@ const NFTPostcard = {
     this.timeoutCallback();
     this.loadNFTs();
 
-    const storedCanvas = JSON.parse(localStorage.getItem('canvas'));
+    let storedCanvas;
+    try {
+      storedCanvas = JSON.parse(localStorage.getItem('canvas'));
+    } catch (e) {
+      storedCanvas = null;
+    }
     // logInfo("NFTPostcard", "LocalStorage storedCanvas: " + JSON.stringify(storedCanvas));
 
     logInfo("NFTPostcard", "Canvas: " + JSON.stringify(this.canvas));
