@@ -14,6 +14,22 @@ const NFTPostcard = {
                   </div>
                 </b-col>
 
+                <div>
+                  <b-button id="show-btn" @click="showModal">Open Modal</b-button>
+                  <b-button id="toggle-btn" @click="toggleModal">Toggle Modal</b-button>
+
+                  <b-modal ref="my-modal" hide-footer title="Using Component Methods">
+                    <div class="d-block text-center">
+                      <h3>Hello From My Modal!</h3>
+                      <img id="thegif" :src="gif.src" :rel:animated_src="gif.src"
+                       width="360" height="360" rel:auto_play="0" rel:rubbable="1" />
+                    </div>
+                    <b-button class="mt-3" variant="outline-danger" block @click="hideModal">Close Me</b-button>
+                    <b-button class="mt-2" variant="outline-warning" block @click="toggleModal">Toggle Me</b-button>
+                  </b-modal>
+                </div>
+
+
                 <!--
                 <b-col md="4" class="ml-auto p-3">
                   <pre>
@@ -63,7 +79,7 @@ const NFTPostcard = {
                       <b-col md="6" class="p-3">
                         <b-card-group deck class="m-0">
                           <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                            <b-form-select v-model="collectionsSelected" :options="collectionsOptions" multiple :select-size="4"></b-form-select>
+                            <b-form-select v-model="collectionsSelected" :options="collectionsOptions" multiple :select-size="10"></b-form-select>
                           </b-card>
                         </b-card-group>
                       </b-col>
@@ -76,7 +92,7 @@ const NFTPostcard = {
                       Click the power button <b-button size="sm" variant="link" class="m-0 p-0" v-b-popover.hover="'Power up this app'" @click="setPowerOn();" v-if="!powerOn"><b-icon-power shift-v="-1" font-scale="1.5"></b-icon-power></b-button> on the top right to connect via web3 to load your NFTs.
                     </div>
                     <div v-else>
-                      <b-button size="sm" @click="loadNFTs()" variant="link" class="mt-2"><b-icon-arrow-repeat v-b-popover.hover="'(Re)load NFTs using the OpenSea API'" shift-v="+3" font-scale="1.5"></b-icon-arrow-repeat></b-button>Load NFTs
+                      <b-button size="sm" @click="loadNFTs()" variant="link" class="mt-2"><b-icon-arrow-repeat v-b-popover.hover="'Refresh NFTs using the OpenSea API'" shift-v="+3" font-scale="1.5"></b-icon-arrow-repeat></b-button>Refresh NFTs
                     </div>
 
                     <b-card-group deck class="m-0">
@@ -505,6 +521,10 @@ const NFTPostcard = {
         backgroundColour: "#ffffff"
       },
 
+      gif: {
+        src: null,
+      },
+
       canvas: null,
     }
   },
@@ -606,6 +626,20 @@ const NFTPostcard = {
     },
   },
   methods: {
+
+    showModal() {
+      this.$refs['my-modal'].show()
+    },
+    hideModal() {
+      this.$refs['my-modal'].hide()
+    },
+    toggleModal() {
+      // We pass the ID of the button that we want to return focus to
+      // when the modal has hidden
+      this.$refs['my-modal'].toggle('#toggle-btn')
+    },
+
+
     setPowerOn() {
       store.dispatch('connection/setPowerOn', true);
       localStorage.setItem('powerOn', true);
@@ -822,14 +856,43 @@ const NFTPostcard = {
       // } else if (asset.asset_contract.name == 'CryptoCat') {
       //   scale = 5.0 / 80;
       }
-      fabric.Image.fromURL(asset.image_url, function(oImg) {
-        oImg.set('imageSmoothing', false).scale(scale);
-        // logInfo("NFTPostcard", "addAsset() adding: " + JSON.stringify(oImg));
-        t.canvas.add(oImg);
-        logInfo("NFTPostcard", "addAsset() added: " + JSON.stringify(oImg));
-        logInfo("NFTPostcard", "addAsset() LocalStorage.setItem: " + JSON.stringify(oImg));
-        localStorage.setItem('canvas', JSON.stringify(t.canvas));
-      } , {crossOrigin: 'anonymous'});
+
+      logInfo("NFTPostcard", "EXIF.getData getting 1: " + JSON.stringify(asset.image_url));
+      // this.img.src = asset.image_url;
+      // logInfo("NFTPostcard", "EXIF.getData getting 2: " + JSON.stringify(asset.image_url));
+      // var element = document.getElementById("thegif")
+      // logInfo("NFTPostcard", "EXIF.getData getting 3: " + JSON.stringify(asset.image_url));
+      // EXIF.getData(new File(asset.image_url), function() {
+      //   logInfo("NFTPostcard", "EXIF.getData this: " + JSON.stringify(this));
+      //   var make = EXIF.getTag(this, "Make");
+      //     // var model = EXIF.getTag(this, "Model");
+      //     // var makeAndModel = document.getElementById("makeAndModel");
+      //     // makeAndModel.innerHTML = `${make} ${model}`;
+      // });
+
+      // if (/.*\.gif/.test(asset.image_url)) {
+        this.gif.src = asset.image_url;
+        this.$refs['my-modal'].show()
+      // } else {
+        fabric.Image.fromURL(asset.image_url, function(oImg) {
+
+          // EXIF.getData(oImg, function() {
+          //   logInfo("NFTPostcard", "EXIF.getData this: " + JSON.stringify(this));
+          //   // var make = EXIF.getTag(this, "Make");
+          //     // var model = EXIF.getTag(this, "Model");
+          //     // var makeAndModel = document.getElementById("makeAndModel");
+          //     // makeAndModel.innerHTML = `${make} ${model}`;
+          // });
+
+
+          oImg.set('imageSmoothing', false).scale(scale);
+          // logInfo("NFTPostcard", "addAsset() adding: " + JSON.stringify(oImg));
+          t.canvas.add(oImg);
+          logInfo("NFTPostcard", "addAsset() added: " + JSON.stringify(oImg));
+          logInfo("NFTPostcard", "addAsset() LocalStorage.setItem: " + JSON.stringify(oImg));
+          localStorage.setItem('canvas', JSON.stringify(t.canvas));
+        } , {crossOrigin: 'anonymous'});
+      // }
     },
     async addImage(nftType, id, image, asset) {
       logInfo("NFTPostcard", "addImage() type: " + nftType + ", id: " + id + ", image: " + image);
@@ -1126,7 +1189,7 @@ const NFTPostcard = {
     this.loadNFTs();
 
     const storedCanvas = JSON.parse(localStorage.getItem('canvas'));
-    logInfo("NFTPostcard", "LocalStorage storedCanvas: " + JSON.stringify(storedCanvas));
+    // logInfo("NFTPostcard", "LocalStorage storedCanvas: " + JSON.stringify(storedCanvas));
 
     logInfo("NFTPostcard", "Canvas: " + JSON.stringify(this.canvas));
     if (storedCanvas == null) {
@@ -1159,10 +1222,10 @@ const NFTPostcard = {
       });
       const t = this;
       this.canvas.loadFromJSON(storedCanvas, function() {
-        logInfo("NFTPostcard", "LocalStorage loadFromJSON: " + JSON.stringify(storedCanvas));
+        // logInfo("NFTPostcard", "LocalStorage loadFromJSON: " + JSON.stringify(storedCanvas));
          t.canvas.renderAll();
       },function(o,object){
-         console.log(o,object)
+         // console.log(o,object)
       })
     }
 

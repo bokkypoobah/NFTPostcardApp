@@ -183,6 +183,11 @@ const tokensModule = {
           //   // An event triggered whenever anyone transfers to someone else
           //   "event Transfer(address indexed from, address indexed to, uint amount)"
           // ];
+
+          const beeeefRegistryContract = new ethers.Contract(BEEEEFREGISTRYENS, BEEEEFREGISTRYABI, store.getters['connection/connection'].provider);
+          const entries = await beeeefRegistryContract.getEntries();
+          logInfo("tokensModule", "execWeb3() beeeefRegistryContract.entries: " + JSON.stringify(entries));
+
           //
           // // The Contract object
           const nftContract = new ethers.Contract(nftAddress, nftAbi, store.getters['connection/connection'].provider);
@@ -202,6 +207,7 @@ const tokensModule = {
           const cryptoPunksMarketContract = new ethers.Contract(CRYPTOPUNKMARKETADDRESS, CRYPTOPUNKMARKETABI, store.getters['connection/connection'].provider);
           const cpBalanceOf = await cryptoPunksMarketContract.balanceOf(store.getters['connection/coinbase']);
           logInfo("tokensModule", "execWeb3() cpBalanceOf: " + cpBalanceOf);
+
 
           // Direct query. Could deploy contract to perform multicall
           // for (let i = 0; i < 10000; i++) {
