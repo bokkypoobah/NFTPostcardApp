@@ -54,14 +54,33 @@ const NFTPostcard = {
 
                   <b-tab title="Canvas" class="p-1">
                     <b-card-text>
+
                       <b-form-group label-cols="2" label-size="sm" label="Width" description="24 to 2048">
-                        <b-form-input type="text" @change="setCanvasSize()" v-model.trim="canvasSetting.width" class="w-25"></b-form-input>
-                        <b-form-input @change="setCanvasSize()" v-model="canvasSetting.width" type="range" min="24" max="2048" class="w-25"></b-form-input>
+                        <b-input-group>
+                          <template #prepend>
+                            <b-form-input type="text" @change="setCanvasSize()" v-model.trim="canvasSetting.width" class="w-100 mr-2"></b-form-input>
+                            <b-input-group-text>24</b-input-group-text>
+                          </template>
+                          <b-form-input @change="setCanvasSize()" v-model="canvasSetting.width" type="range" min="24" max="2048" class="w-25"></b-form-input>
+                          <template #append>
+                            <b-input-group-text>2048</b-input-group-text>
+                          </template>
+                        </b-input-group>
                       </b-form-group>
+
                       <b-form-group label-cols="2" label-size="sm" label="Height" description="24 to 2048">
-                        <b-form-input type="text" @change="setCanvasSize()" v-model.trim="canvasSetting.height" class="w-25"></b-form-input>
-                        <b-form-input @change="setCanvasSize()" v-model="canvasSetting.height" type="range" min="24" max="2048" class="w-25"></b-form-input>
+                        <b-input-group>
+                          <template #prepend>
+                            <b-form-input type="text" @change="setCanvasSize()" v-model.trim="canvasSetting.height" class="w-100 mr-2"></b-form-input>
+                            <b-input-group-text>24</b-input-group-text>
+                          </template>
+                          <b-form-input @change="setCanvasSize()" v-model="canvasSetting.height" type="range" min="24" max="2048" class="w-25"></b-form-input>
+                          <template #append>
+                            <b-input-group-text>2048</b-input-group-text>
+                          </template>
+                        </b-input-group>
                       </b-form-group>
+
                       <!--
                       <b-form-group label-cols="2" label-size="sm">
                         <b-button size="sm" @click="setCanvasSize()" variant="info">Set Canvas Size</b-button>
