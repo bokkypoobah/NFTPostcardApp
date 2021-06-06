@@ -982,20 +982,22 @@ const NFTPostcard = {
         let completed = false;
         let page = 0;
         while (!completed) {
-          const offset = PAGESIZE * page;
-          let url = "https://api.opensea.io/api/v1/assets?owner=" + account + "&order_direction=desc&limit=" + PAGESIZE + "&offset=" + offset;
-          const data = await fetch(url).then(response => response.json());
-          if (data.assets && data.assets.length > 0) {
-            for (let assetIndex = 0; assetIndex < data.assets.length; assetIndex++) {
-              const asset = data.assets[assetIndex];
-              // logInfo("NFTPostcard", "loadAssets() asset(" + (parseInt(offset) + assetIndex) + ") name: " + asset.collection.name + ", slug: " + asset.collection.slug);
-              this.assets.push(asset);
+          if (account != null) {
+            const offset = PAGESIZE * page;
+            let url = "https://api.opensea.io/api/v1/assets?owner=" + account + "&order_direction=desc&limit=" + PAGESIZE + "&offset=" + offset;
+            const data = await fetch(url).then(response => response.json());
+            if (data.assets && data.assets.length > 0) {
+              for (let assetIndex = 0; assetIndex < data.assets.length; assetIndex++) {
+                const asset = data.assets[assetIndex];
+                // logInfo("NFTPostcard", "loadAssets() asset(" + (parseInt(offset) + assetIndex) + ") name: " + asset.collection.name + ", slug: " + asset.collection.slug);
+                this.assets.push(asset);
+              }
+            } else {
+              completed = true;
             }
-          } else {
-            completed = true;
+            page++;
           }
-          page++;
-          await delay(1000);
+          await delay(DELAY);
         }
       }
     },

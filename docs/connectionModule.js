@@ -151,6 +151,7 @@ const Connection = {
       spinnerVariant: "success",
       lastBlockTimeDiff: "establishing network connection",
       reschedule: false,
+      refreshNow: false,
     }
   },
   computed: {
@@ -231,6 +232,22 @@ const Connection = {
               const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
               // logInfo("Connection", "execWeb3() accounts: " + JSON.stringify(accounts));
           }
+          // Following does not work
+          // // For now, 'eth_accounts' will continue to always return an array
+          function handleAccountsChanged(accounts) {
+            logInfo("Connection", "execWeb3() handleAccountsChanged: " + accounts);
+            this.refreshNow = true;
+          }
+          window.ethereum.on('accountsChanged', handleAccountsChanged);
+          function handleChainChanged(_chainId) {
+            logInfo("Connection", "execWeb3() handleChainChanged: " + _chainId);
+            // We recommend reloading the page, unless you must do otherwise
+            console.log('Ethereum chain changed. Reloading as recommended.')
+            // chainId = _chainId
+            alert('Ethereum chain has changed. We will reload the page as recommended.')
+            window.location.reload()
+          }
+          window.ethereum.on('chainChanged', handleChainChanged);
         }
         // logInfo("Connection", "execWeb3() ethereum: " + JSON.stringify(ethereum));
         // logInfo("Connection", "execWeb3() ethereum.isConnected(): " + window.ethereum.isConnected());
@@ -239,6 +256,12 @@ const Connection = {
           try {
             this.provider = new ethers.providers.Web3Provider(window.ethereum);
             // logInfo("Connection", "execWeb3() provider: " + JSON.stringify(this.provider));
+
+            this.provider.on("block", (blockNumber) => {
+                logInfo("Connection", "block updated: " + JSON.stringify(blockNumber));
+                this.refreshNow = true;
+            });
+
             this.signer = this.provider.getSigner();
             // logInfo("Connection", "execWeb3() signer: " + JSON.stringify(this.signer));
             store.dispatch('connection/setConnected', { provider: this.provider, signer: this.signer, connectionType: "MetaMask / Modern dapp browsers" });
@@ -271,7 +294,8 @@ const Connection = {
       if (store.getters['connection/connection'] && store.getters['connection/connection'].connected) {
         try {
           coinbase = await this.signer.getAddress();
-          // logInfo("Connection", "execWeb3() coinbase: " + JSON.stringify(coinbase));
+          const name = await this.provider.lookupAddress(coinbase);
+          logInfo("Connection", "execWeb3() coinbase: " + JSON.stringify(coinbase) + " => " + name);
           if (coinbase != this.lastCoinbase) {
             store.dispatch('connection/setCoinbase', coinbase);
             logDebug("Connection", "execWeb3() Coinbase updated from " + this.lastCoinbase + " to " + coinbase);
@@ -341,8 +365,9 @@ const Connection = {
     timeoutCallback() {
       var t = this;
       if (store.getters['connection/powerOn']) {
-        if (this.count++ % 15 == 0) {
+        if (this.count++ % 15 == 0 || this.refreshNow) {
           t.execWeb3();
+          this.refreshNow = false;
         }
       }
       if (store.getters['connection/block'] != null) {
