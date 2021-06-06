@@ -18,10 +18,10 @@ const NFTPostcard = {
                   <b-button id="show-btn" @click="showModal">Open Modal</b-button>
                   <b-button id="toggle-btn" @click="toggleModal">Toggle Modal</b-button>
 
-                  <b-modal ref="my-modal" hide-footer title="Using Component Methods">
+                  <b-modal ref="my-modal" hide-footer title="Using Component Methods" @shown="onModalOpened">
                     <div class="d-block text-center">
                       <h3>Hello From My Modal!</h3>
-                      <img id="thegif" :src="gif.src" :rel:animated_src="gif.src"
+                      <img id="thegif1" :src="gif.src" :rel:animated_src="gif.src"
                        width="360" height="360" rel:auto_play="0" rel:rubbable="1" />
                     </div>
                     <b-button class="mt-3" variant="outline-danger" block @click="hideModal">Close Me</b-button>
@@ -541,7 +541,7 @@ const NFTPostcard = {
       },
 
       gif: {
-        src: null,
+        src: "images/bganpunkv2_2221.gif" // null,
       },
 
       canvas: null,
@@ -851,7 +851,85 @@ const NFTPostcard = {
         // t.canvas.renderAll();
       };
     },
+    async onModalOpened() {
+      logInfo("NFTPostcard", "onModalOpened()");
+      const t = this;
+      var element = document.getElementById("thegif1")
+      var rub = new SuperGif({ gif: element, loop_delay: 2000, rubbable: true } );
+      console.log("rub: " + JSON.stringify(rub));
+      console.log("rub.loadError: " + JSON.stringify(rub.loadError));
+      rub.load(function(){
+        console.log('oh hey, now the gif is loaded');
+        console.log("rub.get_length(): " + JSON.stringify(rub.get_length()));
+        console.log("rub.get_auto_play(): " + JSON.stringify(rub.get_auto_play()));
+        rub.move_to(120);
+      });
+    },
     async addAsset(asset) {
+      logInfo("NFTPostcard", "addAsset() asset: " + JSON.stringify(asset, null, 2));
+      const t = this;
+      var element = document.getElementById("thegif1")
+
+      const xhr = new XMLHttpRequest();
+      // Bypass CORS for this demo - naughty, Drakes
+      xhr.open('GET', asset.image_url);
+      // xhr.responseType = "image/gif";
+      xhr.onload = function() {
+        // callback(url, xhr.response);
+        console.log(xhr.response.substring(0, 3));
+        if (xhr.response.substring(0, 3) == "GIF") {
+          logInfo("NFTPostcard", "addAsset() asset GIF: " + JSON.stringify(asset, null, 2));
+          t.gif.src = asset.image_url;
+          t.$refs['my-modal'].show()
+          // var rub = new SuperGif({ gif: element, loop_delay: 2000, rubbable: true } );
+          // console.log("rub: " + JSON.stringify(rub));
+          // console.log("rub.loadError: " + JSON.stringify(rub.loadError));
+          // rub.load(function(){
+          //   console.log('oh hey, now the gif is loaded');
+          //   console.log("rub.get_length(): " + JSON.stringify(rub.get_length()));
+          //   console.log("rub.get_auto_play(): " + JSON.stringify(rub.get_auto_play()));
+          //   rub.move_to(120);
+          // });
+        } else {
+          let scale = 1.0;
+          // const canvas = store.getters['nftPostcard/canvas'];
+          // ZombieBabies
+          if (asset.asset_contract.address == '0xfe9231f0e6753a8412a00ec1f0028a24d5220ba9') {
+            scale = 5.0 / 16;
+          } else if (asset.asset_contract.name == 'CryptoPunks') {
+            scale = 5.0 / 14;
+          } else if (asset.asset_contract.name == 'PunkBodies') {
+            scale = 1.0;
+          } else if (asset.asset_contract.name == 'Meebits') {
+            scale = 1.0 / 1.2;
+          } else if (asset.collection.name == 'The Pixel Portraits') {
+            scale = 5.0 / 20;
+          } else if (asset.collection.name == 'BASTARD GAN PUNKS V2') {
+            scale = 5.0 / 15;
+          } else if (asset.collection.name == '3DVoxelPunks') {
+            scale = 5.0 / 16;
+          // } else if (asset.asset_contract.name == 'MoonCat') {
+          //   scale = 5.0 / 12;
+          // } else if (asset.asset_contract.name == 'CryptoCat') {
+          //   scale = 5.0 / 80;
+          }
+          fabric.Image.fromURL(asset.image_url, function(oImg) {
+            oImg.set('imageSmoothing', false).scale(scale);
+            // logInfo("NFTPostcard", "addAsset() adding: " + JSON.stringify(oImg));
+            t.canvas.add(oImg);
+            logInfo("NFTPostcard", "addAsset() added: " + JSON.stringify(oImg));
+            logInfo("NFTPostcard", "addAsset() LocalStorage.setItem: " + JSON.stringify(oImg));
+            localStorage.setItem('canvas', JSON.stringify(t.canvas));
+          } , {crossOrigin: 'anonymous'});
+        }
+      };
+      xhr.onerror = function() {
+        alert('A network error occurred!');
+      };
+      xhr.send();
+
+    },
+    async addAssetOld(asset) {
       logInfo("NFTPostcard", "addAsset() asset: " + JSON.stringify(asset, null, 2));
       const t = this;
       let scale = 1.0;
@@ -977,14 +1055,19 @@ const NFTPostcard = {
       let page = 0;
       this.assets = [];
       const delay = ms => new Promise(res => setTimeout(res, ms));
+      await delay(DELAY);
+      logInfo("NFTPostcard", "loadNFTs() 1 - this.accounts: " + this.accounts);
       for (let accountIndex in this.accounts) {
+        logInfo("NFTPostcard", "loadNFTs() 2");
         const account = this.accounts[accountIndex];
+        logInfo("NFTPostcard", "loadNFTs() 2 - account: " + account);
         let completed = false;
         let page = 0;
         while (!completed) {
           if (account != null) {
             const offset = PAGESIZE * page;
             let url = "https://api.opensea.io/api/v1/assets?owner=" + account + "&order_direction=desc&limit=" + PAGESIZE + "&offset=" + offset;
+            logInfo("NFTPostcard", "loadAssets() url:" + url);
             const data = await fetch(url).then(response => response.json());
             if (data.assets && data.assets.length > 0) {
               for (let assetIndex = 0; assetIndex < data.assets.length; assetIndex++) {
