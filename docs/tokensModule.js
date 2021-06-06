@@ -184,6 +184,19 @@ const tokensModule = {
           //   "event Transfer(address indexed from, address indexed to, uint amount)"
           // ];
 
+          // store.getters['connection/coinbase']
+          const name = await store.getters['connection/connection'].provider.lookupAddress(store.getters['connection/coinbase']);
+          logInfo("tokensModule", "execWeb3() coinbase: " + JSON.stringify(store.getters['connection/coinbase']) + " => " + name);
+
+          // // const allnames = await ReverseRecords.getNames(['coinbase']);
+          // // logInfo("Connection", "execWeb3() allnames: " + JSON.stringify(allnames));
+          const addresses = [ "0x07fb31ff47Dc15f78C5261EEb3D711fb6eA985D1", "0x000001f568875F378Bf6d170B790967FE429C81A", "0xBeeef66749B64Afe43Bbc9475635Eb510cFE4922"];
+          const ensReverseRecordsContract = new ethers.Contract(ENSREVERSERECORDSADDRESS, ENSREVERSERECORDSABI, store.getters['connection/connection'].provider);
+          const allnames = await ensReverseRecordsContract.getNames(addresses);
+          logInfo("tokensModule", "execWeb3() allnames: " + JSON.stringify(addresses) + " => " + allnames);
+          const validNames = allnames.filter((n) => normalize(n) === n );
+          logInfo("tokensModule", "execWeb3() validNames: " + JSON.stringify(addresses) + " => " + validNames);
+
           const beeeefRegistryContract = new ethers.Contract(BEEEEFREGISTRYENS, BEEEEFREGISTRYABI, store.getters['connection/connection'].provider);
           const entries = await beeeefRegistryContract.getEntries();
           logInfo("tokensModule", "execWeb3() beeeefRegistryContract.entries: " + JSON.stringify(entries));

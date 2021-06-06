@@ -1,30 +1,30 @@
-(function (root, factory) {
-  /* istanbul ignore next */
-  // eslint-disable-next-line no-undef
-  if (typeof define === 'function' && define.amd) {
-    // eslint-disable-next-line no-undef
-    define(['punycode', './idna-map'], function (punycode, idnaMap) {
-      return factory(punycode, idnaMap)
-    })
-  } else if (typeof exports === 'object') {
-    // eslint-disable-next-line node/no-deprecated-api
-    module.exports = factory(require('punycode'), require('./idna-map'))
-  } else {
-    root.uts46 = factory(root.punycode, root.idna_map)
-  }
-}(this, function (punycode, idnaMap) {
+// (function (root, factory) {
+//   /* istanbul ignore next */
+//   // eslint-disable-next-line no-undef
+//   if (typeof define === 'function' && define.amd) {
+//     // eslint-disable-next-line no-undef
+//     define(['punycode', './idna-map'], function (punycode, idnaMap) {
+//       return factory(punycode, idnaMap)
+//     })
+//   } else if (typeof exports === 'object') {
+//     // eslint-disable-next-line node/no-deprecated-api
+//     module.exports = factory(require('punycode'), require('./idna-map'))
+//   } else {
+//     root.uts46 = factory(root.punycode, root.idna_map)
+//   }
+// }(this, function (punycode, idnaMap) {
   function mapLabel (label, useStd3ASCII, transitional) {
     const mapped = []
     const chars = punycode.ucs2.decode(label)
     for (let i = 0; i < chars.length; i++) {
       const cp = chars[i]
       const ch = punycode.ucs2.encode([chars[i]])
-      const composite = idnaMap.mapChar(cp)
+      const composite = mapChar(cp)
       const flags = (composite >> 23)
       const kind = (composite >> 21) & 3
       const index = (composite >> 5) & 0xffff
       const length = composite & 0x1f
-      const value = idnaMap.mapStr.substr(index, length)
+      const value = mapStr.substr(index, length)
       if (kind === 0 || (useStd3ASCII && (flags & 1))) {
         throw new Error('Illegal char ' + ch)
       } else if (kind === 1) {
@@ -82,7 +82,7 @@
     // 5. The label must not begin with a combining mark, that is:
     // General_Category=Mark.
     const ch = label.codePointAt(0)
-    if (idnaMap.mapChar(ch) & (0x2 << 23)) { throw new Error('Label contains illegal character: ' + ch) }
+    if (mapChar(ch) & (0x2 << 23)) { throw new Error('Label contains illegal character: ' + ch) }
   }
 
   function toAscii (domain, options) {
@@ -137,15 +137,15 @@
     return { IDN: results.IDN[0], PC: results.PC[0] }
   }
 
-  function toUnicode (domain, options) {
+  function uts46_toUnicode (domain, options) {
     if (options === undefined) { options = {} }
     const useStd3ASCII = 'useStd3ASCII' in options ? options.useStd3ASCII : false
     return process(domain, false, useStd3ASCII)
   }
 
-  return {
-    toUnicode: toUnicode,
-    toAscii: toAscii,
-    convert: convert
-  }
-}))
+//   return {
+//     toUnicode: toUnicode,
+//     toAscii: toAscii,
+//     convert: convert
+//   }
+// }))

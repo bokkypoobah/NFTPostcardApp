@@ -294,8 +294,10 @@ const Connection = {
       if (store.getters['connection/connection'] && store.getters['connection/connection'].connected) {
         try {
           coinbase = await this.signer.getAddress();
-          const name = await this.provider.lookupAddress(coinbase);
-          logInfo("Connection", "execWeb3() coinbase: " + JSON.stringify(coinbase) + " => " + name);
+          // const name = await this.provider.lookupAddress(coinbase);
+          // logInfo("Connection", "execWeb3() coinbase: " + JSON.stringify(coinbase) + " => " + name);
+          // const allnames = await ReverseRecords.getNames(['coinbase']);
+          // logInfo("Connection", "execWeb3() allnames: " + JSON.stringify(allnames));
           if (coinbase != this.lastCoinbase) {
             store.dispatch('connection/setCoinbase', coinbase);
             logDebug("Connection", "execWeb3() Coinbase updated from " + this.lastCoinbase + " to " + coinbase);
