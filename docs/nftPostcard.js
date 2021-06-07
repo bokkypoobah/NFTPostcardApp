@@ -18,17 +18,28 @@ const NFTPostcard = {
                   <b-button id="show-btn" @click="showModal">Open Modal</b-button>
                   <b-button id="toggle-btn" @click="toggleModal">Toggle Modal</b-button>
 
-                  <b-modal ref="my-modal" hide-footer title="Using Component Methods" @shown="onModalOpened">
+                  <b-modal ref="my-modal" hide-footer title="Select frame from GIF" @shown="onGIFFrameSelectionModalOpened">
                     <div class="d-block text-center">
-                      <h3>Hello From My Modal!</h3>
-                      <img id="thegif1" :src="gif.src" :rel:animated_src="gif.src"
-                       width="360" height="360" rel:auto_play="0" rel:rubbable="1" />
+                      <h3>Frame {{ gif.frame == null ? '(loading)' : gif.frame }} </h3>
+                      <img id="thegif1" :src="gif.src" :rel:animated_src="gif.src" width="360" height="360" rel:auto_play="0" rel:rubbable="1" class="p-2" />
                     </div>
+                    <br />
+
+                    <b-input-group>
+                      <template #prepend>
+                        <b-form-input type="text" @change="setFrame()" v-model.trim="gif.frame" class="w-100 mr-2"></b-form-input>
+                        <b-input-group-text>0</b-input-group-text>
+                      </template>
+                      <b-form-input @change="setFrame()" v-model="gif.frame" type="range" min="0" :max="gif.frames == null ? 0 : (gif.frames - 1)" class="w-25"></b-form-input>
+                      <template #append>
+                        <b-input-group-text>{{ gif.frames == null ? 0 : (gif.frames - 1) }}</b-input-group-text>
+                      </template>
+                    </b-input-group>
+
                     <b-button class="mt-3" variant="outline-danger" block @click="hideModal">Close Me</b-button>
                     <b-button class="mt-2" variant="outline-warning" block @click="toggleModal">Toggle Me</b-button>
                   </b-modal>
                 </div>
-
 
                 <!--
                 <b-col md="4" class="ml-auto p-3">
@@ -150,192 +161,6 @@ const NFTPostcard = {
                     </b-card-group>
                   </b-tab>
 
-                  <!--
-                  <b-tab title="Sample NFTs" class="p-1">
-                    <b-card-group deck class="m-0">
-                      <div>
-                        <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                          <b-link @click="addImage('ZombieBaby', freeTokenId, 'media/' + nftData.tokens[freeTokenId].imageName)">
-                            <b-avatar rounded="sm" variant="light" size="5.0rem" :src="(nftData == null || nftData.tokens == null) ? null : ('media/' + nftData.tokens[freeTokenId].imageName)" class="pixelated"></b-avatar>
-                          </b-link>
-                          <template #footer>
-                            <span class="small truncate">
-                              #{{ freeTokenId }}
-                            </span>
-                          </template>
-                        </b-card>
-                      </div>
-                    </b-card-group>
-                  </b-tab>
-                  <b-tab title="ZombieBabies" class="p-1">
-                    <b-card-group deck class="m-0">
-                      <div v-for="(tokenId, tokenIdIndex) in allTokenIds">
-                        <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                          <b-link @click="addImage('ZombieBaby', tokenId, 'media/' + nftData.tokens[tokenId].imageName)">
-                            <b-avatar rounded="sm" variant="light" size="5.0rem" :src="'media/' + nftData.tokens[tokenId].imageName" class="pixelated"></b-avatar>
-                          </b-link>
-                          <template #footer>
-                            <span class="small truncate">
-                              #{{ tokenId }}
-                            </span>
-                          </template>
-                        </b-card>
-                      </div>
-                    </b-card-group>
-                  </b-tab>
-                  <b-tab title="CryptoPunks" class="p-1">
-                    <b-card-group deck class="m-0">
-                      <div v-for="punkData in punksDataList">
-                        <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                          <b-link @click="addImage('CryptoPunk', punkData.id, punkData.imageUrl)">
-                            <b-avatar rounded="sm" variant="light" size="5.0rem" :src="punkData.imageUrl" class="pixelated"></b-avatar>
-                          </b-link>
-                          <template #footer>
-                            <span class="small truncate">
-                              #{{ punkData.id }}
-                            </span>
-                          </template>
-                        </b-card>
-                      </div>
-                    </b-card-group>
-                    <div v-if="!powerOn" class="mt-4">
-                      Click the power button <b-button size="sm" variant="link" class="m-0 p-0" v-b-popover.hover="'Power up this app'" @click="setPowerOn();" v-if="!powerOn"><b-icon-power shift-v="-1" font-scale="1.5"></b-icon-power></b-button> on the top right to connect via web3 to load your NFTs.
-                    </div>
-                    <div v-else>
-                      <b-button size="sm" @click="loadNFTs('CryptoPunks')" variant="link" class="mt-2"><b-icon-arrow-repeat v-b-popover.hover="'(Re)load your NFTs'" shift-v="+3" font-scale="1.5"></b-icon-arrow-repeat></b-button>CryptoPunks
-                    </div>
-                  </b-tab>
-
-                  <b-tab title="PixelPortraits" class="p-1">
-                    <b-card-group deck class="m-0">
-                      <div v-for="pixelPortraitData in pixelPortraitsDataList">
-                        <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                          <b-link @click="addImage('PixelPortrait', pixelPortraitData.id, pixelPortraitData.imageUrl)">
-                            <b-avatar rounded="sm" variant="light" size="5.0rem" :src="pixelPortraitData.imageUrl" class="pixelated"></b-avatar>
-                          </b-link>
-                          <template #footer>
-                            <span class="small truncate">
-                              {{ pixelPortraitData.id }}
-                            </span>
-                          </template>
-                        </b-card>
-                      </div>
-                    </b-card-group>
-                    <div v-if="!powerOn" class="mt-4">
-                      Click the power button <b-button size="sm" variant="link" class="m-0 p-0" v-b-popover.hover="'Power up this app'" @click="setPowerOn();" v-if="!powerOn"><b-icon-power shift-v="-1" font-scale="1.5"></b-icon-power></b-button> on the top right to connect via web3 to load your NFTs.
-                    </div>
-                    <div v-else>
-                      <b-button size="sm" @click="loadNFTs('PixelPortraits')" variant="link" class="mt-2"><b-icon-arrow-repeat v-b-popover.hover="'(Re)load your NFTs'" shift-v="+3" font-scale="1.5"></b-icon-arrow-repeat></b-button> PixelPortraits
-                    </div>
-                  </b-tab>
-
-                  <b-tab title="BGANPUNKV2" class="p-1">
-                    <b-card-group deck class="m-0">
-                      <div v-for="bganpunkv2Data in bganpunkv2DataList">
-                        <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                          <b-link @click="addImage('BGANPUNKV2', bganpunkv2Data.id, bganpunkv2Data.imageUrl)">
-                            <b-avatar rounded="sm" variant="light" size="5.0rem" :src="bganpunkv2Data.imageUrl" class="pixelated"></b-avatar>
-                          </b-link>
-                          <template #footer>
-                            <span class="small truncate">
-                              {{ bganpunkv2Data.id }}
-                            </span>
-                          </template>
-                        </b-card>
-                      </div>
-                    </b-card-group>
-                    <div v-if="!powerOn" class="mt-4">
-                      Click the power button <b-button size="sm" variant="link" class="m-0 p-0" v-b-popover.hover="'Power up this app'" @click="setPowerOn();" v-if="!powerOn"><b-icon-power shift-v="-1" font-scale="1.5"></b-icon-power></b-button> on the top right to connect via web3 to load your NFTs.
-                    </div>
-                    <div v-else>
-                      <b-button size="sm" @click="loadNFTs('BGANPUNKV2')" variant="link" class="mt-2"><b-icon-arrow-repeat v-b-popover.hover="'(Re)load your NFTs'" shift-v="+3" font-scale="1.5"></b-icon-arrow-repeat></b-button> BGANPUNKV2
-                    </div>
-                  </b-tab>
-
-                  <b-tab title="PunkBodies" class="p-1">
-                    <b-card-group deck class="m-0">
-                      <div v-for="punkBodyData in punkBodiesDataList">
-                        <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                          <b-link @click="addImage('PunkBody', punkBodyData.id, punkBodyData.imageUrl)">
-                            <b-avatar rounded="sm" variant="light" size="5.0rem" :src="punkBodyData.imageUrl" class="pixelated"></b-avatar>
-                          </b-link>
-                          <template #footer>
-                            <span class="small truncate">
-                              #{{ punkBodyData.id }}
-                            </span>
-                          </template>
-                        </b-card>
-                      </div>
-                    </b-card-group>
-                    <div v-if="!powerOn" class="mt-4">
-                      Click the power button <b-button size="sm" variant="link" class="m-0 p-0" v-b-popover.hover="'Power up this app'" @click="setPowerOn();" v-if="!powerOn"><b-icon-power shift-v="-1" font-scale="1.5"></b-icon-power></b-button> on the top right to connect via web3 to load your NFTs.
-                    </div>
-                    <div v-else>
-                      <b-button size="sm" @click="loadNFTs('PunkBodies')" variant="link" class="mt-2"><b-icon-arrow-repeat v-b-popover.hover="'(Re)load your NFTs'" shift-v="+3" font-scale="1.5"></b-icon-arrow-repeat></b-button> PunkBodies
-                    </div>
-                  </b-tab>
-
-
-                  <b-tab title="MoonCats" class="p-1">
-                    <b-card-group deck class="m-0">
-                      <div v-for="mooncatsData in mooncatsDataList">
-                        <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                          <b-link @click="addImage('MoonCat', mooncatsData.id, mooncatsData.imageUrl)">
-                            <b-avatar rounded="sm" variant="light" size="5.0rem" :src="mooncatsData.imageUrl" class="pixelated"></b-avatar>
-                          </b-link>
-                          <template #footer>
-                            <span class="small truncate">
-                              #{{ mooncatsData.id }}
-                            </span>
-                          </template>
-                        </b-card>
-                      </div>
-                    </b-card-group>
-                    <div v-if="!powerOn" class="mt-4">
-                      Click the power button <b-button size="sm" variant="link" class="m-0 p-0" v-b-popover.hover="'Power up this app'" @click="setPowerOn();" v-if="!powerOn"><b-icon-power shift-v="-1" font-scale="1.5"></b-icon-power></b-button> on the top right to connect via web3 to load your NFTs.
-                    </div>
-                    <div v-else>
-                      <b-button size="sm" @click="loadNFTs('MoonCats')" variant="link" class="mt-2"><b-icon-arrow-repeat v-b-popover.hover="'(Re)load your NFTs'" shift-v="+3" font-scale="1.5"></b-icon-arrow-repeat></b-button> MoonCats
-                    </div>
-                  </b-tab>
-
-                  <b-tab title="CryptoCats" class="p-1">
-                    <b-card-group deck class="m-0">
-                      <div v-for="cryptoCatData in cryptoCatsDataList">
-                        <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                          <b-link @click="addImage('CryptoCat', cryptoCatData.id, cryptoCatData.imageUrl)">
-                            <b-avatar rounded="sm" variant="light" size="5.0rem" :src="cryptoCatData.imageUrl" class="pixelated"></b-avatar>
-                          </b-link>
-                          <template #footer>
-                            <span class="small truncate">
-                              #{{ cryptoCatData.id }}
-                            </span>
-                          </template>
-                        </b-card>
-                      </div>
-                      <div v-for="cryptoCatData in wrappedCryptoCatsDataList">
-                        <b-card body-class="p-1" footer-class="p-1" img-top class="m-1 p-0">
-                          <b-link @click="addImage('CryptoCat', cryptoCatData.id, cryptoCatData.imageUrl)">
-                            <b-avatar rounded="sm" variant="light" size="5.0rem" :src="cryptoCatData.imageUrl" class="pixelated"></b-avatar>
-                          </b-link>
-                          <template #footer>
-                            <span class="small truncate">
-                              #{{ cryptoCatData.id }}
-                            </span>
-                          </template>
-                        </b-card>
-                      </div>
-                    </b-card-group>
-                    <div v-if="!powerOn" class="mt-4">
-                      Click the power button <b-button size="sm" variant="link" class="m-0 p-0" v-b-popover.hover="'Power up this app'" @click="setPowerOn();" v-if="!powerOn"><b-icon-power shift-v="-1" font-scale="1.5"></b-icon-power></b-button> on the top right to connect via web3 to load your NFTs.
-                    </div>
-                    <div v-else>
-                      <b-button size="sm" @click="loadNFTs('CryptoCats')" variant="link" class="mt-2"><b-icon-arrow-repeat v-b-popover.hover="'(Re)load your NFTs'" shift-v="+3" font-scale="1.5"></b-icon-arrow-repeat></b-button> CryptoCats
-                    </div>
-
-                  </b-tab>
-                  -->
-
                   <b-tab title="Upload Image" class="p-1">
                     <b-card-text>
                       <b-row  align-h="start">
@@ -373,35 +198,6 @@ const NFTPostcard = {
 
                   <b-tab title="Text" class="p-1">
                     <b-card-text>
-                      <!--
-                      <b-row  align-h="start">
-                        <b-col cols="2">Scale</b-col>
-                        <b-col cols="3">
-                          <b-form-group description="Scale width. e.g., 0.5">
-                            <b-form-input type="text" v-model.trim="settings['ImageUpload'].scaleWidth"></b-form-input>
-                          </b-form-group>
-                        </b-col>
-                        <b-col cols="3">
-                          <b-form-group description="Scale height. e.g., 0.5">
-                            <b-form-input type="text" v-model.trim="settings['ImageUpload'].scaleHeight"></b-form-input>
-                          </b-form-group>
-                        </b-col>
-                        <b-col cols="2">
-                          <b-form-group>
-                            <b-form-checkbox v-model.trim="settings['ImageUpload'].flipX">
-                              Flip X
-                            </b-form-checkbox>
-                          </b-form-group>
-                        </b-col>
-                        <b-col cols="2">
-                          <b-form-group>
-                            <b-form-checkbox v-model.trim="settings['ImageUpload'].flipY">
-                              Flip Y
-                            </b-form-checkbox>
-                          </b-form-group>
-                        </b-col>
-                      </b-row>
-                      -->
                       <b-form-group label-cols="2" label-size="sm" label="Enter text">
                         <b-form-input type="text" v-model.trim="text.text"></b-form-input>
                       </b-form-group>
@@ -541,7 +337,10 @@ const NFTPostcard = {
       },
 
       gif: {
-        src: "images/bganpunkv2_2221.gif" // null,
+        src: "images/bganpunkv2_2221.gif", // null,
+        rub: null,
+        frames: null,
+        frame: 0,
       },
 
       canvas: null,
@@ -832,6 +631,11 @@ const NFTPostcard = {
       this.canvas.setWidth(this.canvasSetting.width);
       this.canvas.setHeight(this.canvasSetting.height);
     },
+    setFrame() {
+      logInfo("NFTPostcard", "setFrame() this.gif.frame: " + JSON.stringify(this.gif.frame));
+      this.gif.rub.move_to(this.gif.frame);
+      // this.canvas.setWidth(this.gif.frame);
+    },
     onFileChange(file) {
       const t = this;
       const url = URL.createObjectURL(file);
@@ -851,18 +655,19 @@ const NFTPostcard = {
         // t.canvas.renderAll();
       };
     },
-    async onModalOpened() {
-      logInfo("NFTPostcard", "onModalOpened()");
+    async onGIFFrameSelectionModalOpened() {
+      logInfo("NFTPostcard", "onGIFFrameSelectionModalOpened()");
       const t = this;
       var element = document.getElementById("thegif1")
-      var rub = new SuperGif({ gif: element, loop_delay: 2000, rubbable: true } );
-      console.log("rub: " + JSON.stringify(rub));
-      console.log("rub.loadError: " + JSON.stringify(rub.loadError));
-      rub.load(function(){
+      t.gif.rub = new SuperGif({ gif: element, loop_delay: 2000, max_width: 360, rubbable: true } );
+      console.log("rub: " + JSON.stringify(t.gif.rub));
+      console.log("rub.loadError: " + JSON.stringify(t.gif.rub.loadError));
+      t.gif.rub.load(function(){
         console.log('oh hey, now the gif is loaded');
-        console.log("rub.get_length(): " + JSON.stringify(rub.get_length()));
-        console.log("rub.get_auto_play(): " + JSON.stringify(rub.get_auto_play()));
-        rub.move_to(120);
+        console.log("rub.get_length(): " + JSON.stringify(t.gif.rub.get_length()));
+        console.log("rub.get_auto_play(): " + JSON.stringify(t.gif.rub.get_auto_play()));
+        // t.gif.rub.move_to(120);
+        t.gif.frames = t.gif.rub.get_length();
       });
     },
     async addAsset(asset) {
@@ -880,7 +685,7 @@ const NFTPostcard = {
         if (xhr.response.substring(0, 3) == "GIF") {
           logInfo("NFTPostcard", "addAsset() asset GIF: " + JSON.stringify(asset, null, 2));
           t.gif.src = asset.image_url;
-          t.$refs['my-modal'].show()
+          t.$refs['my-modal'].show();
           // var rub = new SuperGif({ gif: element, loop_delay: 2000, rubbable: true } );
           // console.log("rub: " + JSON.stringify(rub));
           // console.log("rub.loadError: " + JSON.stringify(rub.loadError));
@@ -1083,193 +888,6 @@ const NFTPostcard = {
           await delay(DELAY);
         }
       }
-    },
-    async loadNFTs_old(collection) {
-      logInfo("NFTPostcard", "loadNFTs() collection: " + collection);
-      const t = this;
-
-      // CryptoPunks - OpenSea
-      if (collection == "CryptoPunks") {
-        let cryptoPunksUrl = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&asset_contract_address=" + CRYPTOPUNKMARKETADDRESS + "&order_direction=desc&offset=0&limit=50";
-        cryptoPunksReq = new XMLHttpRequest();
-        cryptoPunksReq.overrideMimeType("application/json");
-        logInfo("NFTPostcard", "loadNFTs() openSeaPunkData cryptoPunksUrl: " + cryptoPunksUrl);
-        cryptoPunksReq.open('GET', cryptoPunksUrl, true);
-        cryptoPunksReq.onload  = function() {
-          if (cryptoPunksReq.readyState == 4) {
-            const punkDataTemp = [];
-            const openSeaPunkData = JSON.parse(cryptoPunksReq.responseText);
-            for (let assetIndex in Object.keys(openSeaPunkData.assets)) {
-              const asset = openSeaPunkData.assets[assetIndex];
-              // var id = asset.token_id;
-              // var imageUrl = "https://www.larvalabs.com/public/images/cryptopunks/punk" + id + ".png"
-              // punkDataTemp.push({ id: id, imageUrl: imageUrl });
-              punkDataTemp.push({ id: asset.token_id, imageUrl: asset.image_url });
-            }
-            t.punksDataList = punkDataTemp;
-            t.punksDataList.sort(function(a, b) { return a.id - b.id; });
-          }
-        };
-        cryptoPunksReq.send(null);
-      }
-
-      // Pixel Portraits - OpenSea
-      if (collection == "PixelPortraits") {
-        let pixelPortraitsUrl = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&order_direction=desc&offset=0&limit=50&collection=the-pixel-portraits";
-        pixelPortraitsReq = new XMLHttpRequest();
-        pixelPortraitsReq.overrideMimeType("application/json");
-        logInfo("NFTPostcard", "loadNFTs() openSeaPixelPortraitsData pixelPortraitsUrl: " + pixelPortraitsUrl);
-        pixelPortraitsReq.open('GET', pixelPortraitsUrl, true);
-        pixelPortraitsReq.onload  = function() {
-          if (pixelPortraitsReq.readyState == 4) {
-            const pixelPortraitsDataListTemp = [];
-            const openSeaPixelPortraitData = JSON.parse(pixelPortraitsReq.responseText);
-            for (let assetIndex in Object.keys(openSeaPixelPortraitData.assets)) {
-              const asset = openSeaPixelPortraitData.assets[assetIndex];
-              var id = asset.name;
-              var imageUrl = asset.image_url;
-              logInfo("NFTPostcard", "loadNFTs() openSeaPixelPortraitsData id: " + id + " => " + imageUrl);
-              pixelPortraitsDataListTemp.push({ id: id, imageUrl: imageUrl });
-            }
-            t.pixelPortraitsDataList = pixelPortraitsDataListTemp;
-            t.pixelPortraitsDataList.sort(function(a, b) { return ('' + a.id).localeCompare(b.id) });
-          }
-        };
-        pixelPortraitsReq.send(null);
-      }
-
-      // BGANPUNKV2 - OpenSea
-      if (collection == "BGANPUNKV2") {
-        let bganpunkv2Url = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&asset_contract_address=" + BGANPUNKV2ADDRESS + "&order_direction=desc&offset=0&limit=50";
-        bganpunkv2Req = new XMLHttpRequest();
-        bganpunkv2Req.overrideMimeType("application/json");
-        logInfo("NFTPostcard", "loadNFTs() openSeaBganpunkv2Data bganpunkv2Url: " + bganpunkv2Url);
-        bganpunkv2Req.open('GET', bganpunkv2Url, true);
-        bganpunkv2Req.onload  = function() {
-          if (bganpunkv2Req.readyState == 4) {
-            const bganpunkv2DataListTemp = [];
-            const openSeaBganpunkv2Data = JSON.parse(bganpunkv2Req.responseText);
-            for (let assetIndex in Object.keys(openSeaBganpunkv2Data.assets)) {
-              const asset = openSeaBganpunkv2Data.assets[assetIndex];
-              bganpunkv2DataListTemp.push({ id: asset.token_id, imageUrl: asset.image_original_url });
-            }
-            t.bganpunkv2DataList = bganpunkv2DataListTemp;
-            t.bganpunkv2DataList.sort(function(a, b) { return a.id - b.id; });
-          }
-        };
-        bganpunkv2Req.send(null);
-      }
-
-      // PunkBodies - OpenSea
-      if (collection == "PunkBodies") {
-        let punkBodiesUrl = "https://api.opensea.io/api/v1/assets?owner=" + store.getters['connection/coinbase'] + "&asset_contract_address=" + PUNKBODIESADDRESS + "&order_direction=desc&offset=0&limit=50";
-        punkBodiesReq = new XMLHttpRequest();
-        punkBodiesReq.overrideMimeType("application/json");
-        logInfo("NFTPostcard", "loadNFTs() openSeaPunkBodyData punkBodiesUrl: " + punkBodiesUrl);
-        punkBodiesReq.open('GET', punkBodiesUrl, true);
-        punkBodiesReq.onload  = function() {
-          if (punkBodiesReq.readyState == 4) {
-            const punkBodiesDataListTemp = [];
-            const openSeaPunkBodyData = JSON.parse(punkBodiesReq.responseText);
-            for (let assetIndex in Object.keys(openSeaPunkBodyData.assets)) {
-              const asset = openSeaPunkBodyData.assets[assetIndex];
-              // var id = asset.token_id;
-              // var imageUrl = "https://api.punkbodies.com/get-images/" + id + ".png"
-              // punkBodiesDataListTemp.push({ id: id, imageUrl: imageUrl });
-              punkBodiesDataListTemp.push({ id: asset.token_id, imageUrl: asset.image_url });
-            }
-            t.punkBodiesDataList = punkBodiesDataListTemp;
-            t.punkBodiesDataList.sort(function(a, b) { return a.id - b.id; });
-          }
-        };
-        punkBodiesReq.send(null);
-      }
-
-      if (collection == "MoonCats") {
-        fetch('https://api.thegraph.com/subgraphs/name/merklejerk/moon-cats-rescue', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-          },
-          body: JSON.stringify({"operationName":"cats","variables":{"addr":store.getters['connection/coinbase'].toLowerCase()},"query":"query cats($addr: ID!) {\n  cats(first: 1000, where: {owner: $addr}) {\n    id\n    rescueIndex\n    name\n    maxAdoptionPrice\n    askPrice\n    owner {\n      id\n      __typename\n    }\n    __typename\n  }\n}\n"})
-        })
-          .then(r => r.json())
-          // .then(data => console.log('data returned:', data));
-          .then(function(data) {
-            // console.log('data returned: ', JSON.stringify(data.data.cats));
-            const mooncatsDataListTemp = [];
-            for (let catIndex in data.data.cats) {
-              const cat = data.data.cats[catIndex];
-              // console.log('cat: ', JSON.stringify(cat));
-              var id = cat.rescueIndex;
-              var imageUrl = "https://ipfs.io/ipfs/bafybeidk4zunuq56w2pf2sncexohlyqae62dzplljkbwswa7jwywh2dava/" + cat.id.substring(4, 6) + "/" + cat.id + ".png"
-              mooncatsDataListTemp.push({ id: id, imageUrl: imageUrl });
-            }
-            t.mooncatsDataList = mooncatsDataListTemp;
-            t.mooncatsDataList.sort(function(a, b) { return a.id - b.id; });
-            // console.log('t.mooncatsDataList: ', JSON.stringify(t.mooncatsDataList));
-          });
-      }
-
-      // CryptoCats
-      if (collection == "CryptoCats") {
-        let cryptoCatsUrl = "https://us-central1-cryptocats-ws-prod.cloudfunctions.net/listing/ccat/" + store.getters['connection/coinbase'].toLowerCase();
-        cryptoCatsReq = new XMLHttpRequest();
-        cryptoCatsReq.overrideMimeType("application/json");
-        logInfo("NFTPostcard", "loadNFTs() cryptoCatsUrl: " + cryptoCatsUrl);
-        cryptoCatsReq.open('GET', cryptoCatsUrl, true);
-        cryptoCatsReq.onload  = function() {
-          if (cryptoCatsReq.readyState == 4) {
-            const cryptoCatsDataListTemp = [];
-            const cryptoCatsData = JSON.parse(cryptoCatsReq.responseText);
-            logInfo("NFTPostcard", "loadNFTs() cryptoCatsData: " + JSON.stringify(cryptoCatsData));
-            if (cryptoCatsData.ccat != null) {
-              logInfo("NFTPostcard", "loadNFTs() cryptoCatsData.ccat: " + JSON.stringify(cryptoCatsData.ccat));
-              for (const [id, value] of Object.entries(cryptoCatsData.ccat)) {
-                // const ccat = cryptoCatsData.ccat[ccatIndex];
-                logInfo("NFTPostcard", "loadNFTs() id: " + id + " => " + JSON.stringify(value));
-                var imageUrl = "https://cryptocats.thetwentysix.io/contents/images/cats/" + id + ".png"
-                logInfo("NFTPostcard", "loadNFTs() id: " + id + " => " + imageUrl);
-                cryptoCatsDataListTemp.push({ id: id, imageUrl: imageUrl });
-              }
-              t.cryptoCatsDataList = cryptoCatsDataListTemp;
-              t.cryptoCatsDataList.sort(function(a, b) { return a.id - b.id; });
-            }
-          }
-        };
-        cryptoCatsReq.send(null);
-
-        // WrappedCryptoCats
-        // Testing let wrappedCryptoCatsUrl = "https://us-central1-cryptocats-ws-prod.cloudfunctions.net/listing/wccat/0xad9f11d1dd6d202243473a0cdae606308ab243b4";
-        let wrappedCryptoCatsUrl = "https://us-central1-cryptocats-ws-prod.cloudfunctions.net/listing/wccat/" + store.getters['connection/coinbase'].toLowerCase();
-        wrappedCryptoCatsReq = new XMLHttpRequest();
-        wrappedCryptoCatsReq.overrideMimeType("application/json");
-        logInfo("NFTPostcard", "loadNFTs() wrappedCryptoCatsUrl: " + wrappedCryptoCatsUrl);
-        wrappedCryptoCatsReq.open('GET', wrappedCryptoCatsUrl, true);
-        wrappedCryptoCatsReq.onload  = function() {
-          if (wrappedCryptoCatsReq.readyState == 4) {
-            const wrappedCryptoCatsDataListTemp = [];
-            const wrappedCryptoCatsData = JSON.parse(wrappedCryptoCatsReq.responseText);
-            logInfo("NFTPostcard", "loadNFTs() wrappedCryptoCatsData: " + JSON.stringify(wrappedCryptoCatsData));
-            // 00:47:36 INFO NFTPostcard:loadNFTs() wrappedCryptoCatsData: {"ccat":{"207":"wrapped"}}
-            if (wrappedCryptoCatsData.ccat != null) {
-              logInfo("NFTPostcard", "loadNFTs() wrappedCryptoCatsData.ccat: " + JSON.stringify(wrappedCryptoCatsData.ccat));
-              for (const [id, value] of Object.entries(wrappedCryptoCatsData.ccat)) {
-                // const ccat = cryptoCatsData.ccat[ccatIndex];
-                logInfo("NFTPostcard", "loadNFTs() id: " + id + " => " + JSON.stringify(value));
-                var imageUrl = "https://cryptocats.thetwentysix.io/contents/images/cats/" + id + ".png"
-                logInfo("NFTPostcard", "loadNFTs() id: " + id + " => " + imageUrl);
-                wrappedCryptoCatsDataListTemp.push({ id: id, imageUrl: imageUrl });
-              }
-              t.wrappedCryptoCatsDataList = wrappedCryptoCatsDataListTemp;
-              t.wrappedCryptoCatsDataList.sort(function(a, b) { return a.id - b.id; });
-            }
-          }
-        };
-        wrappedCryptoCatsReq.send(null);
-      }
-
     },
     async timeoutCallback() {
       logInfo("NFTPostcard", "timeoutCallback() count: " + this.count);
