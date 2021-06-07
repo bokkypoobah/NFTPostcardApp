@@ -138,10 +138,6 @@
             </b-navbar-nav>
           </b-navbar>
         </div>
-        <img id="thegif" src="images/bganpunkv2_2221.gif" rel:animated_src="images/bganpunkv2_2221.gif"
-         width="360" height="360" rel:auto_play="0" rel:rubbable="1" />
-        <!-- <img id="thegif" src="images/Cryptogs_3185_ZFam_2048x960.png" rel:animated_src="images/Cryptogs_3185_ZFam_2048x960.png"
-         width="360" height="360" rel:auto_play="0" rel:rubbable="1" /> -->
         <router-view></router-view>
         <hr />
       </b-container>
@@ -149,36 +145,5 @@
     <div>
     </div>
     <script src="index.js"></script>
-    <script type="text/javascript">
-      console.log('--- Start ---');
-      var element = document.getElementById("thegif")
-      console.log("element: " + JSON.stringify(element));
-      console.log("element.src: " + JSON.stringify(element.src));
-
-
-      var xhr = new XMLHttpRequest();
-      // Bypass CORS for this demo - naughty, Drakes
-      xhr.open('GET', element.src);
-      // xhr.responseType = "image/gif";
-      xhr.onload = function() {
-        // callback(url, xhr.response);
-        console.log(xhr.response.substring(0, 3));
-        if (xhr.response.substring(0, 3) == "GIF") {
-          var rub = new SuperGif({ gif: element, loop_delay: 2000, rubbable: true } );
-          console.log("rub: " + JSON.stringify(rub));
-          console.log("rub.loadError: " + JSON.stringify(rub.loadError));
-          rub.load(function(){
-              console.log('oh hey, now the gif is loaded');
-              console.log("rub.get_length(): " + JSON.stringify(rub.get_length()));
-              console.log("rub.get_auto_play(): " + JSON.stringify(rub.get_auto_play()));
-              rub.move_to(120);
-          });
-        }
-      };
-      xhr.onerror = function() {
-        alert('A network error occurred!');
-      };
-      xhr.send();
-    </script>
   </body>
 </html>
