@@ -27,7 +27,7 @@ const NFTPostcard = {
 
                     <b-input-group>
                       <template #prepend>
-                        <b-form-input type="text" @change="setFrame()" v-model.trim="gif.frame" class="w-100 mr-2"></b-form-input>
+                        <b-form-spinbutton @change="setFrame()" v-model.trim="gif.frame" min="0" :max="gif.frames == null ? 0 : (gif.frames - 1)" class="mr-2"></b-form-spinbutton>
                         <b-input-group-text>0</b-input-group-text>
                       </template>
                       <b-form-input @change="setFrame()" v-model="gif.frame" type="range" min="0" :max="gif.frames == null ? 0 : (gif.frames - 1)" class="w-25"></b-form-input>
