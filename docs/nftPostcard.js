@@ -19,15 +19,18 @@ const NFTPostcard = {
                   <b-button id="toggle-btn" @click="toggleModal">Toggle Modal</b-button>
 
                   <b-modal ref="my-modal" hide-footer title="Select frame from GIF" @shown="onGIFFrameSelectionModalOpened">
-                    <div class="d-block text-center">
-                      <h3>Frame {{ gif.frame == null ? '(loading)' : gif.frame }} </h3>
-                      <img id="thegif1" :src="gif.src" :rel:animated_src="gif.src" width="360" height="360" rel:auto_play="0" rel:rubbable="1" class="p-2" />
-                    </div>
+
+                    <b-link @click="addGIFFrame()" v-b-popover.hover="'Click to add this frame to the canvas'">
+                      <div class="d-block text-center">
+                        <h3>Frame {{ gif.frame == null ? '(loading)' : gif.frame }} </h3>
+                        <img id="thegif1" :src="gif.src" :rel:animated_src="gif.src" width="360" height="360" rel:auto_play="0" rel:rubbable="1" class="p-2" />
+                      </div>
+                    </b-link>
                     <br />
 
                     <b-input-group>
                       <template #prepend>
-                        <b-form-spinbutton @change="setFrame()" v-model.trim="gif.frame" min="0" :max="gif.frames == null ? 0 : (gif.frames - 1)" class="mr-2"></b-form-spinbutton>
+                        <b-form-spinbutton wrap @change="setFrame()" v-model.trim="gif.frame" min="0" :max="gif.frames == null ? 0 : (gif.frames - 1)" class="mr-2"></b-form-spinbutton>
                         <b-input-group-text>0</b-input-group-text>
                       </template>
                       <b-form-input @change="setFrame()" v-model="gif.frame" type="range" min="0" :max="gif.frames == null ? 0 : (gif.frames - 1)" class="w-25"></b-form-input>
@@ -666,9 +669,31 @@ const NFTPostcard = {
         console.log('oh hey, now the gif is loaded');
         console.log("rub.get_length(): " + JSON.stringify(t.gif.rub.get_length()));
         console.log("rub.get_auto_play(): " + JSON.stringify(t.gif.rub.get_auto_play()));
-        // t.gif.rub.move_to(120);
         t.gif.frames = t.gif.rub.get_length();
+        if (t.gif.frame < 0 || t.gif.frame >= t.gif.frames) {
+          t.gif.frame = 0;
+        }
+        t.gif.rub.move_to(t.gif.frame);
       });
+    },
+    async addGIFFrame() {
+      const t = this;
+      logInfo("NFTPostcard", "addGIFFrame() t.gif.rub: " + JSON.stringify(t.gif.rub, null, 2));
+      logInfo("NFTPostcard", "addGIFFrame() t.gif.rub.get_canvas(): " + JSON.stringify(t.gif.rub.get_canvas(), null, 2));
+      const scale = 0.5;
+      const x = t.gif.rub;
+      const y = x.get_canvas().getContext("2d");
+      const z = x.get_canvas().toDataURL();
+      logInfo("NFTPostcard", "addGIFFrame() z: " + JSON.stringify(z, null, 2));
+      fabric.Image.fromURL(z, function(oImg) {
+        oImg.set('imageSmoothing', false).scale(scale);
+        // logInfo("NFTPostcard", "addAsset() adding: " + JSON.stringify(oImg));
+        t.canvas.add(oImg);
+        logInfo("NFTPostcard", "addGIFFrame() added: " + JSON.stringify(oImg));
+        logInfo("NFTPostcard", "addGIFFrame() LocalStorage.setItem: " + JSON.stringify(oImg));
+        localStorage.setItem('canvas', JSON.stringify(t.canvas));
+      } , {crossOrigin: 'anonymous'});
+      // var element = document.getElementById("thegif1")
     },
     async addAsset(asset) {
       logInfo("NFTPostcard", "addAsset() asset: " + JSON.stringify(asset, null, 2));
