@@ -25,6 +25,9 @@ const BeeefLibrary = {
                 -->
 
               </b-row>
+              {{ collectionList }}
+              {{ collections }}
+              {{ assets }}
             </b-container>
             <!--
             <b-form-group label-cols="2" label-size="sm">
@@ -506,6 +509,15 @@ const BeeefLibrary = {
     accounts() {
       return [ store.getters['connection/coinbase'], "0xBeeef66749B64Afe43Bbc9475635Eb510cFE4922" ];
       // return [ "0x000001f568875F378Bf6d170B790967FE429C81A", "0x00000217d2795F1Da57e392D2a5bC87125BAA38D", "0x000003e1E88A1110E961f135dF8cdEa4b1FFA81a", "0x07fb31ff47Dc15f78C5261EEb3D711fb6eA985D1" ];
+    },
+    collections() {
+      return store.getters['tokens/collections'];
+    },
+    collectionList() {
+      return store.getters['tokens/collectionList'];
+    },
+    assets() {
+      return store.getters['tokens/assets'];
     },
     // canvas() {
     //   return store.getters['nftPostcard/canvas'];

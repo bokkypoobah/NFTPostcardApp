@@ -484,10 +484,10 @@ const NFTPostcard = {
       }
     },
     async saveImage() {
-      logInfo("NFTPostcard", "saveImage()");
+      logDebug("NFTPostcard", "saveImage()");
 
       // const div = document.getElementById("toBeCaptured");
-      // logInfo("NFTPostcard", "saveImage() div: " + JSON.stringify(div));
+      // logDebug("NFTPostcard", "saveImage() div: " + JSON.stringify(div));
       // console.table(div);
 
       // getScreenshotOfElement($("div#toBeCaptured").get(0), 0, 0, 100, 100, function(data) {
@@ -521,7 +521,7 @@ const NFTPostcard = {
 
       /*
       function getScreenshotOfElement(element, posX, posY, width, height, callback) {
-        // logInfo("NFTPostcard", "getScreenshotOfElement() element: " + JSON.stringify(element));
+        // logDebug("NFTPostcard", "getScreenshotOfElement() element: " + JSON.stringify(element));
         // console.table(element);
         html2canvas(element, {
           width: width,
@@ -531,7 +531,7 @@ const NFTPostcard = {
           allowTaint: false
         }).then(canvas => {
           // onrendered: function (canvas) {
-          // logInfo("NFTPostcard", "getScreenshotOfElement() element: " + JSON.stringify(element));
+          // logDebug("NFTPostcard", "getScreenshotOfElement() element: " + JSON.stringify(element));
           var context = canvas.getContext('2d');
           var imageData = context.getImageData(posX, posY, width, height).data;
           var outputCanvas = document.createElement('canvas');
@@ -542,7 +542,7 @@ const NFTPostcard = {
           var idata = outputContext.createImageData(width, height);
           idata.data.set(imageData);
           outputContext.putImageData(idata, 0, 0);
-          logInfo("NFTPostcard", "getScreenshotOfElement() idata: " + JSON.stringify(idata));
+          logDebug("NFTPostcard", "getScreenshotOfElement() idata: " + JSON.stringify(idata));
           callback(outputCanvas.toDataURL());
           // },
         });
@@ -552,11 +552,11 @@ const NFTPostcard = {
         // in the data variable there is the base64 image
         // exmaple for displaying the image in an <img>
         // $("img#captured").attr("src", "data:image/png;base64,"+data);
-        logInfo("NFTPostcard", "saveImage() data: " + JSON.stringify(data));
+        logDebug("NFTPostcard", "saveImage() data: " + JSON.stringify(data));
         const blob = await fetch(data).then(r => r.blob());
-        logInfo("NFTPostcard", "saveImage() blob: " + JSON.stringify(blob));
+        logDebug("NFTPostcard", "saveImage() blob: " + JSON.stringify(blob));
         const url = URL.createObjectURL(blob);
-        logInfo("NFTPostcard", "saveImage() url: " + JSON.stringify(url));
+        logDebug("NFTPostcard", "saveImage() url: " + JSON.stringify(url));
         const a = document.createElement('a');
         a.download = "my_image.png"
         a.href = url;
@@ -582,7 +582,7 @@ const NFTPostcard = {
         // document.body.appendChild(canvas);
         var context = canvas.getContext('2d');
         var imageData = context.getImageData(posX, posY, width, height).data;
-        logInfo("NFTPostcard", "saveImage() imageData: " + JSON.stringify(imageData));
+        logDebug("NFTPostcard", "saveImage() imageData: " + JSON.stringify(imageData));
         var outputCanvas = document.createElement('canvas');
         var outputContext = outputCanvas.getContext('2d');
         outputCanvas.width = width;
@@ -592,12 +592,12 @@ const NFTPostcard = {
         idata.data.set(imageData);
         outputContext.putImageData(idata, 0, 0);
         var dataURL = outputCanvas.toDataURL();
-        logInfo("NFTPostcard", "saveImage() dataURL: " + JSON.stringify(dataURL));
+        logDebug("NFTPostcard", "saveImage() dataURL: " + JSON.stringify(dataURL));
 
         const blob = await fetch(dataURL).then(r => r.blob());
-        logInfo("NFTPostcard", "saveImage() blob: " + JSON.stringify(blob));
+        logDebug("NFTPostcard", "saveImage() blob: " + JSON.stringify(blob));
         const url = URL.createObjectURL(blob);
-        logInfo("NFTPostcard", "saveImage() url: " + JSON.stringify(url));
+        logDebug("NFTPostcard", "saveImage() url: " + JSON.stringify(url));
         const a = document.createElement('a');
         a.download = "my_image.png"
         a.href = url;
@@ -613,12 +613,12 @@ const NFTPostcard = {
 
 
       // let dataURL = this.canvas.toDataURL({ format: 'png', multiplier: 2, });
-      // logInfo("NFTPostcard", "saveImage() dataURL: " + JSON.stringify(dataURL));
+      // logDebug("NFTPostcard", "saveImage() dataURL: " + JSON.stringify(dataURL));
       //
       // const blob = await fetch(dataURL).then(r => r.blob());
-      // logInfo("NFTPostcard", "saveImage() blob: " + JSON.stringify(blob));
+      // logDebug("NFTPostcard", "saveImage() blob: " + JSON.stringify(blob));
       // const url = URL.createObjectURL(blob);
-      // logInfo("NFTPostcard", "saveImage() url: " + JSON.stringify(url));
+      // logDebug("NFTPostcard", "saveImage() url: " + JSON.stringify(url));
       // const a = document.createElement('a');
       // a.download = "my_image.png"
       // a.href = url;
@@ -630,27 +630,27 @@ const NFTPostcard = {
 
     },
     setCanvasSize() {
-      // logInfo("NFTPostcard", "setCanvasSize() canvasSetting: " + JSON.stringify(this.canvasSetting));
+      // logDebug("NFTPostcard", "setCanvasSize() canvasSetting: " + JSON.stringify(this.canvasSetting));
       this.canvas.setWidth(this.canvasSetting.width);
       this.canvas.setHeight(this.canvasSetting.height);
     },
     setFrame() {
-      logInfo("NFTPostcard", "setFrame() this.gif.frame: " + JSON.stringify(this.gif.frame));
+      logDebug("NFTPostcard", "setFrame() this.gif.frame: " + JSON.stringify(this.gif.frame));
       this.gif.rub.move_to(this.gif.frame);
       // this.canvas.setWidth(this.gif.frame);
     },
     onFileChange(file) {
       const t = this;
       const url = URL.createObjectURL(file);
-      // logInfo("NFTPostcard", "onFileChange() url: " + JSON.stringify(url));
+      // logDebug("NFTPostcard", "onFileChange() url: " + JSON.stringify(url));
       var imgObj = new Image();
       imgObj.src = url;
-      // logInfo("NFTPostcard", "onFileChange() imgObj: " + JSON.stringify(imgObj));
+      // logDebug("NFTPostcard", "onFileChange() imgObj: " + JSON.stringify(imgObj));
       imgObj.onload = function () {
         const image = new fabric.Image(imgObj);
         image.set({ left: 0, top: 0, angle: 0, padding: 0, cornersize: 0 });
-        // logInfo("NFTPostcard", "onFileChange() image width: " + image.width + ", height: " + image.height);
-        // logInfo("NFTPostcard", "onFileChange() t.canvas width: " + t.canvas.width + ", height: " + t.canvas.height);
+        // logDebug("NFTPostcard", "onFileChange() image width: " + image.width + ", height: " + image.height);
+        // logDebug("NFTPostcard", "onFileChange() t.canvas width: " + t.canvas.width + ", height: " + t.canvas.height);
         image.scale(t.settings['ImageUpload'].scaleWidth, t.settings['ImageUpload'].scaleHeight).set('flipX', t.settings['ImageUpload'].flipX).set('flipY', t.settings['ImageUpload'].flipY);
         t.canvas.add(image);
         localStorage.setItem('canvas', JSON.stringify(t.canvas));
@@ -659,7 +659,7 @@ const NFTPostcard = {
       };
     },
     async onGIFFrameSelectionModalOpened() {
-      logInfo("NFTPostcard", "onGIFFrameSelectionModalOpened()");
+      logDebug("NFTPostcard", "onGIFFrameSelectionModalOpened()");
       const t = this;
       var element = document.getElementById("thegif1")
       t.gif.rub = new SuperGif({ gif: element, loop_delay: 2000, max_width: 360, rubbable: true } );
@@ -678,25 +678,25 @@ const NFTPostcard = {
     },
     async addGIFFrame() {
       const t = this;
-      logInfo("NFTPostcard", "addGIFFrame() t.gif.rub: " + JSON.stringify(t.gif.rub, null, 2));
-      logInfo("NFTPostcard", "addGIFFrame() t.gif.rub.get_canvas(): " + JSON.stringify(t.gif.rub.get_canvas(), null, 2));
+      logDebug("NFTPostcard", "addGIFFrame() t.gif.rub: " + JSON.stringify(t.gif.rub, null, 2));
+      logDebug("NFTPostcard", "addGIFFrame() t.gif.rub.get_canvas(): " + JSON.stringify(t.gif.rub.get_canvas(), null, 2));
       const scale = 0.5;
       const x = t.gif.rub;
       const y = x.get_canvas().getContext("2d");
       const z = x.get_canvas().toDataURL();
-      logInfo("NFTPostcard", "addGIFFrame() z: " + JSON.stringify(z, null, 2));
+      logDebug("NFTPostcard", "addGIFFrame() z: " + JSON.stringify(z, null, 2));
       fabric.Image.fromURL(z, function(oImg) {
         oImg.set('imageSmoothing', false).scale(scale);
-        // logInfo("NFTPostcard", "addAsset() adding: " + JSON.stringify(oImg));
+        // logDebug("NFTPostcard", "addAsset() adding: " + JSON.stringify(oImg));
         t.canvas.add(oImg);
-        logInfo("NFTPostcard", "addGIFFrame() added: " + JSON.stringify(oImg));
-        logInfo("NFTPostcard", "addGIFFrame() LocalStorage.setItem: " + JSON.stringify(oImg));
+        logDebug("NFTPostcard", "addGIFFrame() added: " + JSON.stringify(oImg));
+        logDebug("NFTPostcard", "addGIFFrame() LocalStorage.setItem: " + JSON.stringify(oImg));
         localStorage.setItem('canvas', JSON.stringify(t.canvas));
       } , {crossOrigin: 'anonymous'});
       // var element = document.getElementById("thegif1")
     },
     async addAsset(asset) {
-      logInfo("NFTPostcard", "addAsset() asset: " + JSON.stringify(asset, null, 2));
+      logDebug("NFTPostcard", "addAsset() asset: " + JSON.stringify(asset, null, 2));
       const t = this;
       var element = document.getElementById("thegif1")
 
@@ -708,7 +708,7 @@ const NFTPostcard = {
         // callback(url, xhr.response);
         console.log(xhr.response.substring(0, 3));
         if (xhr.response.substring(0, 3) == "GIF") {
-          logInfo("NFTPostcard", "addAsset() asset GIF: " + JSON.stringify(asset, null, 2));
+          logDebug("NFTPostcard", "addAsset() asset GIF: " + JSON.stringify(asset, null, 2));
           t.gif.src = asset.image_url;
           t.$refs['my-modal'].show();
           // var rub = new SuperGif({ gif: element, loop_delay: 2000, rubbable: true } );
@@ -745,10 +745,10 @@ const NFTPostcard = {
           }
           fabric.Image.fromURL(asset.image_url, function(oImg) {
             oImg.set('imageSmoothing', false).scale(scale);
-            // logInfo("NFTPostcard", "addAsset() adding: " + JSON.stringify(oImg));
+            // logDebug("NFTPostcard", "addAsset() adding: " + JSON.stringify(oImg));
             t.canvas.add(oImg);
-            logInfo("NFTPostcard", "addAsset() added: " + JSON.stringify(oImg));
-            logInfo("NFTPostcard", "addAsset() LocalStorage.setItem: " + JSON.stringify(oImg));
+            logDebug("NFTPostcard", "addAsset() added: " + JSON.stringify(oImg));
+            logDebug("NFTPostcard", "addAsset() LocalStorage.setItem: " + JSON.stringify(oImg));
             localStorage.setItem('canvas', JSON.stringify(t.canvas));
           } , {crossOrigin: 'anonymous'});
         }
@@ -760,7 +760,7 @@ const NFTPostcard = {
 
     },
     async addAssetOld(asset) {
-      logInfo("NFTPostcard", "addAsset() asset: " + JSON.stringify(asset, null, 2));
+      logDebug("NFTPostcard", "addAsset() asset: " + JSON.stringify(asset, null, 2));
       const t = this;
       let scale = 1.0;
       // const canvas = store.getters['nftPostcard/canvas'];
@@ -785,13 +785,13 @@ const NFTPostcard = {
       //   scale = 5.0 / 80;
       }
 
-      logInfo("NFTPostcard", "EXIF.getData getting 1: " + JSON.stringify(asset.image_url));
+      logDebug("NFTPostcard", "EXIF.getData getting 1: " + JSON.stringify(asset.image_url));
       // this.img.src = asset.image_url;
-      // logInfo("NFTPostcard", "EXIF.getData getting 2: " + JSON.stringify(asset.image_url));
+      // logDebug("NFTPostcard", "EXIF.getData getting 2: " + JSON.stringify(asset.image_url));
       // var element = document.getElementById("thegif")
-      // logInfo("NFTPostcard", "EXIF.getData getting 3: " + JSON.stringify(asset.image_url));
+      // logDebug("NFTPostcard", "EXIF.getData getting 3: " + JSON.stringify(asset.image_url));
       // EXIF.getData(new File(asset.image_url), function() {
-      //   logInfo("NFTPostcard", "EXIF.getData this: " + JSON.stringify(this));
+      //   logDebug("NFTPostcard", "EXIF.getData this: " + JSON.stringify(this));
       //   var make = EXIF.getTag(this, "Make");
       //     // var model = EXIF.getTag(this, "Model");
       //     // var makeAndModel = document.getElementById("makeAndModel");
@@ -805,7 +805,7 @@ const NFTPostcard = {
         fabric.Image.fromURL(asset.image_url, function(oImg) {
 
           // EXIF.getData(oImg, function() {
-          //   logInfo("NFTPostcard", "EXIF.getData this: " + JSON.stringify(this));
+          //   logDebug("NFTPostcard", "EXIF.getData this: " + JSON.stringify(this));
           //   // var make = EXIF.getTag(this, "Make");
           //     // var model = EXIF.getTag(this, "Model");
           //     // var makeAndModel = document.getElementById("makeAndModel");
@@ -814,16 +814,16 @@ const NFTPostcard = {
 
 
           oImg.set('imageSmoothing', false).scale(scale);
-          // logInfo("NFTPostcard", "addAsset() adding: " + JSON.stringify(oImg));
+          // logDebug("NFTPostcard", "addAsset() adding: " + JSON.stringify(oImg));
           t.canvas.add(oImg);
-          logInfo("NFTPostcard", "addAsset() added: " + JSON.stringify(oImg));
-          logInfo("NFTPostcard", "addAsset() LocalStorage.setItem: " + JSON.stringify(oImg));
+          logDebug("NFTPostcard", "addAsset() added: " + JSON.stringify(oImg));
+          logDebug("NFTPostcard", "addAsset() LocalStorage.setItem: " + JSON.stringify(oImg));
           localStorage.setItem('canvas', JSON.stringify(t.canvas));
         } , {crossOrigin: 'anonymous'});
       // }
     },
     async addImage(nftType, id, image, asset) {
-      logInfo("NFTPostcard", "addImage() type: " + nftType + ", id: " + id + ", image: " + image);
+      logDebug("NFTPostcard", "addImage() type: " + nftType + ", id: " + id + ", image: " + image);
       if (asset != null) {
         // console.table(asset);
         console.log(JSON.stringify(asset, null, 2));
@@ -858,14 +858,14 @@ const NFTPostcard = {
         // oImg.set({width: 300, height: 300, left: 10, top: 10, originX: 'left', originY: 'top'});
         // oImg.filters.push(new fabric.Image.filters.Grayscale());
         // oImg.applyFilters();
-        logInfo("NFTPostcard", "addImage() adding: " + JSON.stringify(oImg));
+        logDebug("NFTPostcard", "addImage() adding: " + JSON.stringify(oImg));
         t.canvas.add(oImg);
-        logInfo("NFTPostcard", "addImage() added: " + JSON.stringify(oImg));
+        logDebug("NFTPostcard", "addImage() added: " + JSON.stringify(oImg));
       } , {crossOrigin: 'anonymous'});
     },
 
     async addText(text) {
-      logInfo("NFTPostcard", "addText() text: " + JSON.stringify(text, null, 2));
+      logDebug("NFTPostcard", "addText() text: " + JSON.stringify(text, null, 2));
       const iText = new fabric.IText(text.text, {
         fontFamily: text.fontFamily,
         left: 100,
@@ -875,34 +875,34 @@ const NFTPostcard = {
       });
       this.canvas.add(iText);
       localStorage.setItem('canvas', JSON.stringify(this.canvas));
-      logInfo("NFTPostcard", "LocalStorage Canvas: " + JSON.stringify(this.canvas));
+      logDebug("NFTPostcard", "LocalStorage Canvas: " + JSON.stringify(this.canvas));
     },
 
     async loadNFTs() {
-      logInfo("NFTPostcard", "loadNFTs()");
+      logDebug("NFTPostcard", "loadNFTs()");
       const PAGESIZE = 50; // Default 20, max 50
       const DELAY = 1000; // Millis
       let page = 0;
       this.assets = [];
       const delay = ms => new Promise(res => setTimeout(res, ms));
       await delay(DELAY);
-      logInfo("NFTPostcard", "loadNFTs() 1 - this.accounts: " + this.accounts);
+      logDebug("NFTPostcard", "loadNFTs() 1 - this.accounts: " + this.accounts);
       for (let accountIndex in this.accounts) {
-        logInfo("NFTPostcard", "loadNFTs() 2");
+        logDebug("NFTPostcard", "loadNFTs() 2");
         const account = this.accounts[accountIndex];
-        logInfo("NFTPostcard", "loadNFTs() 2 - account: " + account);
+        logDebug("NFTPostcard", "loadNFTs() 2 - account: " + account);
         let completed = false;
         let page = 0;
         while (!completed) {
           if (account != null) {
             const offset = PAGESIZE * page;
             let url = "https://api.opensea.io/api/v1/assets?owner=" + account + "&order_direction=desc&limit=" + PAGESIZE + "&offset=" + offset;
-            logInfo("NFTPostcard", "loadAssets() url:" + url);
+            logDebug("NFTPostcard", "loadAssets() url:" + url);
             const data = await fetch(url).then(response => response.json());
             if (data.assets && data.assets.length > 0) {
               for (let assetIndex = 0; assetIndex < data.assets.length; assetIndex++) {
                 const asset = data.assets[assetIndex];
-                // logInfo("NFTPostcard", "loadAssets() asset(" + (parseInt(offset) + assetIndex) + ") name: " + asset.collection.name + ", slug: " + asset.collection.slug);
+                // logDebug("NFTPostcard", "loadAssets() asset(" + (parseInt(offset) + assetIndex) + ") name: " + asset.collection.name + ", slug: " + asset.collection.slug);
                 this.assets.push(asset);
               }
             } else {
@@ -915,7 +915,7 @@ const NFTPostcard = {
       }
     },
     async timeoutCallback() {
-      logInfo("NFTPostcard", "timeoutCallback() count: " + this.count);
+      logDebug("NFTPostcard", "timeoutCallback() count: " + this.count);
 
       this.count++;
       var t = this;
@@ -927,12 +927,12 @@ const NFTPostcard = {
     },
   },
   beforeDestroy() {
-    logInfo("NFTPostcard", "beforeDestroy()");
+    logDebug("NFTPostcard", "beforeDestroy()");
   },
   mounted() {
-    logInfo("NFTPostcard", "mounted() $route: " + JSON.stringify(this.$route.params));
+    logDebug("NFTPostcard", "mounted() $route: " + JSON.stringify(this.$route.params));
     this.reschedule = true;
-    logInfo("NFTPostcard", "Calling timeoutCallback()");
+    logDebug("NFTPostcard", "Calling timeoutCallback()");
     this.timeoutCallback();
     this.loadNFTs();
 
@@ -942,11 +942,11 @@ const NFTPostcard = {
     } catch (e) {
       storedCanvas = null;
     }
-    // logInfo("NFTPostcard", "LocalStorage storedCanvas: " + JSON.stringify(storedCanvas));
+    // logDebug("NFTPostcard", "LocalStorage storedCanvas: " + JSON.stringify(storedCanvas));
 
-    logInfo("NFTPostcard", "Canvas: " + JSON.stringify(this.canvas));
+    logDebug("NFTPostcard", "Canvas: " + JSON.stringify(this.canvas));
     if (storedCanvas == null) {
-      logInfo("NFTPostcard", "Canvas");
+      logDebug("NFTPostcard", "Canvas");
       this.canvas = new fabric.Canvas('thecanvas', {
         hoverCursor: 'pointer',
         selection: false,
@@ -966,7 +966,7 @@ const NFTPostcard = {
       });
       this.canvas.add(text);
       localStorage.setItem('canvas', JSON.stringify(this.canvas));
-      logInfo("NFTPostcard", "LocalStorage Canvas: " + JSON.stringify(this.canvas));
+      logDebug("NFTPostcard", "LocalStorage Canvas: " + JSON.stringify(this.canvas));
     } else {
       this.canvas = new fabric.Canvas('thecanvas', {
         hoverCursor: 'pointer',
@@ -975,7 +975,7 @@ const NFTPostcard = {
       });
       const t = this;
       this.canvas.loadFromJSON(storedCanvas, function() {
-        // logInfo("NFTPostcard", "LocalStorage loadFromJSON: " + JSON.stringify(storedCanvas));
+        // logDebug("NFTPostcard", "LocalStorage loadFromJSON: " + JSON.stringify(storedCanvas));
          t.canvas.renderAll();
       },function(o,object){
          // console.log(o,object)
@@ -1048,10 +1048,10 @@ const NFTPostcard = {
 
     function removeObjectBackground(eventData, transform) {
       if (transform.target.type == "image") {
-        logInfo("NFTPostcard", "Calling removeObjectBackground()  target: " + JSON.stringify(transform.target));
+        logDebug("NFTPostcard", "Calling removeObjectBackground()  target: " + JSON.stringify(transform.target));
         let ctx = transform.target.canvas.getContext('2d');
         let data = ctx.getImageData(parseInt(transform.target.left) * window.devicePixelRatio + 1, parseInt(transform.target.top) * window.devicePixelRatio + 1, 1, 1);
-        logInfo("NFTPostcard", "Calling removeObjectBackground() data: " + JSON.stringify(data));
+        logDebug("NFTPostcard", "Calling removeObjectBackground() data: " + JSON.stringify(data));
         if (data.data[3] != 0) {
           var backgroundColor = '#' + data.data[0].toString(16) + data.data[1].toString(16) + data.data[2].toString(16);
           var filter = new fabric.Image.filters.RemoveColor({
@@ -1174,7 +1174,7 @@ const NFTPostcard = {
       cornerSize: 24
     });
 
-    // logInfo("NFTPostcard", "Calling fabric.Object.prototype.controls: " + JSON.stringify(fabric.Object.prototype.controls));
+    // logDebug("NFTPostcard", "Calling fabric.Object.prototype.controls: " + JSON.stringify(fabric.Object.prototype.controls));
 
     const t = this;
     this.canvas.on({
@@ -1186,38 +1186,38 @@ const NFTPostcard = {
         // var objects = canvas.getObjects('line');
         // var objects = t.canvas.getObjects();
         // for (let i in objects) {
-        //     logInfo("NFTPostcard", "Canvas object:modified(): " + JSON.stringify(objects[i]));
+        //     logDebug("NFTPostcard", "Canvas object:modified(): " + JSON.stringify(objects[i]));
         // }
-        logInfo("NFTPostcard", "canvas object:modified: " + JSON.stringify(t.canvas));
+        logDebug("NFTPostcard", "canvas object:modified: " + JSON.stringify(t.canvas));
         localStorage.setItem('canvas', JSON.stringify(t.canvas));
       },
       'selection:cleared': function(e) {
         // var objects = t.canvas.getObjects();
         // for (let i in objects) {
-        //     logInfo("NFTPostcard", "Canvas selection:cleared(): " + JSON.stringify(objects[i]));
+        //     logDebug("NFTPostcard", "Canvas selection:cleared(): " + JSON.stringify(objects[i]));
         // }
       },
       'selection:updated': function(e) {
         // var objects = t.canvas.getObjects();
         // for (let i in objects) {
-        //     logInfo("NFTPostcard", "Canvas selection:updated(): " + JSON.stringify(objects[i]));
+        //     logDebug("NFTPostcard", "Canvas selection:updated(): " + JSON.stringify(objects[i]));
         // }
       },
       'selection:created': function(e) {
-        // logInfo("NFTPostcard", "Canvas selection:created() e: " + JSON.stringify(e));
+        // logDebug("NFTPostcard", "Canvas selection:created() e: " + JSON.stringify(e));
         // // t.selectedObject = e;
         // var objects = t.canvas.getObjects();
         // for (let i in objects) {
-        //     logInfo("NFTPostcard", "Canvas selection:created(): " + JSON.stringify(objects[i]));
+        //     logDebug("NFTPostcard", "Canvas selection:created(): " + JSON.stringify(objects[i]));
         // }
       },
       'mouse:down': function(options) {
         if (options.target) {
-          // logInfo("NFTPostcard", "Canvas mouse:down(): " + JSON.stringify(options.target));
+          // logDebug("NFTPostcard", "Canvas mouse:down(): " + JSON.stringify(options.target));
           t.selectedObject = options.target;
           // var objects = t.canvas.getObjects();
           // for (let i in objects) {
-          //     logInfo("NFTPostcard", "Canvas mouse:down(): " + JSON.stringify(objects[i]));
+          //     logDebug("NFTPostcard", "Canvas mouse:down(): " + JSON.stringify(objects[i]));
           // }
         }
       }
@@ -1261,7 +1261,7 @@ const nftPostcardModule = {
   },
   actions: {
     setCanvas(context, c) {
-      logInfo("connectionModule", "actions.setCanvas(" + JSON.stringify(c) + ")");
+      logDebug("connectionModule", "actions.setCanvas(" + JSON.stringify(c) + ")");
       // context.commit('setCanvas', c);
     },
   },
