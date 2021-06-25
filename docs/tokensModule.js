@@ -157,6 +157,7 @@ const tokensModule = {
       //     return (state.assets[a].name).localeCompare(state.assets[b].name);
       //   });
       // }
+
       // for (const contract in state.collectionList) {
       //   const collection = state.collections[state.collectionList[contract]];
       //   logInfo("tokensModule", "mutations.updateAssetsCompletion() - collection: " + JSON.stringify(collection, null, 2));
@@ -167,17 +168,24 @@ const tokensModule = {
       //   }
       // }
     },
-    updateAssets(state, { permissions, data }) {
+    updateAssets(state, { owner, permissions, data }) {
       // logInfo("tokensModule", "mutations.updateAssets(" + JSON.stringify(permissions) + ", " + JSON.stringify(data).substring(0, 100) + ")");
       if (data && data.assets && data.assets.length > 0) {
         for (let assetIndex = 0; assetIndex < data.assets.length; assetIndex++) {
           const asset = data.assets[assetIndex];
-          const owner = asset.owner.address.toLowerCase();
-          const contract = asset.asset_contract.address.toLowerCase();
-          let permission = permissions[owner + ':' + contract];
-          if (permission == null) {
-            permission = permissions[owner + ':' + null];
+          let assetOwner = asset.owner.address.toLowerCase();
+          if (assetOwner == ADDRESS0) {
+            assetOwner = owner.toLowerCase();
+            console.log("assetOwner is " + ADDRESS0 + " so set to " + assetOwner);
           }
+          const contract = asset.asset_contract.address.toLowerCase();
+          console.log("Asset: " + JSON.stringify(asset.name || '(no name)') + ", contract: " + contract);
+          // console.log(JSON.stringify(asset, null, 2));
+          let permission = permissions[assetOwner + ':' + contract];
+          if (permission == null) {
+            permission = permissions[assetOwner + ':' + null];
+          }
+          console.log("  assetOwner: " + assetOwner + ", contract: " + contract + " => permission: " + JSON.stringify(permission));
           if (permission && (permission.permission == 1 || permission.permission == 2)) {
             var traits = [];
             for (let traitIndex = 0; traitIndex < asset.traits.length; traitIndex++) {
@@ -198,31 +206,36 @@ const tokensModule = {
                 assetList: []
               });
               collection = state.collections[contract];
+              console.log("New collection: " + JSON.stringify(collection));
             }
             const key = contract + "." + asset.token_id;
             state.touched[key] = 1;
+            // console.log(JSON.stringify(asset));
             var record = {
               key: key,
               permission: permission.permission,
               curation: permission.curation,
               contract: contract,
               tokenId: asset.token_id,
-              owner: owner,
-              name: asset.name,
+              owner: assetOwner,
+              name: asset.name || '(null)',
+              imageUrl: asset.image_url,
               externalLink: asset.external_link,
+              permalink: asset.permalink,
               traits: traits
             }
             Vue.set(state.assets, key, record);
             Vue.set(state.collections[contract].assets, key, true);
+            // console.log(JSON.stringify(record, null, 2));
           }
         }
         state.collectionList = Object.keys(state.collections).sort(function(a, b) {
-          return (state.collections[a].name).localeCompare(state.collections[b].name);
+          return ('' + state.collections[a].name).localeCompare('' + state.collections[b].name);
         });
         for (const contract in state.collectionList) {
           const collection = state.collections[state.collectionList[contract]];
           collection.assetList = Object.keys(collection.assets).sort(function(a, b) {
-            return (state.assets[a].name).localeCompare(state.assets[b].name);
+            return ('' + state.assets[a].name).localeCompare('' + state.assets[b].name);
           });
         }
       }
@@ -312,6 +325,12 @@ const tokensModule = {
       //     }
       // }
 
+      // const defaultRegistryEntries = [
+      //   ["0xBeeef66749B64Afe43Bbc9475635Eb510cFE4922", "0xBeeef66749B64Afe43Bbc9475635Eb510cFE4922", "0x00000217d2795F1Da57e392D2a5bC87125BAA38D", "0x00000217d2795F1Da57e392D2a5bC87125BAA38D"],
+      //   ["0x31385d3520bCED94f77AaE104b406994D8F2168C", null, null, "0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB"],
+      //   [2, 1, 2, 1],
+      //   [1, 1, 1, 1],
+      // ];
       const defaultRegistryEntries = [
         ["0x00000217d2795F1Da57e392D2a5bC87125BAA38D", "0x00000217d2795F1Da57e392D2a5bC87125BAA38D"],
         [null, "0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB"],
@@ -367,7 +386,7 @@ const tokensModule = {
             const url = "https://api.opensea.io/api/v1/assets?owner=" + owner + "&order_direction=desc&limit=" + PAGESIZE + "&offset=" + offset;
             logInfo("tokensModule", "actions.loadLibrary() owner url:" + url);
             const data = await fetch(url).then(response => response.json());
-            context.commit('updateAssets', { permissions, data } );
+            context.commit('updateAssets', { owner, permissions, data } );
             // if (data.assets && data.assets.length > 0) {
             //   for (let assetIndex = 0; assetIndex < data.assets.length; assetIndex++) {
             //     const asset = data.assets[assetIndex];
@@ -394,12 +413,12 @@ const tokensModule = {
             // console.log("Retrieve all by owner %s contract %s", owner, contract);
             let completed = false;
             let page = 0;
-            while (!completed && page < 3) {
+            while (!completed) {
               const offset = PAGESIZE * page;
               const url = "https://api.opensea.io/api/v1/assets?owner=" + owner + "&asset_contract_address=" + contract + "&order_direction=desc&limit=" + PAGESIZE + "&offset=" + offset;
               logInfo("tokensModule", "actions.loadLibrary() owner and contract url:" + url);
               const data = await fetch(url).then(response => response.json());
-              context.commit('updateAssets', { permissions, data });
+              context.commit('updateAssets', { owner, permissions, data });
               // if (data.assets && data.assets.length > 0) {
               //   for (let assetIndex = 0; assetIndex < data.assets.length; assetIndex++) {
               //     const asset = data.assets[assetIndex];

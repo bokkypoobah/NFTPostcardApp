@@ -8,11 +8,13 @@ const BeeefLibrary = {
             <b-container class="p-0" fluid>
 
               <b-row class="mb-3">
+                <!--
                 <b-col md="8" class="p-3">
                   <div id="toBeCaptured">
                     <canvas id="thecanvas" width="1024" height="480" style="border:1px solid; margin: 0 auto; position: absolute;"></canvas>
                   </div>
                 </b-col>
+                -->
 
                 <!--
                 <b-col md="4" class="ml-auto p-3">
@@ -25,9 +27,63 @@ const BeeefLibrary = {
                 -->
 
               </b-row>
-              {{ collectionList }}
-              {{ collections }}
-              {{ assets }}
+
+              <div v-for="collectionKey in collectionList">
+                <b-button v-b-toggle="'library-' + collectionKey" size="sm" class="mt-2" variant="outline-info">{{ collections[collectionKey].name }}</b-button>
+                <b-collapse :id="'library-' + collectionKey" visible class="mt-2">
+                  <b-card no-body class="border-0">
+                    <b-card-group deck class="m-0">
+                      <div v-for="assetKey in collections[collectionKey].assetList">
+                        <b-card body-class="p-1" header-class="p-2" footer-class="p-2" img-top class="m-1 p-0">
+                          <b-img rounded="sm" variant="light" size="10.0rem" :src="assetsToRename[assetKey].imageUrl" style="width: 15rem; height: 15rem; object-fit: contain; object-position: 50% top; background-color: #fafafa;" class="pixelated m-1 p-2"></b-img>
+                          <!--
+                          {{ assetsToRename[assetKey] }}
+                          <b-link @click="addAsset(asset)" v-b-popover.hover="'Click to add image to the canvas'">
+                            <b-img rounded="sm" variant="light" size="10.0rem" :src="asset.image_url" style="width: 15rem; height: 15rem; object-fit: contain; object-position: 50% top; background-color: #fafafa;" class="pixelated m-1 p-2"></b-img>
+                          </b-link>
+                          -->
+                          <template #header>
+                            <span class="small truncate" v-b-popover.hover="assetsToRename[assetKey].name">
+                              <b-link :href="assetsToRename[assetKey].externalLink" v-b-popover.hover="'View on original site, if available. Risky out there, so be careful'" target="_blank">
+                                {{ assetsToRename[assetKey].name ? assetsToRename[assetKey].name.substring(0, 32) : "Unknown name" }}
+                              </b-link>
+                            </span>
+                            <span class="float-right">
+                              <b-link :href="assetsToRename[assetKey].permalink + '?ref=beeef.nftpostcard.eth'" v-b-popover.hover="'View on OpenSea.io'" target="_blank"><img src="images/381114e-opensea-logomark-flat-colored-blue.png" width="20px" /></b-link>
+                            </span>
+                            <!--
+                            <span variant="secondary" class="small truncate">
+                              <b-link :href="asset.collection.external_url" v-b-popover.hover="'View on original site, if available. Risky out there, so be careful - ' + getCollectionTitle(asset)" target="_blank">
+                                <img :src="asset.collection.image_url" width="20px" />
+                              </b-link>
+                              {{ getCollectionTitle(asset).substring(0, 32) }}
+                            </span>
+                            -->
+                          </template>
+                          <template #footer>
+                            <span class="small truncate" v-b-popover.hover="'Owner ' + assetsToRename[assetKey].owner">
+                              <b-link :href="explorer + 'address/' + assetsToRename[assetKey].owner" target="_blank">
+                                {{ assetsToRename[assetKey].owner ? assetsToRename[assetKey].owner.substring(0, 10) : "Unknown owner" }}
+                              </b-link>
+                            </span>
+                          </template>
+                        </b-card>
+                      </div>
+                    </b-card-group>
+
+                    <!--
+                    <b-row>
+                      <b-col cols="4" class="small">Collections</b-col><b-col class="small truncate" cols="8">{{ Object.keys(collections).length }}</b-col>
+                    </b-row>
+                    <b-row>
+                      <b-col cols="4" class="small">Assets</b-col><b-col class="small truncate" cols="8">{{ Object.keys(assets).length }}</b-col>
+                    </b-row>
+                    -->
+                  </b-card>
+                </b-collapse>
+
+              </div>
+
             </b-container>
             <!--
             <b-form-group label-cols="2" label-size="sm">
@@ -516,7 +572,7 @@ const BeeefLibrary = {
     collectionList() {
       return store.getters['tokens/collectionList'];
     },
-    assets() {
+    assetsToRename() {
       return store.getters['tokens/assets'];
     },
     // canvas() {
@@ -555,7 +611,7 @@ const BeeefLibrary = {
       }
       results.push({ value: '--- (all) ---', text: '--- (all) ---'});
       results.sort(function(a, b) {
-        return ('' + a.value).localeCompare(b.value);
+        return ('' + a.value).localeCompare('' + b.value);
       });
       return results;
     },
@@ -573,7 +629,7 @@ const BeeefLibrary = {
       }
       results.push({ value: '--- (all) ---', text: '--- (all) ---'});
       results.sort(function(a, b) {
-        return ('' + a.value + a.text).localeCompare(b.value + a.text);
+        return ('' + a.value + a.text).localeCompare('' + b.value + a.text);
       });
       return results;
     },
@@ -1115,7 +1171,7 @@ const BeeefLibrary = {
     this.reschedule = true;
     logInfo("beeefLibraryOfBestQualityNFTs", "Calling timeoutCallback()");
     this.timeoutCallback();
-    this.loadAssets();
+    // this.loadAssets();
 
     const storedCanvas = JSON.parse(localStorage.getItem('canvas'));
     logInfo("beeefLibraryOfBestQualityNFTs", "LocalStorage storedCanvas: " + JSON.stringify(storedCanvas));
